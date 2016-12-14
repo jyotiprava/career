@@ -24,8 +24,8 @@ use common\models\LoginType;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_DELETED = 1;
+    const STATUS_ACTIVE = 0;
   
     
 
@@ -34,7 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%login}}';
+        return '{{%User}}';
     }
 
     /**
@@ -43,8 +43,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
-        ];
+        'timestamp' => [
+            'class' => '\yii\behaviors\TimestampBehavior',
+            'attributes' => [
+                ActiveRecord::EVENT_BEFORE_INSERT => ['Updateddate', 'Ondate'],
+                ActiveRecord::EVENT_BEFORE_UPDATE => ['Ondate'],
+            ],
+            'value' => new \yii\db\Expression('NOW()'),
+        ],
+    ];
     }
 
     /**
@@ -55,8 +62,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             /*['typeId', 'default', 'value' => self::STATUS_ACTIVE],
             ['typeId', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],*/
-             [['typeId'],'required'],
-            [['typeId'],'integer']
+            ['IsDelete', 'default', 'value' => self::STATUS_ACTIVE],
+            ['IsDelete', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -65,7 +72,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::find()->where(['loginId' => $id])->with('type')->one();
+        return static::find()->where(['LoginId' => $id,'IsDelete' => self::STATUS_ACTIVE])->with('type')->one();
     }
 
     /**
@@ -82,9 +89,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $username
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername($UserName)
     {
-        return static::findOne(['username' => $username]);
+        return static::findOne(['UserName' => $UserName,'IsDelete' => self::STATUS_ACTIVE]);
     }
 
     public static function findByEmail($email)
@@ -156,9 +163,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $password password to validate
      * @return boolean if password provided is valid for current user
      */
-    public function validatePassword($password)
+    public function validatePassword($Password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return Yii::$app->security->validatePassword($Password, $this->Password);
     }
 
     /**
@@ -166,9 +173,9 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword($Password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password_hash = Yii::$app->security->generatePasswordHash($Password);
     }
 
     /**
@@ -197,6 +204,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getType()
     {
-        return $this->hasOne(LoginType::className(), ['loginTypeId' => 'typeId']);
+        return $this->hasOne(UserType::className(), ['TypeId' => 'TypeId']);
     }
 }

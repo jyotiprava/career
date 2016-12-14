@@ -9,13 +9,13 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $username;
-    public $password;
+    public $UserName;
+    public $Password;
     public $email;
     public $rememberMe = true;
    // public $reCaptcha;
-    public $captcha;
-    private $_user = false;
+    //public $captcha;
+    private $_user = null;
 
 
     /**
@@ -25,13 +25,13 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['password','email'], 'required'],
-            ['captcha', 'captcha'],
+            [['UserName','Password'], 'required'],
+           // ['captcha', 'captcha'],
             // rememberMe must be a boolean value
            // [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6LeZAxITAAAAAIPXV8-UxrbpiR98fVDEHpONJQMX'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
-            ['password', 'isApproved'],
+            ['Password', 'validatePassword'],
+            ['Password', 'isApproved'],
                       
         ];
     }
@@ -47,9 +47,9 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user || !$user->validatePassword($this->Password)) {
 
-                $this->addError($attribute, 'Incorrect email or password.');
+                $this->addError($attribute, 'Incorrect Username or Password.');
 
             }
             
@@ -60,7 +60,7 @@ class LoginForm extends Model
 
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if($user->status == 0)
+            if($user->IsDelete == 1)
                 $this->addError($attribute, 'You account is not yet approved.');
         }
      }
@@ -85,18 +85,13 @@ class LoginForm extends Model
      * @return User|null
      */
 
-    public function getUser()
+    protected function getUser()
     {
-        if ($this->_user === false) {
-            //$this->_user = User::findByUsername($this->username);
-            $this->_user = User::findByEmail($this->email);
-            if($this->_user != NULL)
-            {
-                $this->_user->current_login = 1;
-                $this->_user->save(); 
-            }
+        if ($this->_user === null) {
+            $this->_user = User::findByUsername($this->UserName);
+            
         }
-        //print_r($this->_user);
+
         return $this->_user;
     }
 }
