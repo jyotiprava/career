@@ -10,43 +10,48 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="position-relative">
-<div id="login-box" class="login-box visible widget-box no-border">
-									<div class="widget-body">
-										<div class="widget-main">
-											<h4 class="header blue lighter bigger">
-												Sign In										</h4>
+<!-- Page content -->
+		<div class="page-content">
 
-											<div class="space-6"></div>
-                                                                                         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-												<fieldset>
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-                                                                                                                        <?= $form->field($model, 'UserName')->textInput(['autofocus' => true,'placeholder'=>'Username'])->label(false) ?>
-															<i class="ace-icon fa fa-user"></i>												      </span>													</label>
+			<!-- Main content -->
+			<div class="content-wrapper">
 
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-                                                                                                                        <?= $form->field($model, 'Password')->passwordInput(['placeholder'=>'Password'])->label(false) ?>
-															<i class="ace-icon fa fa-lock"></i>														</span>													</label>
+				<!-- Simple login form -->
+				 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+					<div class="panel panel-body login-form">
+						<div class="text-center">
+							<!--<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>-->
+							<img src="bassets/images/logo.png" style="width: 150px;"/>
+							<h5 class="content-group">Login to your account <small class="display-block">Enter your credentials below</small></h5>
+						</div>
 
-													<div class="space"></div>
+						<div class="form-group has-feedback has-feedback-left">
+							<?= $form->field($model, 'UserName')->textInput(['autofocus' => true,'placeholder'=>'Username'])->label(false) ?>
+							<div class="form-control-feedback">
+								<i class="icon-user text-muted"></i>
+							</div>
+						</div>
 
-													<div class="clearfix">
-														<!--<label class="inline" for="loginform-rememberme">
-                                                                                                                    <input type="hidden" value="0" name="LoginForm[rememberMe]">
-                                                                                                                        <input type="checkbox" value="1" name="LoginForm[rememberMe]" class="ace" id="loginform-rememberme">
-															<span class="lbl"> Remember Me</span>												    </label>-->
-															
-                                                                                                                <p class="help-block help-block-error"></p>    
-                                                                                                                <?= Html::submitButton('<i class="ace-icon fa fa-key"></i> <span class="bigger-110">Login</span>', ['class' => 'width-35 pull-right btn btn-sm btn-primary blue1', 'name' => 'login-button']) ?>
-                                                                                                                
-													</div>
-													<div class="space-4"></div>
-												</fieldset>
-											  <?php ActiveForm::end(); ?>
+						<div class="form-group has-feedback has-feedback-left">
+							<?= $form->field($model, 'Password')->passwordInput(['placeholder'=>'Password'])->label(false) ?>
+							<div class="form-control-feedback">
+								<i class="icon-lock2 text-muted"></i>
+							</div>
+						</div>
 
-										</div><!-- /.widget-main -->
-									</div><!-- /.widget-body -->
-								</div><!-- /.login-box -->
-</div>
+						<div class="form-group">
+							<?= Html::submitButton('Sign In <i class="icon-circle-right2 position-right"></i>', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
+						</div>
+
+						<div class="text-center" style="display: none;">
+							<a href="login_password_recover.html">Forgot password?</a>
+						</div>
+					</div>
+				<?php ActiveForm::end(); ?>
+				<!-- /simple login form -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
