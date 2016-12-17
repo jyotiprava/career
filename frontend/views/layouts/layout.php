@@ -160,35 +160,120 @@ AppAsset::register($this);
 							<img class="main-logo" src="images/logo.png" alt="Career Bugs" />
 						</a>
 					</div><!-- logo --> 
-					<div class="col-lg-8  col-md-8 col-sm-6 col-xs- 2 main-nav"><!-- Main Navigation -->  
+					<div class="col-lg-8  col-md-8 col-sm-6 col-xs- 2 main-nav"><!-- Main Navigation -->
+					<?php
+					if(isset(Yii::$app->session['Employeeid']))
+					{
+					?>
+					 <div class="navbar navbar-default " role="navigation"> 
+                       <div class="collapse navbar-collapse"> 
+				           <ul class="nav navbar-nav"> 
+						
+						<!-- It will display when customer paid  for that -->		
+							<li class="no-need"> 
+							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
+							</li>  
+						<!-- It will display when customer paid  for that -->	
+
+						<li class="no-need">
+								<a href="#" class="dropdown-toggle brdr  orange_bg new_style" data-toggle="dropdown"><b class="fa fa-bell orange"></b> <br>  Notification </a> 
+								<!--<ul class="dropdown-menu">
+								    <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
+									 <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
+								</ul>-->
+							</li>
+							
+							<li class="no-need prfl_img">
+								<a href="#" class="dropdown-toggle brdr orange_bg new_style" data-toggle="dropdown">    
+   								<img style="width: 43px;height: 43px;" src="images/user.png" alt="" class="img-responsive center-block "><?=Yii::$app->session['EmployeeName'];?>  </a> 
+								<ul class="dropdown-menu"> 
+									<li class=""><a href="<?= Url::toRoute(['site/profilepage'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
+									<li class=""><a href="edit_profile.html"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
+									<li class=""><a href="change_password.html"> <b class="fa fa-lock"></b> Change Password  </a></li> 
+									<li class=""><a href="index.html"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
+								</ul>
+							</li> 
+				      </ul> 
+                </div><!--/.nav-collapse --> 
+					<?php
+					}
+					else
+					{
+					?>
                        <div class="head_right"> 
 						       <ul>  
 								   <li class=""> <strong> Are you recruiting?</strong> <a  href="how_we_can_help.html"> 
 									  <span>How we can help</span>  </a></li>  
 								   <li><a class="btn-123"  href="<?= Url::toRoute(['site/searchcandidate'])?>"   >Search Candidates</a></li>
 						       </ul>
-                      </div><!--/.nav-collapse --> 
+                      </div><!--/.nav-collapse -->
+					<?php
+					}
+					?>
                 </div>  
-				<div class="col-xs-3  col-sm-2  ds"> 
+		    <!--<div class="col-xs-3  col-sm-2  ds"> 
 			   <div class="dropdown _login">
 				 <a  href="<?= Url::toRoute(['site/login'])?>" >	<span class="fa fa-user"></span></a>
 				</div>	
-			 </div> 		 
+		    </div> 		 -->
 			<div class="clear"></div>
 		</div><!-- Main Navigation --> 
   </div>
 </div> 
   <!-- Head -->   
-  
+</div>
   
 <!-- Start main header Menu -->
+
+					<?php
+					if(isset(Yii::$app->session['Employeeid']))
+					{
+					?>
+ 	   <div id="header"><!-- start main header --> 
+					<div class="container"><!-- container -->
+						<div class="row">  
+							    <div class="col-lg-8  col-md-8 col-sm-8 col-xs-12 main-nav"><!-- Main Navigation --> 
+					              <div class="navbar navbar-default " role="navigation"> 
+								   <div class="collapse navbar-collapse"> 
+									 <ul class="nav navbar-nav float-left">
+										<li><a href="#">Dashboard</a></li>   
+										<li><a href="post_a_job.html" > Bookmark Jobs  </a></li>   
+										  <li><a href="post_a_job.html" > Applied Job  <span class="total">3</span></a></li>  
+											</ul>
+									</div><!--/.nav-collapse --> 
+								   </div>
+								   
+									<div  class="clear"></div>
+								</div><!-- Main Navigation -->
+					
+					<div class="clearfix"></div>
+				</div>
+			</div><!-- container --> 
+		</div><!-- end main header -->
+			   <?php
+					}
+					else
+					{
+					?>
  <div id="header">
 		 <div class="find_a_job">
 		     <span style="cursor:pointer" onclick="openNav()"> <img src="images/find-icon.png"></span> 
          </div>
 			<div class="container"><!-- container -->
 			  <div class="row"> 
-				  
+					<div class="col-lg-8  col-md-8 col-sm-8 col-xs-12 main-nav"><!-- Main Navigation --> 
+					              <div class="navbar navbar-default " role="navigation"> 
+								   <div class="collapse navbar-collapse"> 
+									 <ul class="nav navbar-nav float-left">
+										<li><a href="#">Dashboard</a></li>   
+										<li><a href="post_a_job.html" > Bookmark Jobs  </a></li>   
+										  <li><a href="post_a_job.html" > Applied Job  <span class="total">3</span></a></li>  
+											</ul>
+									</div><!--/.nav-collapse --> 
+								   </div>
+								   
+									<div  class="clear"></div>
+								</div><!-- Main Navigation -->
 					  <div class="col-lg-8  col-md-7 col-sm-7 col-xs-12 main-nav"><!-- Main Navigation --> 
 					   <div class="navbar navbar-default " role="navigation"> 
                        <div class="collapse navbar-collapse"> 
@@ -201,7 +286,8 @@ AppAsset::register($this);
                        </div><!--/.nav-collapse -->  
                       </div>  
 						<div  class="clear"></div>
-					</div><!-- Main Navigation -->  
+					</div><!-- Main Navigation -->
+					
 					<div class="col-lg-4  col-md-5 col-sm-5 col-xs-12 main-nav"><!-- Main Navigation --> 
 					   <div class="navbar navbar-default " role="navigation"> 
                         <div class="collapse navbar-collapse no_pad"> 
@@ -214,14 +300,16 @@ AppAsset::register($this);
                     </div><!--/.nav-collapse --> 
                   </div> 
 						<div  class="clear"></div>
-					</div><!-- Main Navigation -->  
+					</div><!-- Main Navigation -->
 					<div class="clearfix"></div>
 				</div>
 				 
 			</div><!-- container --> 
 	</div>
 <!-- end main header -->
-
+<?php
+					}
+					?>
   
  <!---------------------------------------------- Header End ----------------------------------------------> 
   

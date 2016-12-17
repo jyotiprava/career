@@ -419,7 +419,6 @@ function locationInfo() {
 
 $(function() {
 var loc = new locationInfo();
-loc.getStates(101);
  $(".countries").on("change", function(ev) {
         var countryId = $("option:selected", this).attr('countryid');
         if(countryId != ''){

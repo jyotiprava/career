@@ -40,7 +40,7 @@ class Education extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserId', 'HighestQualification', 'CourseId', 'University', 'PassingYear', 'SkillId', 'DurationFrom', 'DurationTo', 'IsDelete', 'OnDate'], 'required'],
+            [['UserId', 'HighestQualification', 'CourseId', 'University', 'PassingYear', 'SkillId', 'DurationFrom', 'DurationTo', 'OnDate'], 'required'],
             [['UserId', 'CourseId', 'SkillId', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdateDate'], 'safe'],
             [['HighestQualification', 'University'], 'string', 'max' => 200],

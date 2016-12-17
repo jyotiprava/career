@@ -38,7 +38,7 @@ class Experience extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserId', 'CompanyName', 'PositionId', 'YearFrom', 'YearTo', 'Experience', 'Salary', 'IsDelete', 'OnDate'], 'required'],
+            [['UserId', 'CompanyName', 'PositionId', 'YearFrom', 'YearTo', 'Experience', 'Salary', 'OnDate'], 'required'],
             [['UserId', 'PositionId', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['CompanyName', 'Experience'], 'string', 'max' => 150],

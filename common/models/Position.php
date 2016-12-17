@@ -31,7 +31,7 @@ class Position extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Position', 'IsDelete', 'OnDate'], 'required'],
+            [['Position','OnDate'], 'required'],
             [['IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['Position'], 'string', 'max' => 200],

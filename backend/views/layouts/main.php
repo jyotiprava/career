@@ -166,6 +166,13 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 										<li><a href="<?=Url::to(['job-category/index']);?>">View</a></li>
 									</ul>
 								</li>
+								<li>
+									<a href="#" class="has-ul"><i class="icon-stack"></i> <span>Position</span></a>
+									<ul class="hidden-ul">
+										<li><a href="<?=Url::to(['position/create']);?>">Add</a></li>
+										<li><a href="<?=Url::to(['position/index']);?>">View</a></li>
+									</ul>
+								</li>
 								
 								
 								 <li class="navigation-header"><span style=" font-weight: bold;font-size: 14px; text-align: center;">   Candidate List</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>

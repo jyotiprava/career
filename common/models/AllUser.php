@@ -53,7 +53,7 @@ class AllUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserTypeId', 'EntryType', 'Name', 'Email', 'MobileNo', 'Address', 'Country', 'State', 'City', 'PinCode', 'Password', 'CVId', 'CompanyDesc', 'IndustryId', 'PhotoId', 'IsDelete', 'Ondate'], 'required'],
+            [['UserTypeId', 'EntryType', 'Name', 'Email', 'MobileNo', 'Address', 'Country', 'State', 'City', 'PinCode', 'Password', 'Ondate'], 'required'],
             [['UserTypeId', 'CVId', 'IndustryId', 'PhotoId', 'IsDelete'], 'integer'],
             [['CompanyDesc'], 'string'],
             [['Ondate', 'UpdatedDate'], 'safe'],

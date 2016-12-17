@@ -14,6 +14,17 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\AllUser;
 use yii\heleprs\Url;
+
+
+use common\models\Skill;
+use common\models\Course;
+use common\models\Position;
+use common\models\Documents;
+use common\models\Education;
+use common\models\Experience;
+
+
+use yii\web\UploadedFile;
 /**
  * Site controller
  */
@@ -248,7 +259,72 @@ class SiteController extends Controller
     public function actionJobseekersregister()
     {
         $this->layout='layout';
-        return $this->render('jobseekersregister');
+        $skill=new Skill();
+        $position=new Position();
+        $course=new Course();
+        $alluser=new AllUser();
+        $docmodel=new Documents();
+        
+        $allskill=$skill->find()->where("IsDelete=0")->all();
+        
+        $allposition=$position->find()->where("IsDelete=0")->all();
+        
+        $allcourse=$course->find()->where("IsDelete=0")->all();
+        
+        if ($alluser->load(Yii::$app->request->post())) {
+            $cv = UploadedFile::getInstance($alluser, 'CVId');
+            if($cv)
+            {
+            $cv_id=$docmodel->imageUpload($cv,'CVId');
+            }
+            else
+            {
+                $cv_id=0;
+            }
+            $alluser->UserTypeId=2;
+            $alluser->EntryType='Experience';
+            $alluser->Password=md5(Yii::$app->request->post()['AllUser']['Password']);
+            $alluser->CVId=$cv_id;
+            $alluser->Ondate=date('Y-m-d');
+            $alluser->save();
+            
+            $education=new Education;
+            $education->UserId=$alluser->UserId;
+            $education->HighestQualification=Yii::$app->request->post()['AllUser']['HighestQualification'];
+            $education->CourseId=Yii::$app->request->post()['AllUser']['CourseId'];
+            $education->University=Yii::$app->request->post()['AllUser']['University'];
+            $education->PassingYear=Yii::$app->request->post()['AllUser']['DurationTo'];
+            $education->SkillId=Yii::$app->request->post()['AllUser']['SkillId'];
+            $education->DurationFrom=Yii::$app->request->post()['AllUser']['DurationFrom'];
+            $education->DurationTo=Yii::$app->request->post()['AllUser']['DurationTo'];
+            $education->OnDate=date('Y-m-d');
+            $education->save();
+            
+            if(Yii::$app->request->post()['AllUser']['CompanyName']!='')
+            {
+            $experience=new Experience();
+            $experience->UserId=$alluser->UserId;
+            $experience->CompanyName=Yii::$app->request->post()['AllUser']['CompanyName'];
+            $experience->PositionId=Yii::$app->request->post()['AllUser']['PositionId'];
+            $experience->YearFrom=Yii::$app->request->post()['AllUser']['YearFrom'];
+            $experience->YearTo=Yii::$app->request->post()['AllUser']['YearTo'];
+            $experience->Experience=Yii::$app->request->post()['AllUser']['Experience'];
+            $experience->Salary=Yii::$app->request->post()['AllUser']['Salary'];
+            $experience->OnDate=date('Y-m-d');
+            $experience->save();
+            }
+            
+                $session = Yii::$app->session;
+                $session->open();
+                Yii::$app->session['EmployeeEmail']=$alluser->Email;
+                Yii::$app->session['Employeeid']=$alluser->UserId;
+                Yii::$app->session['EmployeeName']=$alluser->Name;
+                return $this->redirect(['profilepage']);
+        }
+        else{
+            return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
+        }
+        
     }
     
     
@@ -290,6 +366,12 @@ class SiteController extends Controller
     {
         $this->layout='layout';
         return $this->render('postajob');
+    }
+    
+    public function actionProfilepage()
+    {
+        $this->layout='layout';
+        return $this->render('profilepage');
     }
     
     

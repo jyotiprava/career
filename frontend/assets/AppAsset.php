@@ -26,7 +26,7 @@ class AppAsset extends AssetBundle
         'css/jslider.round.css'
     ];
     public $js = [
-        'js/jquery.min.js',
+        //'js/jquery.min.js',
         
         'bootstrap/js/bootstrap.min.js',
         
