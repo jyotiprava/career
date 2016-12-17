@@ -1,3 +1,11 @@
+<?php
+$this->title = 'Employers Register';
+
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+$imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
+?>
 <div id="wrapper"><!-- start main wrapper --> 
 	
 		<div class="headline_inner">
@@ -18,7 +26,7 @@
 			<div class="row main">
 				 
 				<div class="xs-12 col-sm-8 main-center">
-					<form class="form-horizontal" method="post" action="#">
+					<?php $form = ActiveForm::begin(); ?>
 						
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label"> Company Type  </label>
@@ -26,13 +34,13 @@
 								<div class="input-group">  
 									  <div class="radio float-left-widtth3">
 										<label>
-										  <input type="radio" name="underwear" required="">
+										  <input type="radio" value="2" name="AllUser[UserTypeId]" required="">
 										  Company
 										</label>
 									  </div>
 									  <div class="radio float-left-widtth3">
 										<label>
-										  <input type="radio" name="underwear" required="">
+										  <input type="radio" value="3" name="AllUser[UserTypeId]" required="">
 										   Consultancy
 										</label>
 									  </div> 
@@ -46,7 +54,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  placeholder="Company Name"/>
+									<input type="text" class="form-control" name="AllUser[Name]" id="Name"  placeholder="Company Name"/>
 								</div>
 							</div>
 						</div>
@@ -196,7 +204,7 @@
 							<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
 						</div>
 						 
-					</form>
+					<?php ActiveForm::end(); ?>
 				</div>
 				
 				

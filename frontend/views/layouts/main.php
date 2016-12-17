@@ -20,7 +20,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title>Career Bugs</title>
+    <title><?= Html::encode($this->title) ?></title>
     <link rel="shortcut icon" href="images/icons/favicon.png"/>
     <?php $this->head() ?>
 </head>

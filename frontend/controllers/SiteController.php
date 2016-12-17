@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\AllUser;
 use yii\heleprs\Url;
 /**
  * Site controller
@@ -210,10 +211,28 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    // ------------------- ALL USER(Employers) Start -------------------//
+     public function actionEmployerslogin()
+    {
+        $this->layout='layout';
+        $model=new AllUser();
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->save();
+            //return $this->render('employerslogin',['model'=>$model,]);
+        }else{            
+            return $this->render('employerslogin', ['model' => $model,]);
+        }
+        
+    }
     
+     public function actionEmployersregister()
+    {
+        $this->layout='layout';
+        return $this->render('employersregister');
+    }
     
-    
-    
+    // ------------------- ALL USER(Employers) End -------------------//
     public function actionJobsearch()
     {
         $this->layout='layout';
@@ -233,12 +252,7 @@ class SiteController extends Controller
     }
     
     
-    public function actionEmployerslogin()
-    {
-        $this->layout='layout';
-        return $this->render('employerslogin');
-    }
-    
+   
     
     public function actionLogin()
     {
@@ -246,12 +260,7 @@ class SiteController extends Controller
         return $this->render('login');
     }
     
-    public function actionEmployersregister()
-    {
-        $this->layout='layout';
-        return $this->render('employersregister');
-    }
-    
+   
     
     public function actionEmployeeforgetpassword()
     {

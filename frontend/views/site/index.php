@@ -1,4 +1,6 @@
-
+<?php
+$this->title = 'Career Bugs';
+?>
 <!-- start main wrapper --> 
 	<div id="wrapper">
 		<div class="headline">

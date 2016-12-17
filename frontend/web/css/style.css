@@ -4239,7 +4239,7 @@ margin: 6px auto 0; display: block; text-align:center;}
 
 .checkbox label input[type="checkbox"],
 .radio label input[type="radio"] {
-    display: none;
+    display: block;
 }
 
 .checkbox label input[type="checkbox"] + .cr > .cr-icon,
