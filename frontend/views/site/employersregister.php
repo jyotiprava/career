@@ -26,15 +26,14 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 			<div class="row main">
 				 
 				<div class="xs-12 col-sm-8 main-center">
-					<?php $form = ActiveForm::begin(); ?>
-						
+					<?php $form = ActiveForm::begin(['options' => ['class' => 'form-horizontal','enctype'=>'multipart/form-data']]); ?>					
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label"> Company Type  </label>
 							<div class="cols-sm-10">
 								<div class="input-group">  
 									  <div class="radio float-left-widtth3">
 										<label>
-										  <input type="radio" value="2" name="AllUser[UserTypeId]" required="">
+										  <input type="radio" selected value="2" name="AllUser[UserTypeId]" required="">
 										  Company
 										</label>
 									  </div>
@@ -62,10 +61,11 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="name" class="cols-sm-2 control-label"> Company Type  </label>
 							<div class="cols-sm-10">
 								<div class="input-group full">
-								<select name="indtype" class="form-control bfh-states">
-                    <option selected="selected" value="-1">- Select an Industry -</option>
-                    <option value="2">Accessories/Apparel/Fashion Design</option><option value="3">Accounting/Consulting/Taxation</option><option value="4">Advertising/Event Management/PR</option><option value="5">Agriculture/Dairy Technology</option><option value="6">Airlines/Hotel/Hospitality/Travel/Tourism/Restaurants</option><option value="40">Animation / Gaming</option><option value="7">Architectural Services/ Interior Designing</option><option value="8">Auto Ancillary/Automobiles/Components</option><option value="9">Banking/Financial Services/Stockbroking/Securities</option><option value="41">Banking/FinancialServices/Broking</option><option value="10">Biotechnology/Pharmaceutical/Clinical Research</option><option value="43">Brewery/Distillery</option><option value="11">Cement/Construction/Engineering/Metals/Steel/Iron</option><option value="44">Ceramics/Sanitaryware</option><option value="12">Chemicals/Petro Chemicals/Plastics</option><option value="22">Computer Hardware/Networking</option><option value="13">Consumer FMCG/Foods/Beverages</option><option value="14">Consumer Goods - Durables</option><option value="15">Courier/Freight/Transportation/Warehousing</option><option value="16">CRM/ IT Enabled Services/BPO</option><option value="17">Education/Training/Teaching</option><option value="46">Electricals/Switchgears</option><option value="18">Employment Firms/Recruitment Services Firms</option><option value="19">Entertainment/Media/Publishing/Dotcom</option><option value="20">Export Houses/Textiles/Merchandise</option><option value="48">FacilityManagement</option><option value="49">Fertilizers/Pesticides</option><option value="50">FoodProcessing</option><option value="21">Gems and Jewellery</option><option value="51">Glass</option><option value="45">Government/Defence</option><option value="23">Healthcare/Medicine</option><option value="52">HeatVentilation/AirConditioning</option><option value="24">Insurance</option><option value="53">KPO/Research/Analytics</option><option value="25">Law/Legal Firms</option><option value="26">Machinery/Equipment Manufacturing/Industrial Products</option><option value="54">Mining</option><option value="27">NGO/Social Services</option><option value="28">Office Automation</option><option value="37">Others/Engg. Services/Service Providers</option><option value="29">Petroleum/Oil and Gas/Projects/Infrastructure/Power/Non-conventional Energy</option><option value="30">Printing/Packaging</option><option value="55">Publishing</option><option value="31">Real Estate</option><option value="32">Retailing</option><option value="33">Security/Law Enforcement</option><option value="38">Shipping/Marine</option><option value="34">Software Services</option><option value="56">Steel</option><option value="57">Strategy/ManagementConsultingFirms</option><option value="35">Telecom Equipment/Electronics/Electronic Devices/RF/Mobile Network/Semi-conductor</option><option value="36">Telecom/ISP</option><option value="58">Tyres</option><option value="59">WaterTreatment/WasteManagement</option><option value="60">Wellness/Fitness/Sports</option>
-                </select>
+								<select name="AllUser[IndustryId]" class="form-control bfh-states">
+                    
+										<option selected="selected" value="-1">- Select an Industry -</option>
+								</select>
+             
 								</div>
 							</div>
 						</div>
@@ -77,7 +77,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+									<input type="text" class="form-control" name="AllUser[Email]" id="Email"  placeholder="Enter your Email"/>
 								</div>
 							</div>
 						</div>
@@ -88,8 +88,8 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Address 1"/>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Address 2"/>
+									<input type="text" class="form-control" name="AllUser[Address]" id="Address"  placeholder="Address"/>
+									
 								</div>
 							</div>
 						</div> 
@@ -99,12 +99,12 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Mobile No"/>
+									<input type="text" class="form-control" name="AllUser[MobileNo]" id="MobileNo"  placeholder="Mobile No"/>
 								</div>
 							</div>
 						</div> 
 						
-						<div class="form-group">
+						<!--<div class="form-group">
 							<label for="email" class="cols-sm-2 control-label">  Contact No</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
@@ -113,14 +113,14 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 									
 								</div>
 							</div>
-						</div> 
+						</div> -->
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Password</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+									<input type="password" class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password"/>
 								</div>
 							</div>
 						</div>
@@ -137,10 +137,10 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 						</div>
 						
 						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label">Country  </label>
+							<label for="confirm" class="cols-sm-2 control-label"> Country  </label>
 							<div class="cols-sm-12">
 								<div class="input-group full">
-									<select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"  id="countryId">
+									<select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Country]"  id="countryId">
 										<option value="">Select Country</option>
 										</select>
 								</div>
@@ -151,7 +151,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="confirm" class="cols-sm-2 control-label">Select State  </label>
 							<div class="cols-sm-12">
 								<div class="input-group full">
-									 <select class="questions-category states form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"  id="stateId">
+									 <select class="questions-category states form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[State]"  id="stateId">
 											<option value="">Select State  </option>
 										</select>
 								</div>
@@ -163,7 +163,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="confirm" class="cols-sm-2 control-label">  City  </label>
 						 
 								<div class="input-group full">
-									 <select class="questions-category cities form-control select2-hidden-accessible"  name="city" tabindex="-1" aria-hidden="true"  id="cityId">
+									 <select class="questions-category cities form-control select2-hidden-accessible"  name="AllUser[City]" tabindex="-1" aria-hidden="true"  id="cityId">
 														<option value="">Select City  </option>
 										</select>
 								 
@@ -177,23 +177,23 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Pincode"/>
+									<input type="password" class="form-control" name="AllUser[Pincode]" id="Pincode"  placeholder="Pincode"/>
 								</div>
 							</div>
 						</div>
 						
 						
 						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label">Description  </label>
+							<label for="confirm" class="cols-sm-2 control-label">Description </label>
 							<div class="cols-sm-10">
 								<div class="input-group full">
-									<textarea class="form-control textarea"></textarea></div>
+									<textarea name="AllUser[CompanyDesc]" class="form-control textarea"></textarea></div>
 							</div>
 						</div>
 						 
 						 
 						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label"><input type="checkbox" id="check_box" class="" >  </label>
+							<label for="confirm" class="cols-sm-2 control-label"><input type="checkbox" id="agreed"  >  </label>
 							<div class="cols-sm-10 info">
 									I agreed to the Terms and Conditions  
 							</div>
@@ -201,7 +201,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 						
 						
 						<div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+							<input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Register" >
 						</div>
 						 
 					<?php ActiveForm::end(); ?>
