@@ -1,0 +1,26 @@
+/*
+ 
+Description:
+Version:
+Author:
+Template URI:
+Template URI:
+License URI:
+Tags:
+*/
+
+/*--------------------------------------------------------------------------------*/
+/*	Default Element Styling */
+/*--------------------------------------------------------------------------------*/
+ @media only screen and (min-width: 768px) and (max-width: 979px) {
+	 
+	 .menu_humb {    display: block; margin:23px 0 0 0;}
+	 .top-main a img{margin:13px auto 0; display:block;}
+	 .rt_flt{float:right}
+ }
+ 
+ 
+ 
+.btn-primary.after_login_image{background:none; border:0px;     border-radius: 0px;     padding: 0;}
+ img.after_login_profile_photo{width: 100%;  border-radius: 5px;} 
+ .fa-bell.mbl{font-size:16px;}

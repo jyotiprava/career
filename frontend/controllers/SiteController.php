@@ -12,7 +12,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use common\models\AllUser;
+use yii\heleprs\Url;
 /**
  * Site controller
  */
@@ -29,7 +30,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup','index','jobseach','employersregister'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -80,7 +81,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogin()
+  /*  public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -94,7 +95,7 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
-    }
+    }*/
 
     /**
      * Logs out the current user.
@@ -210,4 +211,86 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    // ------------------- ALL USER(Employers) Start -------------------//
+     public function actionEmployerslogin()
+    {
+        $this->layout='layout';
+        $model=new AllUser();
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->save();
+            //return $this->render('employerslogin',['model'=>$model,]);
+        }else{            
+            return $this->render('employerslogin', ['model' => $model,]);
+        }
+        
+    }
+    
+     public function actionEmployersregister()
+    {
+        $this->layout='layout';
+        return $this->render('employersregister');
+    }
+    
+    // ------------------- ALL USER(Employers) End -------------------//
+    public function actionJobsearch()
+    {
+        $this->layout='layout';
+        return $this->render('jobsearch');
+    }
+    
+    public function actionHirecandidate()
+    {
+        $this->layout='layout';
+        return $this->render('hirecandidate');
+    }
+    
+    public function actionJobseekersregister()
+    {
+        $this->layout='layout';
+        return $this->render('jobseekersregister');
+    }
+    
+    
+   
+    
+    public function actionLogin()
+    {
+        //$this->layout='layout';
+        return $this->render('login');
+    }
+    
+   
+    
+    public function actionEmployeeforgetpassword()
+    {
+        $this->layout='layout';
+        return $this->render('employeeforgetpassword');
+    }
+    
+    public function actionForgetpassword()
+    {
+        $this->layout='layout';
+        return $this->render('forgetpassword');
+    }
+    
+    public function actionRegister()
+    {
+        $this->layout='layout';
+        return $this->render('register');
+    }
+    
+    public function actionSearchcandidate()
+    {
+        $this->layout='layout';
+        return $this->render('searchcandidate');
+    }
+        
+     public function actionPostajob()
+    {
+        $this->layout='layout';
+        return $this->render('postajob');
+    }
+    
+    
 }
