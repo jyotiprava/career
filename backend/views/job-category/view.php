@@ -1,0 +1,39 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\DetailView;
+
+/* @var $this yii\web\View */
+/* @var $model common\models\JobCategory */
+
+$this->title = $model->JobCategoryId;
+$this->params['breadcrumbs'][] = ['label' => 'Job Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="job-category-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Update', ['update', 'id' => $model->JobCategoryId], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->JobCategoryId], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'JobCategoryId',
+            'CategoryName',
+            'IsDelete',
+            'OnDate',
+            'UpdatedDate',
+        ],
+    ]) ?>
+
+</div>

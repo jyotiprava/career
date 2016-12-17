@@ -4,20 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\SkillSearch */
+/* @var $searchModel common\models\JobCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Skills';
+$this->title = 'Job Categories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="panel panel-flat">
-    <div class="panel-body">
-<div class="skill-index">
- <legend class="text-bold"><?= Html::encode($this->title) ?></legend>
+<div class="job-category-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Skill', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Job Category', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,15 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-           // 'SkillId',
-            'Skill',
-            //'IsDelete',
+            'JobCategoryId',
+            'CategoryName',
+            'IsDelete',
             'OnDate',
-          //  'UpdatedDate',
+            'UpdatedDate',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-</div>
-    </div>
 </div>

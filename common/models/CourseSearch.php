@@ -60,7 +60,7 @@ class CourseSearch extends Course
         // grid filtering conditions
         $query->andFilterWhere([
             'CourseId' => $this->CourseId,
-            'IsDelete' => $this->IsDelete,
+            'IsDelete' => 0,
             'OnDate' => $this->OnDate,
             'UpdatedDate' => $this->UpdatedDate,
         ]);
