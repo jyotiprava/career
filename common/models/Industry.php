@@ -31,7 +31,7 @@ class Industry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['IndustryName', 'IsDelete', 'OnDate'], 'required'],
+            [['IndustryName','OnDate'], 'required'],
             [['IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['IndustryName'], 'string', 'max' => 200],

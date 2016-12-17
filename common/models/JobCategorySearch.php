@@ -60,7 +60,7 @@ class JobCategorySearch extends JobCategory
         // grid filtering conditions
         $query->andFilterWhere([
             'JobCategoryId' => $this->JobCategoryId,
-            'IsDelete' => $this->IsDelete,
+            'IsDelete' => 0,
             'OnDate' => $this->OnDate,
             'UpdatedDate' => $this->UpdatedDate,
         ]);

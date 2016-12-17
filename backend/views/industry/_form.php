@@ -12,16 +12,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'IndustryName')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'IsDelete')->textInput() ?>
-
-    <?= $form->field($model, 'OnDate')->textInput() ?>
-
-    <?= $form->field($model, 'UpdatedDate')->textInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<label class="control-label col-lg-2">Industry Name</label>
+		<div class="col-lg-10">
+            <?= $form->field($model, 'IndustryName')->textInput(['maxlength' => true])->label(false) ?>
+		</div>
+	</div>
+   
+<div class="form-group">
+        <label class="control-label col-lg-2">&nbsp;</label>
+        <div class="col-lg-10">
+        <?= Html::submitButton($model->isNewRecord ? 'Create <i class="icon-arrow-right14 position-right"></i>' : 'Update <i class="icon-arrow-right14 position-right"></i>', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

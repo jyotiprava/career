@@ -10,12 +10,14 @@ $this->title = 'Create Job Category';
 $this->params['breadcrumbs'][] = ['label' => 'Job Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="panel panel-flat">
+    <div class="panel-body">
 <div class="job-category-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<legend class="text-bold"><?= Html::encode($this->title) ?></legend>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 
+</div>
+    </div>
 </div>

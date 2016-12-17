@@ -60,7 +60,7 @@ class IndustrySearch extends Industry
         // grid filtering conditions
         $query->andFilterWhere([
             'IndustryId' => $this->IndustryId,
-            'IsDelete' => $this->IsDelete,
+            'IsDelete' => 0,
             'OnDate' => $this->OnDate,
             'UpdatedDate' => $this->UpdatedDate,
         ]);

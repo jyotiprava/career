@@ -65,8 +65,10 @@ class JobCategoryController extends Controller
     {
         $model = new JobCategory();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->JobCategoryId]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->OnDate=date('Y-m-d');
+            $model->save();
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +87,7 @@ class JobCategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->JobCategoryId]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

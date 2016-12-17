@@ -29,7 +29,7 @@ class JobCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CategoryName', 'IsDelete', 'OnDate'], 'required'],
+            [['CategoryName','OnDate'], 'required'],
             [['IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['CategoryName'], 'string', 'max' => 150],

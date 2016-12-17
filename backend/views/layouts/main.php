@@ -153,47 +153,17 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 									</ul>
 								</li>
 								<li>
-									<a href="#" class="has-ul"><i class="icon-droplet2"></i> <span>Color system</span></a>
+									<a href="#" class="has-ul"><i class="icon-droplet2"></i> <span>Industry</span></a>
 									<ul class="hidden-ul">
-										<li><a href="colors_primary.html">Primary palette</a></li>
-										<li><a href="colors_danger.html">Danger palette</a></li>
-										<li><a href="colors_success.html">Success palette</a></li>
-										<li><a href="colors_warning.html">Warning palette</a></li>
-										<li><a href="colors_info.html">Info palette</a></li>
-										<li class="navigation-divider"></li>
-										<li><a href="colors_pink.html">Pink palette</a></li>
-										<li><a href="colors_violet.html">Violet palette</a></li>
-										<li><a href="colors_purple.html">Purple palette</a></li>
-										<li><a href="colors_indigo.html">Indigo palette</a></li>
-										<li><a href="colors_blue.html">Blue palette</a></li>
-										<li><a href="colors_teal.html">Teal palette</a></li>
-										<li><a href="colors_green.html">Green palette</a></li>
-										<li><a href="colors_orange.html">Orange palette</a></li>
-										<li><a href="colors_brown.html">Brown palette</a></li>
-										<li><a href="colors_grey.html">Grey palette</a></li>
-										<li><a href="colors_slate.html">Slate palette</a></li>
+										<li><a href="<?=Url::to(['industry/create'])?>">Add</a></li>
+										<li><a href="<?=Url::to(['industry/index'])?>">View</a></li>
 									</ul>
 								</li>
 								<li>
-									<a href="#" class="has-ul"><i class="icon-stack"></i> <span>Starter kit</span></a>
+									<a href="#" class="has-ul"><i class="icon-stack"></i> <span>Job Category</span></a>
 									<ul class="hidden-ul">
-										<li><a href="starters/horizontal_nav.html">Horizontal navigation</a></li>
-										<li><a href="starters/1_col.html">1 column</a></li>
-										<li><a href="starters/2_col.html">2 columns</a></li>
-										<li>
-											<a href="#" class="has-ul">3 columns</a>
-											<ul class="hidden-ul">
-												<li><a href="starters/3_col_dual.html">Dual sidebars</a></li>
-												<li><a href="starters/3_col_double.html">Double sidebars</a></li>
-											</ul>
-										</li>
-										<li><a href="starters/4_col.html">4 columns</a></li>
-										<li><a href="starters/layout_boxed.html">Boxed layout</a></li>
-										<li class="navigation-divider"></li>
-										<li><a href="starters/layout_navbar_fixed_main.html">Fixed main navbar</a></li>
-										<li><a href="starters/layout_navbar_fixed_secondary.html">Fixed secondary navbar</a></li>
-										<li><a href="starters/layout_navbar_fixed_both.html">Both navbars fixed</a></li>
-										<li><a href="starters/layout_sidebar_sticky.html">Sticky sidebar</a></li>
+										<li><a href="<?=Url::to(['job-category/create']);?>">Add</a></li>
+										<li><a href="<?=Url::to(['job-category/index']);?>">View</a></li>
 									</ul>
 								</li>
 								
