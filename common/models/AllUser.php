@@ -53,18 +53,19 @@ class AllUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserTypeId', 'EntryType', 'Name', 'Email', 'MobileNo', 'Address', 'Country', 'State', 'City', 'PinCode', 'Password', 'CVId', 'CompanyDesc', 'IndustryId', 'PhotoId', 'IsDelete', 'Ondate'], 'required'],
-            [['UserTypeId', 'CVId', 'IndustryId', 'PhotoId', 'IsDelete'], 'integer'],
+            [['UserTypeId','Name', 'Email', 'MobileNo', 'Address', 'Country', 'State', 'City', 'PinCode', 'Password', 'IndustryId'], 'required'],
+            [['UserTypeId', 'CVId', 'IndustryId', 'PhotoId', 'IsDelete','VerifyStatus'], 'integer'],
             [['CompanyDesc'], 'string'],
             [['Ondate', 'UpdatedDate'], 'safe'],
             [['EntryType', 'Country', 'State', 'City'], 'string', 'max' => 100],
-            [['Name', 'Email', 'Address'], 'string', 'max' => 200],
+            [['Name', 'Email'], 'string', 'max' => 200],
             [['MobileNo'], 'string', 'max' => 12],
             [['PinCode'], 'string', 'max' => 6],
             [['Password'], 'string', 'max' => 150],
-            [['CVId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['CVId' => 'DocId']],
+            [['VerifyKey'], 'string', 'max' => 400],
+           // [['CVId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['CVId' => 'DocId']],
             [['IndustryId'], 'exist', 'skipOnError' => true, 'targetClass' => Industry::className(), 'targetAttribute' => ['IndustryId' => 'IndustryId']],
-            [['PhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['PhotoId' => 'DocId']],
+           // [['PhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['PhotoId' => 'DocId']],
             [['UserTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => UserType::className(), 'targetAttribute' => ['UserTypeId' => 'TypeId']],
         ];
     }

@@ -48,13 +48,14 @@ class ContactForm extends Model
      * @param string $email the target email address
      * @return boolean whether the email was sent
      */
-    public function sendEmail($email)
+     public function sendEmail($to,$from,$html,$subject)
     {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
+        $sendGrid = Yii::$app->sendGrid;
+        $message = $sendGrid->compose();
+        $message->setFrom($from)
+        ->setTo($to)
+        ->setSubject($subject)
+        ->setHtmlBody($html)
+        ->send($sendGrid);
     }
 }

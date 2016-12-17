@@ -13,7 +13,11 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\AllUser;
+use common\models\Industry;
+use common\models\UserType;
+use common\models\Documents;
 use yii\heleprs\Url;
+use yii\helpers\ArrayHelper;
 /**
  * Site controller
  */
@@ -212,27 +216,103 @@ class SiteController extends Controller
         ]);
     }
     // ------------------- ALL USER(Employers) Start -------------------//
-     public function actionEmployerslogin()
+    public function actionEmployerslogin()
     {
-        $this->layout='layout';
+        $this->layout='layout';        
         $model=new AllUser();
-        if ($model->load(Yii::$app->request->post()))
-        {
-            $model->save();
-            //return $this->render('employerslogin',['model'=>$model,]);
-        }else{            
+        if ($model->load(Yii::$app->request->post())) {
+            $password=md5($model->Password);
+            $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'IsDelete'=>0])->count();
+            if($cnt>0)
+            {
+                $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'IsDelete'=>0])->one();
+                $session = Yii::$app->session;
+                $session->open();
+                Yii::$app->session['Employerid']=$rest->AllUserId;
+                Yii::$app->session['EmployerName']=$rest->Name;
+                Yii::$app->session['EmployerEmail']=$model->Email;
+                return $this->render('index'); 
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "Wrong Email Or Password");
+                return $this->render('employerslogin', ['model' => $model,]);
+            }
+        } else {
             return $this->render('employerslogin', ['model' => $model,]);
         }
-        
     }
     
      public function actionEmployersregister()
     {
         $this->layout='layout';
-        return $this->render('employersregister');
+       
+        $model=new AllUser();
+        $allindustry= ArrayHelper::map(Industry::find()->where(['IsDelete'=>0])->all(),'IndustryId','IndustryName');
+        
+        if ($model->load(Yii::$app->request->post()))
+        {
+            //var_dump(Yii::$app->request->post());
+            echo $model->UserTypeId;
+            $model->Password=md5($model->Password);
+            $vkey='CB'.time();
+            $model->VerifyKey=$vkey;
+            $model->save();
+            
+            var_dump($model->getErrors());
+            
+                $to=$model->Email;
+                $from='Careerbugs@info.in';
+                $subject="Verify your email id";
+                
+               $html= "<html>
+               <head>
+               <title>Verify your email id</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/jyoti/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:200px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/jyoti/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+                 <h3> Dear  $model->Name, </h3>
+                Just click the button below (it only takes a couple of seconds). You won’t be asked to log in as its simply a verification of the ownership of this email address.
+               <br/>
+               </span>
+               </h2>
+               </td>
+               </tr>
+               <tr>
+                <td><a href='http://45.58.34.139/jyoti/frontend/web/index.php/site/employersverifryemail?vkey=$vkey'>
+               <span style='display: block;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Verify Email</span>
+               </a></td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+               $mail= new ContactForm();
+              // $mail->sendEmail($to,$from,$html,$subject);
+               Yii::$app->session->setFlash('success', 'Check your email for EmailId Verification.');
+            
+           // return $this->render('index');
+        }else{            
+            return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
+        }
     }
-    
+    public function actionemployersverifryemail($vkey)
+    {
+        $this->layout='layout';
+        return $this->render('employerslogin');
+    }
     // ------------------- ALL USER(Employers) End -------------------//
+    
     public function actionJobsearch()
     {
         $this->layout='layout';

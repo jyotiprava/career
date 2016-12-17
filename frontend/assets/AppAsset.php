@@ -42,6 +42,7 @@ class AppAsset extends AssetBundle
         'js/jquery.slider.js',
         
         'js/main.js',
+        'js/validate.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

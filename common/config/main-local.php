@@ -16,5 +16,11 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'sendGrid' => [
+           'class' => 'bryglen\sendgrid\Mailer',
+           'username' => 'kriti_swagatika',
+           'password' => 'kriti@2705',
+           ////'viewPath' => '@app/views/mail', // your view path here
+           ],
     ],
 ];
