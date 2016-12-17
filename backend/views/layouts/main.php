@@ -59,7 +59,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
 						<img src="bassets/images/demo/users/face11.jpg" alt="">
-						<span>Victoria</span>
+						<span><?=Yii::$app->user->identity->Name;?></span>
 						<i class="caret"></i>
 					</a>
 
@@ -82,7 +82,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 	<div class="page-header">
 		<div class="breadcrumb-line">
 			<ul class="breadcrumb">
-				<li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+				<li><a href="#"><i class="icon-home2 position-left"></i> Home</a></li>
 				<li class="active">Dashboard</li>
 			</ul>
  
@@ -116,7 +116,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 							<div class="media">
 								<a href="#" class="media-left"><img src="bassets/images/demo/users/face11.jpg" class="img-circle img-sm" alt=""></a>
 								<div class="media-body">
-									<span class="media-heading text-semibold">Victoria Baker</span>
+									<span class="media-heading text-semibold"><?=Yii::$app->user->identity->Name;?></span>
 									<div class="text-size-mini text-muted">
 										<i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
 									</div>
@@ -139,30 +139,17 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="" data-original-title="Main pages"></i></li>
 								<li><a href="index.html"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 								<li>
-									<a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Page layouts</span></a>
+									<a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Course</span></a>
 									<ul class="hidden-ul">
-										<li><a href="layout_navbar_main_fixed.html">Fixed main navbar</a></li>
-										<li><a href="layout_navbar_secondary_fixed.html">Fixed secondary navbar</a></li>
-										<li><a href="layout_navbar_main_hideable.html">Hideable main navbar</a></li>
-										<li><a href="layout_navbar_secondary_hideable.html">Hideable secondary navbar</a></li>
-										<li><a href="layout_sidebar_sticky_custom.html">Sticky sidebar (custom scroll)</a></li>
-										<li><a href="layout_sidebar_sticky_native.html">Sticky sidebar (native scroll)</a></li>
-										<li><a href="layout_footer_fixed.html">Fixed footer</a></li>
-										<li class="navigation-divider"></li>
-										<li><a href="boxed_default.html">Boxed with default sidebar</a></li>
-										<li><a href="boxed_mini.html">Boxed with mini sidebar</a></li>
-										<li><a href="boxed_full.html">Boxed full width</a></li>
+										<li><a href="<?=Url::to(['course/create'])?>">Add</a></li>
+										<li><a href="<?=Url::to(['course/index'])?>">View</a></li>
 									</ul>
 								</li>
 								<li>
-									<a href="#" class="has-ul"><i class="icon-copy"></i> <span>Layouts</span></a>
+									<a href="#" class="has-ul"><i class="icon-copy"></i> <span>Skill</span></a>
 									<ul class="hidden-ul">
-										<li><a href="http://demo.interface.club/limitless/layout_1/LTR/default/index.html" id="layout1">Layout 1</a></li>
-										<li><a href="http://demo.interface.club/limitless/layout_2/LTR/default/index.html" id="layout2">Layout 2</a></li>
-										<li><a href="index.html" id="layout3">Layout 3 <span class="label bg-warning-400">Current</span></a></li>
-										<li><a href="http://demo.interface.club/limitless/layout_4/LTR/default/index.html" id="layout4">Layout 4</a></li>
-										<li><a href="http://demo.interface.club/limitless/layout_5/LTR/default/index.html" id="layout5">Layout 5</a></li>
-										<li class="disabled"><a href="http://demo.interface.club/limitless/layout_6/LTR/default/index.html" id="layout6">Layout 6 <span class="label label-transparent">Coming soon</span></a></li>
+										<li><a href="<?=Url::to(['skill/create'])?>" id="layout1">Add</a></li>
+										<li><a href="<?=Url::to(['skill/index'])?>" id="layout1">View</a></li>
 									</ul>
 								</li>
 								<li>

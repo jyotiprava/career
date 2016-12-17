@@ -10,9 +10,11 @@ use yii\grid\GridView;
 $this->title = 'Courses';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="panel panel-flat">
+    <div class="panel-body">
 <div class="course-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <legend class="text-bold"><?= Html::encode($this->title) ?></legend>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -24,13 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'CourseId',
+           // 'CourseId',
             'CourseName',
-            'IsDelete',
+           // 'IsDelete',
             'OnDate',
-            'UpdatedDate',
+           // 'UpdatedDate',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+</div>
+    </div>
 </div>

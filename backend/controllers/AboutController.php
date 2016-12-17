@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Skill;
-use common\models\SkillSearch;
+use common\models\About;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SkillController implements the CRUD actions for Skill model.
+ * AboutController implements the CRUD actions for About model.
  */
-class SkillController extends Controller
+class AboutController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,22 +30,22 @@ class SkillController extends Controller
     }
 
     /**
-     * Lists all Skill models.
+     * Lists all About models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SkillSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => About::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Skill model.
+     * Displays a single About model.
      * @param integer $id
      * @return mixed
      */
@@ -57,18 +57,16 @@ class SkillController extends Controller
     }
 
     /**
-     * Creates a new Skill model.
+     * Creates a new About model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Skill();
+        $model = new About();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->OnDate=date('Y-m-d');
-            $model->save();
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->AboutId]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -77,7 +75,7 @@ class SkillController extends Controller
     }
 
     /**
-     * Updates an existing Skill model.
+     * Updates an existing About model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,7 +85,7 @@ class SkillController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->AboutId]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -96,30 +94,28 @@ class SkillController extends Controller
     }
 
     /**
-     * Deletes an existing Skill model.
+     * Deletes an existing About model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $model=$this->findModel($id);
-        $model->IsDelete=1;
-        $model->save();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Skill model based on its primary key value.
+     * Finds the About model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Skill the loaded model
+     * @return About the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Skill::findOne($id)) !== null) {
+        if (($model = About::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

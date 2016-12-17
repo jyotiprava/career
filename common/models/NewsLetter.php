@@ -5,24 +5,22 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "Course".
+ * This is the model class for table "NewsLetter".
  *
- * @property integer $CourseId
- * @property string $CourseName
+ * @property integer $NewsLetterId
+ * @property string $Email
  * @property integer $IsDelete
  * @property string $OnDate
  * @property string $UpdatedDate
- *
- * @property Education[] $educations
  */
-class Course extends \yii\db\ActiveRecord
+class NewsLetter extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'Course';
+        return 'NewsLetter';
     }
 
     /**
@@ -31,10 +29,10 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CourseName', 'OnDate'], 'required'],
+            [['Email', 'IsDelete', 'OnDate'], 'required'],
             [['IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
-            [['CourseName'], 'string', 'max' => 150],
+            [['Email'], 'string', 'max' => 150],
         ];
     }
 
@@ -44,19 +42,11 @@ class Course extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'CourseId' => 'Course ID',
-            'CourseName' => 'Course Name',
+            'NewsLetterId' => 'News Letter ID',
+            'Email' => 'Email',
             'IsDelete' => 'Is Delete',
-            'OnDate' => 'Added On',
+            'OnDate' => 'On Date',
             'UpdatedDate' => 'Updated Date',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEducations()
-    {
-        return $this->hasMany(Education::className(), ['CourseId' => 'CourseId']);
     }
 }

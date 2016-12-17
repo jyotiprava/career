@@ -65,8 +65,10 @@ class CourseController extends Controller
     {
         $model = new Course();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->CourseId]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->OnDate=date('Y-m-d');
+            $model->save();
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +87,7 @@ class CourseController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->CourseId]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,7 +103,9 @@ class CourseController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model=$this->findModel($id);
+        $model->IsDelete=1;
+        $model->save();
 
         return $this->redirect(['index']);
     }

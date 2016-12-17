@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Skill;
+use common\models\JobCategory;
 
 /**
- * SkillSearch represents the model behind the search form about `common\models\Skill`.
+ * JobCategorySearch represents the model behind the search form about `common\models\JobCategory`.
  */
-class SkillSearch extends Skill
+class JobCategorySearch extends JobCategory
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SkillSearch extends Skill
     public function rules()
     {
         return [
-            [['SkillId', 'IsDelete'], 'integer'],
-            [['Skill', 'OnDate', 'UpdatedDate'], 'safe'],
+            [['JobCategoryId', 'IsDelete'], 'integer'],
+            [['CategoryName', 'OnDate', 'UpdatedDate'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SkillSearch extends Skill
      */
     public function search($params)
     {
-        $query = Skill::find();
+        $query = JobCategory::find();
 
         // add conditions that should always apply here
 
@@ -59,13 +59,13 @@ class SkillSearch extends Skill
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'SkillId' => $this->SkillId,
-            'IsDelete' => 0,
+            'JobCategoryId' => $this->JobCategoryId,
+            'IsDelete' => $this->IsDelete,
             'OnDate' => $this->OnDate,
             'UpdatedDate' => $this->UpdatedDate,
         ]);
 
-        $query->andFilterWhere(['like', 'Skill', $this->Skill]);
+        $query->andFilterWhere(['like', 'CategoryName', $this->CategoryName]);
 
         return $dataProvider;
     }

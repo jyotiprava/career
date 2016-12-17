@@ -5,24 +5,24 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "Course".
+ * This is the model class for table "Position".
  *
- * @property integer $CourseId
- * @property string $CourseName
+ * @property integer $PositionId
+ * @property string $Position
  * @property integer $IsDelete
  * @property string $OnDate
  * @property string $UpdatedDate
  *
- * @property Education[] $educations
+ * @property Experience[] $experiences
  */
-class Course extends \yii\db\ActiveRecord
+class Position extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'Course';
+        return 'Position';
     }
 
     /**
@@ -31,10 +31,10 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CourseName', 'OnDate'], 'required'],
+            [['Position', 'IsDelete', 'OnDate'], 'required'],
             [['IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
-            [['CourseName'], 'string', 'max' => 150],
+            [['Position'], 'string', 'max' => 200],
         ];
     }
 
@@ -44,10 +44,10 @@ class Course extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'CourseId' => 'Course ID',
-            'CourseName' => 'Course Name',
+            'PositionId' => 'Position ID',
+            'Position' => 'Position',
             'IsDelete' => 'Is Delete',
-            'OnDate' => 'Added On',
+            'OnDate' => 'On Date',
             'UpdatedDate' => 'Updated Date',
         ];
     }
@@ -55,8 +55,8 @@ class Course extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEducations()
+    public function getExperiences()
     {
-        return $this->hasMany(Education::className(), ['CourseId' => 'CourseId']);
+        return $this->hasMany(Experience::className(), ['PositionId' => 'PositionId']);
     }
 }

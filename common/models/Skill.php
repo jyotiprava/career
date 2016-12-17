@@ -32,7 +32,7 @@ class Skill extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Skill', 'IsDelete', 'OnDate'], 'required'],
+            [['Skill', 'OnDate'], 'required'],
             [['IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['Skill'], 'string', 'max' => 200],

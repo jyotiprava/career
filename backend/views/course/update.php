@@ -10,12 +10,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Courses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->CourseId, 'url' => ['view', 'id' => $model->CourseId]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
+<div class="panel panel-flat">
+    <div class="panel-body">
 <div class="course-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<legend class="text-bold"><?= Html::encode($this->title) ?></legend>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 
+</div>
+    </div>
 </div>
