@@ -27,6 +27,10 @@ class ComposerStaticInit0d1d3c13f80202964b8b82ff7f2fb863
         array (
             'cebe\\markdown\\' => 14,
         ),
+        'b' => 
+        array (
+            'bryglen\\sendgrid\\' => 17,
+        ),
         'F' => 
         array (
             'Faker\\' => 6,
@@ -70,6 +74,10 @@ class ComposerStaticInit0d1d3c13f80202964b8b82ff7f2fb863
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
         ),
+        'bryglen\\sendgrid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bryglen/yii2-sendgrid',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
@@ -77,6 +85,17 @@ class ComposerStaticInit0d1d3c13f80202964b8b82ff7f2fb863
     );
 
     public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'Smtpapi' => 
+            array (
+                0 => __DIR__ . '/..' . '/sendgrid/smtpapi/lib',
+            ),
+            'SendGrid' => 
+            array (
+                0 => __DIR__ . '/..' . '/sendgrid/sendgrid/lib',
+            ),
+        ),
         'H' => 
         array (
             'HTMLPurifier' => 

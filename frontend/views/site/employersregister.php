@@ -32,16 +32,12 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">  
 									  <div class="radio float-left-widtth3">
-										<label>
-										  <input type="radio" selected value="2" name="AllUser[UserTypeId]" required="">
+										  <input type="radio" value="Company" name="AllUser[EntryType]" checked>
 										  Company
-										</label>
 									  </div>
 									  <div class="radio float-left-widtth3">
-										<label>
-										  <input type="radio" value="3" name="AllUser[UserTypeId]" required="">
+										  <input type="radio" value="Consultancy" name="AllUser[EntryType]">
 										   Consultancy
-										</label>
 									  </div> 
 								</div>
 							</div>
@@ -53,7 +49,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[Name]" id="Name"  placeholder="Company Name"/>
+									<input type="text" class="form-control" name="AllUser[Name]" id="Name" required placeholder="Company Name"/>
 								</div>
 							</div>
 						</div>
@@ -61,9 +57,12 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="name" class="cols-sm-2 control-label"> Company Type  </label>
 							<div class="cols-sm-10">
 								<div class="input-group full">
-								<select name="AllUser[IndustryId]" class="form-control bfh-states">
+								<select name="AllUser[IndustryId]" required class="form-control bfh-states">
                     
-										<option selected="selected" value="-1">- Select an Industry -</option>
+										<option selected="selected" value="">- Select an Industry -</option>
+										<?php foreach($industry as $key=>$value){?>
+										<option value="<?php echo $key;?>"><?=$value;?></option>
+										<?php } ?>
 								</select>
              
 								</div>
@@ -77,7 +76,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[Email]" id="Email"  placeholder="Enter your Email"/>
+									<input type="email" class="form-control" required name="AllUser[Email]" id="Email"  placeholder="Enter your Email"/>
 								</div>
 							</div>
 						</div>
@@ -88,7 +87,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[Address]" id="Address"  placeholder="Address"/>
+									<input type="text" class="form-control" required name="AllUser[Address]" id="Address"  placeholder="Address"/>
 									
 								</div>
 							</div>
@@ -99,28 +98,18 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[MobileNo]" id="MobileNo"  placeholder="Mobile No"/>
+									<input type="text" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" class="form-control" required name="AllUser[MobileNo]" id="MobileNo"  placeholder="Mobile No" maxlength="10"/>
 								</div>
 							</div>
 						</div> 
 						
-						<!--<div class="form-group">
-							<label for="email" class="cols-sm-2 control-label">  Contact No</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Contact Nos"/>
-									
-								</div>
-							</div>
-						</div> -->
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Password</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password"/>
+									<input type="password" required class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password"/>
 								</div>
 							</div>
 						</div>
@@ -131,7 +120,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+									<input type="password" required class="form-control" onblur="return ConfirmPassword(this.value);" name="confirm" id="confirmpassword"  placeholder="Confirm your Password"/>
 								</div>
 							</div>
 						</div>
@@ -140,8 +129,9 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="confirm" class="cols-sm-2 control-label"> Country  </label>
 							<div class="cols-sm-12">
 								<div class="input-group full">
-									<select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Country]"  id="countryId">
+									<select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Country]" required id="countryId">
 										<option value="">Select Country</option>
+										<option value="India" countryid="101">India</option>
 										</select>
 								</div>
 							</div>
@@ -151,7 +141,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="confirm" class="cols-sm-2 control-label">Select State  </label>
 							<div class="cols-sm-12">
 								<div class="input-group full">
-									 <select class="questions-category states form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[State]"  id="stateId">
+									 <select class="questions-category states form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[State]" required id="stateId">
 											<option value="">Select State  </option>
 										</select>
 								</div>
@@ -163,7 +153,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="confirm" class="cols-sm-2 control-label">  City  </label>
 						 
 								<div class="input-group full">
-									 <select class="questions-category cities form-control select2-hidden-accessible"  name="AllUser[City]" tabindex="-1" aria-hidden="true"  id="cityId">
+									 <select class="questions-category cities form-control select2-hidden-accessible"  name="AllUser[City]" tabindex="-1" aria-hidden="true" required id="cityId">
 														<option value="">Select City  </option>
 										</select>
 								 
@@ -177,7 +167,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="AllUser[Pincode]" id="Pincode"  placeholder="Pincode"/>
+									<input type="text" class="form-control" onkeypress="return numbersonly(event)" name="AllUser[PinCode]" id="Pincode" required  placeholder="Pincode"/>
 								</div>
 							</div>
 						</div>
@@ -193,7 +183,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 						 
 						 
 						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label"><input type="checkbox" id="agreed"  >  </label>
+							<label for="confirm" class="cols-sm-2 control-label"><input type="checkbox" required id="agreed"  >  </label>
 							<div class="cols-sm-10 info">
 									I agreed to the Terms and Conditions  
 							</div>

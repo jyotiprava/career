@@ -57,4 +57,13 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
+  'bryglen/yii2-sendgrid' => 
+  array (
+    'name' => 'bryglen/yii2-sendgrid',
+    'version' => '1.1.2.0',
+    'alias' => 
+    array (
+      '@bryglen/sendgrid' => $vendorDir . '/bryglen/yii2-sendgrid',
+    ),
+  ),
 );

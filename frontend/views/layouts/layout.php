@@ -261,19 +261,6 @@ AppAsset::register($this);
          </div>
 			<div class="container"><!-- container -->
 			  <div class="row"> 
-					<div class="col-lg-8  col-md-8 col-sm-8 col-xs-12 main-nav"><!-- Main Navigation --> 
-					              <div class="navbar navbar-default " role="navigation"> 
-								   <div class="collapse navbar-collapse"> 
-									 <ul class="nav navbar-nav float-left">
-										<li><a href="#">Dashboard</a></li>   
-										<li><a href="post_a_job.html" > Bookmark Jobs  </a></li>   
-										  <li><a href="post_a_job.html" > Applied Job  <span class="total">3</span></a></li>  
-											</ul>
-									</div><!--/.nav-collapse --> 
-								   </div>
-								   
-									<div  class="clear"></div>
-								</div><!-- Main Navigation -->
 					  <div class="col-lg-8  col-md-7 col-sm-7 col-xs-12 main-nav"><!-- Main Navigation --> 
 					   <div class="navbar navbar-default " role="navigation"> 
                        <div class="collapse navbar-collapse"> 
@@ -317,6 +304,7 @@ AppAsset::register($this);
  
  
 <!---------------------- Container Start ------------------------>
+<?= Alert::widget() ?>
         <?= $content ?>
 <!---------------------- Container End ------------------------>
 

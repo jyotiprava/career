@@ -1,7 +1,11 @@
 <?php
+$this->title = 'Employers Login';
+
 use yii\helpers\Url;
-?>	
-	
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+$imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
+?>
 	<div id="wrapper"><!-- start main wrapper --> 
     	<div class="headline_inner">
 				<div class="row"> 
@@ -19,23 +23,24 @@ use yii\helpers\Url;
  
 					<div class="col-xs-12 col-sm-7">  
 						<div class="row">
-							<div class="col-xs-12 col-sm-12">	
-								<form class="omb_loginForm" action="" autocomplete="off" method="POST">
+							<div class="col-xs-12 col-sm-12">
+								<?php $form = ActiveForm::begin(['options' => ['class' => 'omb_loginForm','enctype'=>'multipart/form-data']]); ?>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
-										<input type="text" class="form-control" name="username" placeholder="Email address">
+										<input type="text" class="form-control" name="AllUser[Email]" required  placeholder="Email address">
 									</div>
 									<span class="help-block"></span>
 														
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-										<input  type="password" class="form-control" name="password" placeholder="Password">
+										<input  type="password" class="form-control" required name="AllUser[Passwoed]" placeholder="Password">
 									</div>
 									  <span class="help-block"> &nbsp  </span> 
 									 <!-- <span class="help-block">Password error</span>  -->
 
-									<button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
-								</form>
+									<input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Sign In" >
+						
+								<?php ActiveForm::end(); ?>
 							</div>
 						</div>
 						<div class="row">
