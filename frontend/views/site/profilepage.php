@@ -9,8 +9,8 @@
 			  <div  id="profile-desc">
 			   <div class="col-md-2 col-sm-2 col-xs-12">
 			                 <div class="user-profile">
-                                    <img src="images/users/12.jpg" alt="" class="img-responsive center-block ">
-                                    <h3>Arslan Tariq</h3>
+                                    <img src="images/user.png" alt="" class="img-responsive center-block ">
+                                    <h3><?=$profile->Name;?></h3>
                                 </div> 
 			      	</div>
 		         <div class="col-md-10 col-sm-10 col-xs-12"> 
@@ -26,22 +26,22 @@
                                 <dl>
                                      
                                     <dt>Phone:</dt>
-                                    <dd>+99 333 1234567 </dd>
+                                    <dd>+<?=$profile->MobileNo;?> </dd>
 
                                     <dt>Email:</dt>
-                                    <dd>martine-aug234@domain.com </dd>
+                                    <dd><?=$profile->Email;?> </dd>
  
                                     <dt>Address:</dt>
-                                    <dd>234 Uptown new City Tower </dd>
+                                    <dd><?=$profile->Address;?></dd>
 
                                     <dt>City:</dt>
-                                    <dd>Islamabad, Rawalindi</dd>
+                                    <dd><?=$profile->City;?></dd>
 
                                     <dt>State:</dt>
-                                    <dd>North Vega </dd>
+                                    <dd><?=$profile->State;?></dd>
 
                                     <dt>Country:</dt>
-                                    <dd>Somewere at Antarctica </dd>
+                                    <dd><?=$profile->Country;?></dd>
                                 </dl>
                             </div>
  
@@ -51,10 +51,9 @@
 	
 						
 				<div class="col-md-12 col-sm-12 col-xs-12">
-
                             <div class="resume-box">
                                 <div class="heading-inner">
-                                    <p class="title">Educational Information  <span>2012 to 2016</span></p>
+                                    <p class="title">Educational Information  <span><?=$profile->educations[0]->DurationFrom;?> to <?=$profile->educations[0]->DurationTo;?></span></p>
                                 </div>
                                 <div class="row education-box">
                                     <div class="col-md-4 col-xs-12 col-sm-4">
@@ -68,7 +67,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4>Master of Business Administration</h4>
+                                            <h4><?=$profile->educations[0]->HighestQualification;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -83,7 +82,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4> Software </h4>
+                                            <h4><?=$profile->educations[0]->course->CourseName;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -99,7 +98,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4> Calcutta University</h4>
+                                            <h4><?=$profile->educations[0]->University;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -116,7 +115,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4>Wordpress / Php</h4>
+                                            <h4><?=$profile->educations[0]->skill->Skill;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -132,7 +131,7 @@
 
                             <div class="resume-box">
                                 <div class="heading-inner">
-                                    <p class="title">  Work Experience  <span>2012 to 2016</span></p>
+                                    <p class="title">  Work Experience  <span><?=$profile->experiences[0]->YearFrom;?> to <?=$profile->experiences[0]->YearTo;?></span></p>
                                 </div>
                                 <div class="row education-box">
                                     <div class="col-md-4 col-xs-12 col-sm-4">
@@ -146,7 +145,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4>Techbridge Consultant</h4>
+                                            <h4><?=$profile->experiences[0]->CompanyName;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -161,7 +160,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4>Software Developer</h4>
+                                            <h4><?=$profile->experiences[0]->position->Position;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -177,7 +176,7 @@
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4>  1 Years  </h4>
+                                            <h4><?=$profile->experiences[0]->Experience;?></h4>
                                              </div>
                                     </div>
                                 </div>

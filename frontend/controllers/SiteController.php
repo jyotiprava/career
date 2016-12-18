@@ -270,7 +270,7 @@ class SiteController extends Controller
         $docmodel=new Documents();
         if ($model->load(Yii::$app->request->post()))
         {
-            $count=$model->find()->where(['Email'=>$model->Email,'IsDelete'=>0])->count();
+            $count=$model->find()->where(['Email'=>$model->Email,'IsDelete'=>0,'UserTypeId'=>3])->count();
             if($count>0){
                  Yii::$app->session->setFlash('error', "This Emailid Already Exist.");
                  return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
@@ -425,6 +425,11 @@ class SiteController extends Controller
         $allcourse=$course->find()->where("IsDelete=0")->all();
         
         if ($alluser->load(Yii::$app->request->post())) {
+            $count=$alluser->find()->where(['Email'=>$alluser->Email,'IsDelete'=>0,'UserTypeId'=>2])->count();
+            if($count>0){
+                 Yii::$app->session->setFlash('error', "This Emailid Already Exist.");
+                 return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
+            }else{
             $cv = UploadedFile::getInstance($alluser, 'CVId');
             if($cv)
             {
@@ -473,6 +478,7 @@ class SiteController extends Controller
                 Yii::$app->session['Employeeid']=$alluser->UserId;
                 Yii::$app->session['EmployeeName']=$alluser->Name;
                 return $this->redirect(['profilepage']);
+            }
         }
         else{
             return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
@@ -520,7 +526,9 @@ class SiteController extends Controller
     public function actionProfilepage()
     {
         $this->layout='layout';
-        return $this->render('profilepage');
+        $alluser=new AllUser();
+        $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
+        return $this->render('profilepage',['profile'=>$profile]);
     }
     
     
