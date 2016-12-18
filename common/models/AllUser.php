@@ -63,10 +63,11 @@ class AllUser extends \yii\db\ActiveRecord
             [['MobileNo'], 'string', 'max' => 12],
             [['PinCode'], 'string', 'max' => 6],
             [['Password'], 'string', 'max' => 150],
-            [['VerifyKey'], 'string', 'max' => 400],
-           // [['CVId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['CVId' => 'DocId']],
+            [['VerifyKey','ContactNo'], 'string', 'max' => 400],
+            [['CVId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['CVId' => 'DocId']],
             [['IndustryId'], 'exist', 'skipOnError' => true, 'targetClass' => Industry::className(), 'targetAttribute' => ['IndustryId' => 'IndustryId']],
-           // [['PhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['PhotoId' => 'DocId']],
+            [['PhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['PhotoId' => 'DocId']],
+            [['LogoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['LogoId' => 'DocId']],
             [['UserTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => UserType::className(), 'targetAttribute' => ['UserTypeId' => 'TypeId']],
         ];
     }
@@ -83,6 +84,7 @@ class AllUser extends \yii\db\ActiveRecord
             'Name' => 'Name',
             'Email' => 'Email',
             'MobileNo' => 'Mobile No',
+            'ContactNo'=>'Contact No',
             'Address' => 'Address',
             'Country' => 'Country',
             'State' => 'State',
@@ -93,6 +95,7 @@ class AllUser extends \yii\db\ActiveRecord
             'CompanyDesc' => 'Company Desc',
             'IndustryId' => 'Industry ID',
             'PhotoId' => 'Photo ID',
+            'LogoId' => 'Logo ID',
             'IsDelete' => 'Is Delete',
             'Ondate' => 'Ondate',
             'UpdatedDate' => 'Updated Date',
@@ -121,6 +124,14 @@ class AllUser extends \yii\db\ActiveRecord
     public function getPhoto()
     {
         return $this->hasOne(Documents::className(), ['DocId' => 'PhotoId']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLogo()
+    {
+        return $this->hasOne(Documents::className(), ['DocId' => 'LogoId']);
     }
 
     /**

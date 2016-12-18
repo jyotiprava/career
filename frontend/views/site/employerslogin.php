@@ -33,7 +33,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 														
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-										<input  type="password" class="form-control" required name="AllUser[Passwoed]" placeholder="Password">
+										<input  type="password" class="form-control" required name="AllUser[Password]" placeholder="Password">
 									</div>
 									  <span class="help-block"> &nbsp  </span> 
 									 <!-- <span class="help-block">Password error</span>  -->

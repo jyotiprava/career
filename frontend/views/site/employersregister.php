@@ -1,6 +1,6 @@
 <?php
 $this->title = 'Employers Register';
-
+$csrfToken = Yii::$app->request->getCsrfToken();
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -76,7 +76,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-									<input type="email" class="form-control" required name="AllUser[Email]" id="Email"  placeholder="Enter your Email"/>
+									<input type="email" class="form-control" required name="AllUser[Email]" id="Email" onblur="CheckEmail(this.value);"  placeholder="Enter your Email"/>
 								</div>
 							</div>
 						</div>
@@ -103,6 +103,15 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							</div>
 						</div> 
 						
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">  Contact No</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" required name="AllUser[ContactNo]" id="ContactNo"  placeholder="Contact No"/>
+								</div>
+							</div>
+						</div> 
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Password</label>
@@ -171,7 +180,18 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 								</div>
 							</div>
 						</div>
-						
+				      
+						<div class="form-group">
+							<label for="confirm" class="cols-sm-2 control-label">Upload Logo  </label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+								    <label class="btn-file">
+									Browse <input type="file" name="AllUser[LogoId]" id="uploadBtn" required style="display: block;" accept=
+"application/jpeg, application/png, application/jpg">
+								</label><span style="margin-left: 10px;display: none;" id="uploadFile"> No File Chosen</span>
+								</div>
+							</div>
+						</div>
 						
 						<div class="form-group">
 							<label for="confirm" class="cols-sm-2 control-label">Description </label>

@@ -23,6 +23,16 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <link rel="shortcut icon" href="images/icons/favicon.png"/>
     <?php $this->head() ?>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<!-- Map -->
+ 
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -197,6 +207,40 @@ AppAsset::register($this);
                 </div><!--/.nav-collapse --> 
 					<?php
 					}
+					elseif(isset(Yii::$app->session['Employerid'])){
+				        ?>
+					<div class="navbar navbar-default " role="navigation"> 
+					 <div class="collapse navbar-collapse"> 
+				           <ul class="nav navbar-nav"> 
+						
+						<!-- It will display when customer paid  for that -->		
+							<li class="no-need"> 
+							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
+							</li>  
+						<!-- It will display when customer paid  for that -->	
+
+						<li class="no-need">
+								<a href="#" class="dropdown-toggle brdr  orange_bg new_style" data-toggle="dropdown"><b class="fa fa-bell orange"></b> <br>  Notification </a> 
+								<!--<ul class="dropdown-menu">
+								    <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
+									 <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
+								</ul>-->
+							</li>
+							
+							<li class="no-need prfl_img">
+								<a href="#" class="dropdown-toggle brdr orange_bg new_style" data-toggle="dropdown">    
+   								<img style="width: 43px;height: 43px;" src="images/user.png" alt="" class="img-responsive center-block "><?php echo Yii::$app->session['EmployerName']; ?>  </a> 
+								<ul class="dropdown-menu"> 
+									<li class=""><a href="<?= Url::toRoute(['site/employerprofile'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
+									<li class=""><a href="<?= Url::toRoute(['site/employereditprofile'])?>"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
+									<li class=""><a href="<?= Url::toRoute(['site/employerchangepassword'])?>"> <b class="fa fa-lock"></b> Change Password  </a></li> 
+									<li class=""><a href="<?= Url::toRoute(['site/employerlogout'])?>"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
+								</ul>
+							</li> 
+				      </ul> 
+				    </div><!--/.nav-collapse --> 
+					<?php
+					}
 					else
 					{
 					?>
@@ -251,6 +295,31 @@ AppAsset::register($this);
 			</div><!-- container --> 
 		</div><!-- end main header -->
 			   <?php
+					}elseif(isset(Yii::$app->session['Employerid'])){
+				        ?>
+					 <div id="header"><!-- start main header --> 
+					<div class="container"><!-- container -->
+						<div class="row">  
+							    <div class="col-lg-8  col-md-8 col-sm-8 col-xs-12 main-nav"><!-- Main Navigation --> 
+					              <div class="navbar navbar-default " role="navigation"> 
+								   <div class="collapse navbar-collapse"> 
+									 <ul class="nav navbar-nav float-left">
+										 <li><a href="#">Dashboard</a></li>  
+										 <li><a href="<?= Url::toRoute(['site/yourpost'])?>">Your Post</a></li> 
+										 <li><a href="<?= Url::toRoute(['site/postajob'])?>" >New Post</a></li>
+									 </ul>
+									</div><!--/.nav-collapse --> 
+								   </div>
+								   
+									<div  class="clear"></div>
+								</div><!-- Main Navigation -->
+					
+					<div class="clearfix"></div>
+				</div>
+			</div><!-- container --> 
+		</div><!-- end main header -->
+			
+					<?php
 					}
 					else
 					{

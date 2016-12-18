@@ -231,6 +231,11 @@ class SiteController extends Controller
         $this->layout='layout';        
         $model=new AllUser();
         if ($model->load(Yii::$app->request->post())) {
+            $isverified=$model->find()->where(['Email'=>$model->Email,'VerifyStatus'=>1,'IsDelete'=>0])->count();
+            if($isverified==0){
+                 Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
+                 return $this->render('employerslogin', ['model' => $model,]);
+            }else{
             $password=md5($model->Password);
             $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'IsDelete'=>0])->count();
             if($cnt>0)
@@ -238,17 +243,20 @@ class SiteController extends Controller
                 $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'IsDelete'=>0])->one();
                 $session = Yii::$app->session;
                 $session->open();
-                Yii::$app->session['Employerid']=$rest->AllUserId;
+                Yii::$app->session['Employerid']=$rest->UserId;
                 Yii::$app->session['EmployerName']=$rest->Name;
                 Yii::$app->session['EmployerEmail']=$model->Email;
-                return $this->render('index'); 
+                
+                $employerone=$model->find()->where(['UserId'=>$rest->UserId])->one();
+                return $this->render('companyprofile',['employer'=>$employerone]);
             }
             else
             {
                 Yii::$app->session->setFlash('error', "Wrong Email Or Password");
                 return $this->render('employerslogin', ['model' => $model,]);
             }
-        } else {
+        }
+        }else {
             return $this->render('employerslogin', ['model' => $model,]);
         }
     }
@@ -259,17 +267,32 @@ class SiteController extends Controller
        
         $model=new AllUser();
         $allindustry= ArrayHelper::map(Industry::find()->where(['IsDelete'=>0])->all(),'IndustryId','IndustryName');
-        
+        $docmodel=new Documents();
         if ($model->load(Yii::$app->request->post()))
         {
+            $count=$model->find()->where(['Email'=>$model->Email,'IsDelete'=>0])->count();
+            if($count>0){
+                 Yii::$app->session->setFlash('error', "This Emailid Already Exist.");
+                 return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
+            }else{            
             //var_dump(Yii::$app->request->post());
-            $model->UserTypeId=3;
-            $model->Password=md5($model->Password);
-            $vkey='CB'.time();
-            $model->VerifyKey=$vkey;
-            $model->Ondate=date('Y-m-d');
-            $model->save();
-            $name=$model->Name;
+                $model->UserTypeId=3;
+                $model->Password=md5($model->Password);
+                $vkey='CB'.time();
+                $model->VerifyKey=$vkey;
+                $model->Ondate=date('Y-m-d');
+                $logo = UploadedFile::getInstance($model, 'LogoId');
+                if($logo)
+                {
+                $logo_id=$docmodel->imageUpload($logo,'LogoId');
+                }
+                else
+                {
+                    $logo_id=0;
+                }
+                $model->LogoId=$logo_id;
+                $model->save();
+                $name=$model->Name;
                 $to=$model->Email;
                 $from='Careerbugs@info.in';
                 $subject="Verify your email id";
@@ -298,7 +321,7 @@ class SiteController extends Controller
                </td>
                </tr>
                <tr>
-                <td><a href='http://45.58.34.139/jyoti/frontend/web/index.php/site/employersverifryemail?vkey=$vkey'>
+                <td><a href='http://45.58.34.139/jyoti/frontend/web/index.php?r=site%2Femployersverifryemail&vkey=$vkey'>
                <span style='display: block;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Verify Email</span>
                </a></td>
                </tr>
@@ -309,13 +332,14 @@ class SiteController extends Controller
                $mail= new ContactForm();
                $mail->sendEmail($to,$from,$html,$subject);
                Yii::$app->session->setFlash('success', 'Check your email for EmailId Verification.');
-            
-            return $this->render('index');
+               return $this->render('index');
+        }
+           
         }else{            
             return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
         }
     }
-    public function actionemployersverifryemail($vkey)
+    public function actionEmployersverifryemail($vkey)
     {
         $this->layout='layout';
         $alluser=new AllUser();
@@ -332,6 +356,45 @@ class SiteController extends Controller
         }
         return $this->redirect(['employerslogin']);
     }
+     public function actionCompanyprofileupdate()
+    {
+        $this->layout='layout';
+        $alluser=new AllUser();
+       
+    }
+    public function actionCheckemail($email)
+    {
+        $model = new AllUser();
+        $count=$model->find()->where(['Email'=>$email,'IsDelete'=>0])->count();
+        if($count>0){
+            echo "NOTOK";
+        }else{
+            echo "OK";
+        }
+     }
+      public function actionYourpost()
+    {
+        $this->layout='layout';
+        return $this->render('yourpost');
+    }
+    
+     public function actionPostajob()
+    {
+        $this->layout='layout';
+        return $this->render('postajob');
+    }
+    
+     public function actionEmployerlogout()
+    {
+        
+        $session = Yii::$app->session;
+        $session->open();
+        unset(Yii::$app->session['Employerid']);
+        unset(Yii::$app->session['EmployerName']);
+        unset(Yii::$app->session['EmployerEmail']);
+        return $this->render('index');
+    }
+    
     // ------------------- ALL USER(Employers) End -------------------//
     
     public function actionJobsearch()
@@ -452,11 +515,7 @@ class SiteController extends Controller
         return $this->render('searchcandidate');
     }
         
-     public function actionPostajob()
-    {
-        $this->layout='layout';
-        return $this->render('postajob');
-    }
+
     
     public function actionProfilepage()
     {

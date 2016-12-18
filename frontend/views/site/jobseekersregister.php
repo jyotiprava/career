@@ -54,7 +54,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[MobileNo]" id="MobileNo"  placeholder="Enter your MobileNo" required/>
+									<input type="text" class="form-control" name="AllUser[MobileNo]" id="MobileNo"  placeholder="Enter your MobileNo" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" maxlength="10" required/>
 								</div>
 							</div>
 						</div> 
@@ -110,7 +110,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[PinCode]" id="confirm" placeholder="Pincode" required>
+									<input type="text" class="form-control" name="AllUser[PinCode]" id="confirm" placeholder="Pincode" required onkeypress="return numbersonly(event)">
 								</div>
 							</div>
 						</div>

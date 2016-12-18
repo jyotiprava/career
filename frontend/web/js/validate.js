@@ -21,3 +21,35 @@ if (val!=$('#password').val()) {
     return false
 }
 }
+/*jQuery.noConflict();
+jQuery(function(){
+    jQuery('#uploadBtn').onchange(function(){
+        if (jQuery(this).val()!='') {
+        jQuery('#uploadFile').text(jQuery(this).val());
+        }
+        });
+    });
+
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").html = this.value;
+};
+*/
+function CheckEmail(email) {
+if (email!='') {
+$.ajax({
+dataType: "json",
+type: 'GET',
+url: "index.php?r=site/checkemail",
+data: { email: email, _crsf: "<?= $csrfToken?>"},
+success:function(res) {
+    console.log(res);
+	if(res=="NOTOK")
+	{
+        alert('EmailId Alredy exist.');
+        $('#Email').val('');
+        return false
+	}
+}
+});
+}
+}
