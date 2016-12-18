@@ -1,5 +1,9 @@
 <?php
+$this->title = 'Login';
+
 use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 ?>
 <div id="wrapper"><!-- start main wrapper -->
 	 
@@ -23,22 +27,23 @@ use yii\helpers\Url;
 
 						<div class="row omb_row-sm-offset-3">
 							<div class="col-xs-12 col-sm-6">	
-								<form class="omb_loginForm" action="" autocomplete="off" method="POST">
+								<?php $form = ActiveForm::begin(['options' => ['class' => 'omb_loginForm','enctype'=>'multipart/form-data']]); ?>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
-										<input type="text" class="form-control" name="username" placeholder="Email address">
+										<input type="email" class="form-control" name="AllUser[Email]" required placeholder="Email address">
 									</div>
 									<span class="help-block"></span>
 														
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-										<input  type="password" class="form-control" name="password" placeholder="Password">
+										<input  type="password" class="form-control" name="AllUser[Password]" required placeholder="Password">
 									</div>
 									  <span class="help-block"> &nbsp  </span> 
 									 <!-- <span class="help-block">Password error</span>  -->
 
-									<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-								</form>
+									<input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Log In" >
+						
+								<?php ActiveForm::end(); ?>
 							</div>
 						</div>
 						<div class="row omb_row-sm-offset-3">

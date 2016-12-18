@@ -200,7 +200,7 @@ AppAsset::register($this);
 									<li class=""><a href="<?= Url::toRoute(['site/profilepage'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
 									<li class=""><a href="edit_profile.html"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
 									<li class=""><a href="change_password.html"> <b class="fa fa-lock"></b> Change Password  </a></li> 
-									<li class=""><a href="index.html"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
+									<li class=""><a href="<?= Url::toRoute(['site/employeelogout'])?>"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
 								</ul>
 							</li> 
 				      </ul> 
@@ -231,7 +231,7 @@ AppAsset::register($this);
 								<a href="#" class="dropdown-toggle brdr orange_bg new_style" data-toggle="dropdown">    
    								<img style="width: 43px;height: 43px;" src="images/user.png" alt="" class="img-responsive center-block "><?php echo Yii::$app->session['EmployerName']; ?>  </a> 
 								<ul class="dropdown-menu"> 
-									<li class=""><a href="<?= Url::toRoute(['site/employerprofile'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
+									<li class=""><a href="<?= Url::toRoute(['site/companyprofile'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
 									<li class=""><a href="<?= Url::toRoute(['site/employereditprofile'])?>"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
 									<li class=""><a href="<?= Url::toRoute(['site/employerchangepassword'])?>"> <b class="fa fa-lock"></b> Change Password  </a></li> 
 									<li class=""><a href="<?= Url::toRoute(['site/employerlogout'])?>"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
