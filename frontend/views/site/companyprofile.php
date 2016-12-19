@@ -25,7 +25,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                             <div class="job-short-detail">
                                 <div class="heading-inner">
                                     <p class="title"> Company / Consultant details</p>
-					<a href="edit_company_profile_page.html">  <i class="fa fa-pencil-square-o orange"></i> Edit Profile</a>
+					<a href="<?= Url::toRoute(['site/companyprofileeditpage'])?>">  <i class="fa fa-pencil-square-o orange"></i> Edit Profile</a>
                                 </div>
 								
                                 <dl>

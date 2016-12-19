@@ -3,6 +3,12 @@ jQuery(document).ready(function($) {
 	////////////////////////////////////tab
 	$(function(){
 		$('#tab-container').easytabs();
+		
+		
+		
+		setTimeout(function() {
+            $('.alert').fadeOut('fast');
+            }, 3000); // <-- time in milliseconds
 	});
 	
 	////////////////////////////////////mainnav

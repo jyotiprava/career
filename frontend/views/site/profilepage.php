@@ -126,9 +126,11 @@
 						 
 						 
 						 
-						 		
+				<?php
+				if($profile->experiences)
+				{
+				?>
 				<div class="col-md-12 col-sm-12 col-xs-12">
-
                             <div class="resume-box">
                                 <div class="heading-inner">
                                     <p class="title">  Work Experience  <span><?=$profile->experiences[0]->YearFrom;?> to <?=$profile->experiences[0]->YearTo;?></span></p>
@@ -185,7 +187,11 @@
                             </div>
                         </div>
 	
-  </div>
+  
+			  <?php
+				}
+				?>
+			  </div>
             </div>
        </div>
 		 

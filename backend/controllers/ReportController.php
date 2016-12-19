@@ -38,9 +38,7 @@ class ReportController extends Controller
      */
     public function actionCandidatelist()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => AllUser::find()->where(['UserTypeId'=>2]),
-        ]);
+        $dataProvider = AllUser::find()->where(['UserTypeId'=>2])->all();
 
         return $this->render('candidatelist', [
             'dataProvider' => $dataProvider,

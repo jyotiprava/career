@@ -44,7 +44,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup','index','jobseach','employersregister'],
+                        'actions' => ['signup','index','jobseach','employersregister','companyprofileeditpage'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -228,19 +228,20 @@ class SiteController extends Controller
     // ------------------- ALL USER(Employers) Start -------------------//
     public function actionEmployerslogin()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';        
         $model=new AllUser();
         if ($model->load(Yii::$app->request->post())) {
-            $isverified=$model->find()->where(['Email'=>$model->Email,'VerifyStatus'=>1,'IsDelete'=>0])->count();
+            $isverified=$model->find()->where(['Email'=>$model->Email,'VerifyStatus'=>1,'UserTypeId'=>3,'IsDelete'=>0])->count();
             if($isverified==0){
                  Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
                  return $this->render('employerslogin', ['model' => $model,]);
             }else{
             $password=md5($model->Password);
-            $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'IsDelete'=>0])->count();
+            $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>3,'IsDelete'=>0])->count();
             if($cnt>0)
             {
-                $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'IsDelete'=>0])->one();
+                $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>3,'IsDelete'=>0])->one();
                 $session = Yii::$app->session;
                 $session->open();
                 Yii::$app->session['Employerid']=$rest->UserId;
@@ -259,10 +260,16 @@ class SiteController extends Controller
         }else {
             return $this->render('employerslogin', ['model' => $model,]);
         }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
-     public function actionEmployersregister()
+    public function actionEmployersregister()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';
        
         $model=new AllUser();
@@ -333,17 +340,24 @@ class SiteController extends Controller
                $mail->sendEmail($to,$from,$html,$subject);
                Yii::$app->session->setFlash('success', 'Check your email for EmailId Verification.');
                return $this->render('index');
-        }
-           
+        } 
         }else{            
             return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
         }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
+    
     public function actionEmployersverifryemail($vkey)
     {
         $this->layout='layout';
         $alluser=new AllUser();
-        $userone=$alluser->find()->select(['VerifyStatus'])->where(['VerifyKey'=>$vkey])->one();
+        $userone=$alluser->find()->where(['VerifyKey'=>$vkey])->one();
+        if($userone)
+        {
         if($userone->VerifyStatus==0)
         {
         $userone->VerifyStatus=1;
@@ -354,39 +368,52 @@ class SiteController extends Controller
         {
           Yii::$app->session->setFlash('error', 'Already Verified');  
         }
+        }
+        else
+        {
+            Yii::$app->session->setFlash('error', 'Wrong Activation link');  
+        }
         return $this->redirect(['employerslogin']);
     }
-     public function actionCompanyprofileupdate()
+    
+    public function actionCompanyprofile()
+    {
+        if(isset(Yii::$app->session['Employerid']))
+        {
+        $this->layout='layout';
+        $model=new AllUser();
+        $employerid= Yii::$app->session['Employerid'];
+        $employerone=$model->find()->where(['UserId'=>$employerid])->one();
+        return $this->render('companyprofile',['employer'=>$employerone]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
+    }
+    public function actionCompanyprofileeditpage()
     {
         $this->layout='layout';
-        $alluser=new AllUser();
-       
+        $model=new AllUser();
+        $employerid= Yii::$app->session['Employerid'];
+        $employerone=$model->find()->where(['UserId'=>$employerid])->one();
+        return $this->render('editcompanyprofilepage',['employer'=>$employerone]);
     }
-    public function actionCheckemail($email)
-    {
-        $model = new AllUser();
-        $count=$model->find()->where(['Email'=>$email,'IsDelete'=>0])->count();
-        if($count>0){
-            echo "NOTOK";
-        }else{
-            echo "OK";
-        }
-     }
-      public function actionYourpost()
+
+    public function actionYourpost()
     {
         $this->layout='layout';
         return $this->render('yourpost');
     }
     
-     public function actionPostajob()
+    public function actionPostajob()
     {
         $this->layout='layout';
         return $this->render('postajob');
     }
     
-     public function actionEmployerlogout()
-    {
-        
+    public function actionEmployerlogout()
+    {  
         $session = Yii::$app->session;
         $session->open();
         unset(Yii::$app->session['Employerid']);
@@ -411,6 +438,7 @@ class SiteController extends Controller
     
     public function actionJobseekersregister()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';
         $skill=new Skill();
         $position=new Position();
@@ -430,6 +458,7 @@ class SiteController extends Controller
                  Yii::$app->session->setFlash('error', "This Emailid Already Exist.");
                  return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
             }else{
+
             $cv = UploadedFile::getInstance($alluser, 'CVId');
             if($cv)
             {
@@ -477,13 +506,19 @@ class SiteController extends Controller
                 Yii::$app->session['EmployeeEmail']=$alluser->Email;
                 Yii::$app->session['Employeeid']=$alluser->UserId;
                 Yii::$app->session['EmployeeName']=$alluser->Name;
+                
+                Yii::$app->session->setFlash('success', "Account Created Successfully");
                 return $this->redirect(['profilepage']);
             }
         }
         else{
             return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
         }
-        
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     
@@ -491,11 +526,49 @@ class SiteController extends Controller
     
     public function actionLogin()
     {
-        //$this->layout='layout';
-        return $this->render('login');
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
+          $model=new AllUser();
+         if ($model->load(Yii::$app->request->post())){
+            $password=md5($model->Password);
+            $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>2,'IsDelete'=>0])->count();
+            if($cnt>0)
+            {
+                $this->layout='layout';
+                $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>2,'IsDelete'=>0])->one();
+                $session = Yii::$app->session;
+                $session->open();
+                Yii::$app->session['Employeeid']=$rest->UserId;
+                Yii::$app->session['EmployeeName']=$rest->Name;
+                Yii::$app->session['EmployeeEmail']=$model->Email;
+                
+               
+                return $this->redirect(['profilepage']);
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "Wrong Email Or Password");
+                return $this->render('login', ['model' => $model,]);
+            }
+        }else{
+            return $this->render('login', ['model' => $model,]);
+        }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
-   
+    public function actionEmployeelogout()
+    {
+        $session = Yii::$app->session;
+        $session->open();
+        unset(Yii::$app->session['Employeeid']);
+        unset(Yii::$app->session['EmployeeName']);
+        unset(Yii::$app->session['EmployeeEmail']);
+        return $this->render('index');
+    }
+    
     
     public function actionEmployeeforgetpassword()
     {
@@ -511,8 +584,14 @@ class SiteController extends Controller
     
     public function actionRegister()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';
         return $this->render('register');
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     public function actionSearchcandidate()
@@ -525,10 +604,17 @@ class SiteController extends Controller
     
     public function actionProfilepage()
     {
+        if(isset(Yii::$app->session['Employeeid']))
+        {
         $this->layout='layout';
         $alluser=new AllUser();
         $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
         return $this->render('profilepage',['profile'=>$profile]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     

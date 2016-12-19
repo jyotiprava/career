@@ -27,7 +27,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 								<?php $form = ActiveForm::begin(['options' => ['class' => 'omb_loginForm','enctype'=>'multipart/form-data']]); ?>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
-										<input type="text" class="form-control" name="AllUser[Email]" required  placeholder="Email address">
+										<input type="email" class="form-control" name="AllUser[Email]" required  placeholder="Email address">
 									</div>
 									<span class="help-block"></span>
 														
