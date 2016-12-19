@@ -1,4 +1,12 @@
+<?php
+$this->title = 'Edit Company Profile Pages';
 
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+$imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
+$url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+?>
 	<div id="wrapper"><!-- start main wrapper -->
 	 
 		 
@@ -7,8 +15,8 @@
 			  <div  id="profile-desc">
 			   <div class="col-md-2 col-sm-2 col-xs-12">
 			                 <div class="user-profile">
-                                    <img src="images/logo2.png" alt="" class="img-responsive center-block ">
-                                    <h3>Techbridge Consultant  </h3>
+                                    <img src="<?php echo $url.$employer->logo->Doc ;?>" alt="<?php //secho $employer->Name ;?>" class="img-responsive center-block ">
+                                    <h3>c</h3>
                                 </div> 
 			      	</div>
 		         <div class="col-md-10 col-sm-10 col-xs-12"> 
@@ -22,31 +30,45 @@
                                 <dl>
                                      
                                     <dt>Company Type</dt>
-                                    <dd><input type="text" class="form-control" name="email" id="email" placeholder="Fashion Design"></dd>
+                                    <dd><select name="AllUser[IndustryId]" required class="form-control">
+                    
+										<option selected="selected" value="">- Select an Industry -</option>
+										<?php foreach($industry as $key=>$value){?>
+										<option value="<?php echo $key;?>" <?php if($key==$employer->IndustryId){ echo "selected"; } ?> ><?=$value;?></option>
+										<?php } ?>
+								</select>
+				    </dd>
 
 
                                    <dt> Company Email </dt>
-                                   <dd><input type="text" class="form-control" name="email" id="email" placeholder="Imartine-aug234@domain.com "></dd>
+                                   <dd><input type="text" class="form-control" readonly required name="AllUser[Email]" id="Email" value="<?php echo $employer->Email ;?>" placeholder="Enter your Email"></dd>
 				   <dt>Address:</dt>
-                                   <dd><input type="text" class="form-control" name="email" id="email" placeholder="Islamabad, Rawalindi"></dd>
+                                   <dd><input type="text" class="form-control" required name="AllUser[Address]" id="Address" value="<?php echo $employer->Address ;?>" placeholder="Address"></dd>
 				   <dt> Mobile Number  </dt> 
-				   <dd><input type="text" class="form-control" name="email" id="email" placeholder="8017537619"> </dd>
+				   <dd><input type="text" class="form-control" required name="AllUser[MobileNo]" id="MobileNo" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" value="<?php echo $employer->MobileNo ;?>" placeholder="MobileNo"></dd>
 				   <dt>  Contact Number </dt>
-				   <dd><input type="text" class="form-control" name="email" id="email" placeholder="033 4016165478"></dd>
+				   <dd><input type="text" class="form-control"required name="AllUser[ContactNo]" id="ContactNo" value="<?php echo $employer->ContactNo ;?>" placeholder="ContactNo"></dd>
 				   <dt>City:</dt> 
 				   <dd><input type="text" class="form-control" name="email" id="email" placeholder="Islamabad, Rawalindi"></dd>
 
                                     <dt>State:</dt> <dd></dd>
 									<dd><input type="text" class="form-control" name="email" id="email" placeholder="North Vega "></dd>
                                     <dt>Country:</dt>                                   
-									<dd><input type="text" class="form-control" name="email" id="email" placeholder="Somewere at Antarctica "></dd>
+									<dd><select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Country]" required id="countryId">
+										<option value="">Select Country</option>
+										<option value="India" countryid="101">India</option>
+										</select>
+									</dd>
+				   <dt>State:</dt> <dd><select class="questions-category states form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[State]" required id="stateId">
+											<option value="">Select State  </option>
+										</select>
+				   </dd>
                                     <dt>City:</dt> 
-									<dd><input type="text" class="form-control" name="email" id="email" placeholder="Islamabad, Rawalindi"></dd>
-                                    <dt>State:</dt> <dd></dd>
-									<dd><input type="text" class="form-control" name="email" id="email" placeholder="North Vega "></dd>
-                                    <dt>Country:</dt> 
-									<dd><input type="text" class="form-control" name="email" id="email" placeholder="Somewere at Antarctica "></dd>
-				    <dt>Pincode:</dt>  
+									<dd> <select class="questions-category cities form-control select2-hidden-accessible"  name="AllUser[City]" tabindex="-1" aria-hidden="true" required id="cityId">
+														<option value="">Select City  </option>
+										</select>
+								 </dd>
+                                   <dt>Pincode:</dt>  
 									<dd><input type="text" class="form-control" name="email" id="email" placeholder="Pincode"></dd>
   
                                 </dl>

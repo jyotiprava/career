@@ -76,7 +76,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-									<input type="email" class="form-control" required name="AllUser[Email]" id="Email" onblur="CheckEmail(this.value);"  placeholder="Enter your Email"/>
+									<input type="email" class="form-control" required name="AllUser[Email]" id="Email"   placeholder="Enter your Email"/>
 								</div>
 							</div>
 						</div>

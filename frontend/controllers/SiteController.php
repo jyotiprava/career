@@ -369,9 +369,12 @@ class SiteController extends Controller
     {
         $this->layout='layout';
         $model=new AllUser();
+        $allindustry= ArrayHelper::map(Industry::find()->where(['IsDelete'=>0])->all(),'IndustryId','IndustryName');
+        $docmodel=new Documents();        
         $employerid= Yii::$app->session['Employerid'];
         $employerone=$model->find()->where(['UserId'=>$employerid])->one();
-        return $this->render('editcompanyprofilepage',['employer'=>$employerone]);
+        
+        return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);
     }
 
     public function actionYourpost()
