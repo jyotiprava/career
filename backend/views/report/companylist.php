@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\CourseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'All Candidates';
+$this->title = 'All Company';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
  <style>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								<h5 class="panel-title">  
 													<input type="radio" name="gender2" class="styled">
 													 
-										 Candidate list <button type="submit" class="btn btn-primary">Download   <i class="icon-arrow-right14 position-right"></i></button></h5>
+										 Company list <button type="submit" class="btn btn-primary">Download   <i class="icon-arrow-right14 position-right"></i></button></h5>
 								<div class="heading-elements">
 									<ul class="icons-list">
 									
@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 												<li class="place"><i class="icon-pin position-left"></i> <?=$value->Address;?></li> 
 												<li class="contact_num"><i class="icon-phone position-left"></i> +91 <?=$value->MobileNo;?></li>
 												<li class="email"><i class="icon-mail5 position-left"></i> <a href="#"><?=$value->Email;?></a></li>
-												<li class="expert"><i class="icon-user-tie position-left"></i> <?=$value->educations[0]->skill->Skill;?></li>
+												
 											</ul>
 										</div>
 									</div>

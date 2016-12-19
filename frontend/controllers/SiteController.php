@@ -472,7 +472,14 @@ class SiteController extends Controller
                 $cv_id=0;
             }
             $alluser->UserTypeId=2;
+            if(Yii::$app->request->post()['AllUser']['CompanyName']!='')
+            {
             $alluser->EntryType='Experience';
+            }
+            else
+            {
+            $alluser->EntryType='Fresher';    
+            }
             $alluser->Password=md5(Yii::$app->request->post()['AllUser']['Password']);
             $alluser->CVId=$cv_id;
             $alluser->Ondate=date('Y-m-d');

@@ -38,9 +38,18 @@ class ReportController extends Controller
      */
     public function actionCandidatelist()
     {
-        $dataProvider = AllUser::find()->where(['UserTypeId'=>2])->all();
+        $dataProvider = AllUser::find()->where(['UserTypeId'=>2])->orderBy(['UpdatedDate'=>SORT_DESC])->all();
 
         return $this->render('candidatelist', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionCompanylist()
+    {
+        $dataProvider = AllUser::find()->where(['UserTypeId'=>3])->orderBy(['UpdatedDate'=>SORT_DESC])->all();
+
+        return $this->render('companylist', [
             'dataProvider' => $dataProvider,
         ]);
     }

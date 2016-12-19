@@ -108,7 +108,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" required name="AllUser[ContactNo]" id="ContactNo"  placeholder="Contact No"/>
+									<input type="text" class="form-control" required name="AllUser[ContactNo]" onkeypress="return numbersonly(event)" id="ContactNo"  placeholder="Contact No" autocomplete="off"/>
 								</div>
 							</div>
 						</div> 
@@ -118,7 +118,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" required class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password"/>
+									<input type="password" required class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password" autocomplete="off"/>
 								</div>
 							</div>
 						</div>
@@ -176,7 +176,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" onkeypress="return numbersonly(event)" name="AllUser[PinCode]" id="Pincode" required  placeholder="Pincode"/>
+									<input type="text" class="form-control" maxlength="6" onkeypress="return numbersonly(event)" name="AllUser[PinCode]" id="Pincode" required  placeholder="Pincode"/>
 								</div>
 							</div>
 						</div>

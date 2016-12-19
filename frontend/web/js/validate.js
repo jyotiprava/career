@@ -30,7 +30,7 @@ function yearvalidate(year,id) {
 
 function ConfirmPassword(val){
 if (val!=$('#password').val()) {
-    alert('Password Must Be Same.');
+    alert('Password  and Confirm password Must Be Same.');
     $('#confirmpassword').val('');
     setTimeout(function() {  $('#confirmpassword').focus();return false; }, 10);
     return false

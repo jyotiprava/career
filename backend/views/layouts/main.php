@@ -69,7 +69,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 						<li><a href="#"><span class="badge bg-teal-400 pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>
 						<li class="divider"></li>
 						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-						<li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+						<li><a href="<?= Url::to(['site/logout'])?>" data-method="post"><i class="icon-switch2"></i> Logout</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -185,7 +185,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 									
 					               <li class="navigation-header"><span style=" font-weight: bold;font-size: 14px; text-align: center;"> Company List</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
 								 
-									<li><a href="#"><i class="icon-width"></i> <span>Total Company List</span></a></li> 
+									<li><a href="<?=Url::to(['report/companylist']);?>"><i class="icon-width"></i> <span>Total Company List</span></a></li> 
 								<!-- /main -->
 								
 								

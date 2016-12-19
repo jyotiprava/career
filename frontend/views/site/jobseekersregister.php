@@ -110,7 +110,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[PinCode]" id="confirm" placeholder="Pincode" required onkeypress="return numbersonly(event)" autocomplete="off">
+									<input type="text" class="form-control" name="AllUser[PinCode]" id="confirm" placeholder="Pincode" maxlength="6" required onkeypress="return numbersonly(event)" autocomplete="off">
 								</div>
 							</div>
 						</div>
@@ -133,7 +133,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password" required onblur="if($(this).val()!=$('#password').val()){alert('Password Must Be Same');$(this).val('');setTimeout(function() {  $('#confirm').focus();return false; }, 10);}"/>
+									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password" required onblur="if($(this).val()!=$('#password').val()){alert('Password  and Confirm password Must Be Same');$(this).val('');setTimeout(function() {  $('#password').focus();return false; }, 10);}"/>
 								</div>
 							</div>
 						</div>
