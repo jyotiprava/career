@@ -110,7 +110,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[PinCode]" id="confirm" placeholder="Pincode" required onkeypress="return numbersonly(event)">
+									<input type="text" class="form-control" name="AllUser[PinCode]" id="confirm" placeholder="Pincode" required onkeypress="return numbersonly(event)" autocomplete="off">
 								</div>
 							</div>
 						</div>
@@ -122,7 +122,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password" required/>
+									<input type="password" class="form-control" name="AllUser[Password]" id="password"  placeholder="Enter your Password" required autocomplete="off"/>
 								</div>
 							</div>
 						</div>
@@ -133,7 +133,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password" required onblur="if($(this).val()!=$('#password').val()){alert('Password Must Be Same');$(this).val('');}"/>
+									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password" required onblur="if($(this).val()!=$('#password').val()){alert('Password Must Be Same');$(this).val('');setTimeout(function() {  $('#confirm').focus();return false; }, 10);}"/>
 								</div>
 							</div>
 						</div>
@@ -144,11 +144,11 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<label for="confirm" class="cols-sm-2 control-label">Upload CV  </label>
 							<div class="cols-sm-10">
 								<div class="input-group">
-								    <label class="btn btn-default btn-file design-1">
-									Browse <input type="file" name="AllUser[CVId]" style="display: none;" required accept=
+										<div class="input-group" style="font-size: 14px;">
+								    <input type="file" name="AllUser[CVId]"required accept=
 "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
 text/plain, application/pdf">
-								</label>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -205,12 +205,12 @@ text/plain, application/pdf">
 							<div class="cols-sm-8">
 								<div class="input-group" style="width: 33%;float: left;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[DurationFrom]" id="dfrom"  placeholder="From" required maxlength="4"/>
+									<input type="text" class="form-control" name="AllUser[DurationFrom]" id="dfrom"  placeholder="From" required maxlength="4" onkeypress="return numbersonly(event)" onblur="yearvalidate(this.value,'dfrom');"/>
 								</div>
 								
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[DurationTo]" id="dto"  placeholder="To" required maxlength="4"/>
+									<input type="text" class="form-control" name="AllUser[DurationTo]" id="dto"  placeholder="To" required maxlength="4" onkeypress="return numbersonly(event)" onblur="yearvalidate(this.value,'dto'); if($(this).val()<=$('#dfrom').val()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 							</div>
 							
@@ -276,11 +276,11 @@ text/plain, application/pdf">
 							<div class="cols-sm-5">
 								<div class="input-group" style="width: 33%;float: left;">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[YearFrom]" id="YearFrom"  placeholder="From" maxlength="4"/>
+									<input type="text" class="form-control" name="AllUser[YearFrom]" id="YearFrom"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)" onblur="yearvalidate(this.value,'YearFrom');"/>
 								</div>
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[YearTo]" id="YearTo"  placeholder="To"  maxlength="4"/>
+									<input type="text" class="form-control" name="AllUser[YearTo]" id="YearTo"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onblur="yearvalidate(this.value,'YearTo');if($(this).val()<$('#YearFrom').val()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 							</div>
 							

@@ -178,7 +178,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 								 <li class="navigation-header"><span style=" font-weight: bold;font-size: 14px; text-align: center;">   Candidate List</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
 								 
 									<li><a href="#"><i class="icon-home4"></i> <span> Upload Resume   </span></a></li> 
-									<li><a href="#"><i class="icon-home4"></i> <span> Candidate List     </span></a></li>  
+									<li><a href="<?=Url::to(['report/candidatelist']);?>"><i class="icon-home4"></i> <span> Candidate List     </span></a></li>  
 								 
    
    

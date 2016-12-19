@@ -228,6 +228,7 @@ class SiteController extends Controller
     // ------------------- ALL USER(Employers) Start -------------------//
     public function actionEmployerslogin()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';        
         $model=new AllUser();
         if ($model->load(Yii::$app->request->post())) {
@@ -259,10 +260,16 @@ class SiteController extends Controller
         }else {
             return $this->render('employerslogin', ['model' => $model,]);
         }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     public function actionEmployersregister()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';
        
         $model=new AllUser();
@@ -270,7 +277,7 @@ class SiteController extends Controller
         $docmodel=new Documents();
         if ($model->load(Yii::$app->request->post()))
         {
-            $count=$model->find()->where(['Email'=>$model->Email,'UserTypeId'=>3,'IsDelete'=>0])->count();
+            $count=$model->find()->where(['Email'=>$model->Email,'IsDelete'=>0,'UserTypeId'=>3])->count();
             if($count>0){
                  Yii::$app->session->setFlash('error', "This Emailid Already Exist.");
                  return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
@@ -337,13 +344,20 @@ class SiteController extends Controller
         }else{            
             return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
         }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     public function actionEmployersverifryemail($vkey)
     {
         $this->layout='layout';
         $alluser=new AllUser();
-        $userone=$alluser->find()->select(['VerifyStatus'])->where(['VerifyKey'=>$vkey])->one();
+        $userone=$alluser->find()->where(['VerifyKey'=>$vkey])->one();
+        if($userone)
+        {
         if($userone->VerifyStatus==0)
         {
         $userone->VerifyStatus=1;
@@ -354,16 +368,28 @@ class SiteController extends Controller
         {
           Yii::$app->session->setFlash('error', 'Already Verified');  
         }
+        }
+        else
+        {
+            Yii::$app->session->setFlash('error', 'Wrong Activation link');  
+        }
         return $this->redirect(['employerslogin']);
     }
     
     public function actionCompanyprofile()
     {
+        if(isset(Yii::$app->session['Employerid']))
+        {
         $this->layout='layout';
         $model=new AllUser();
         $employerid= Yii::$app->session['Employerid'];
         $employerone=$model->find()->where(['UserId'=>$employerid])->one();
         return $this->render('companyprofile',['employer'=>$employerone]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     public function actionCompanyprofileeditpage()
     {
@@ -415,6 +441,7 @@ class SiteController extends Controller
     
     public function actionJobseekersregister()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';
         $skill=new Skill();
         $position=new Position();
@@ -429,8 +456,12 @@ class SiteController extends Controller
         $allcourse=$course->find()->where("IsDelete=0")->all();
         
         if ($alluser->load(Yii::$app->request->post())) {
-            
-        
+            $count=$alluser->find()->where(['Email'=>$alluser->Email,'IsDelete'=>0,'UserTypeId'=>2])->count();
+            if($count>0){
+                 Yii::$app->session->setFlash('error', "This Emailid Already Exist.");
+                 return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
+            }else{
+
             $cv = UploadedFile::getInstance($alluser, 'CVId');
             if($cv)
             {
@@ -478,12 +509,19 @@ class SiteController extends Controller
                 Yii::$app->session['EmployeeEmail']=$alluser->Email;
                 Yii::$app->session['Employeeid']=$alluser->UserId;
                 Yii::$app->session['EmployeeName']=$alluser->Name;
+                
+                Yii::$app->session->setFlash('success', "Account Created Successfully");
                 return $this->redirect(['profilepage']);
+            }
         }
         else{
             return $this->render('jobseekersregister',['skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
         }
-        
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     
@@ -491,7 +529,7 @@ class SiteController extends Controller
     
     public function actionLogin()
     {
-        //$this->layout='layout';
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
           $model=new AllUser();
          if ($model->load(Yii::$app->request->post())){
             $password=md5($model->Password);
@@ -506,8 +544,8 @@ class SiteController extends Controller
                 Yii::$app->session['EmployeeName']=$rest->Name;
                 Yii::$app->session['EmployeeEmail']=$model->Email;
                 
-                $employeeone=$model->find()->where(['UserId'=>$rest->UserId])->one();
-                return $this->render('profilepage',['employee'=>$employeeone]);
+               
+                return $this->redirect(['profilepage']);
             }
             else
             {
@@ -516,7 +554,12 @@ class SiteController extends Controller
             }
         }else{
             return $this->render('login', ['model' => $model,]);
-        } 
+        }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     public function actionEmployeelogout()
@@ -544,8 +587,14 @@ class SiteController extends Controller
     
     public function actionRegister()
     {
+        if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         $this->layout='layout';
         return $this->render('register');
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     public function actionSearchcandidate()
@@ -558,8 +607,17 @@ class SiteController extends Controller
     
     public function actionProfilepage()
     {
+        if(isset(Yii::$app->session['Employeeid']))
+        {
         $this->layout='layout';
-        return $this->render('profilepage');
+        $alluser=new AllUser();
+        $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
+        return $this->render('profilepage',['profile'=>$profile]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     

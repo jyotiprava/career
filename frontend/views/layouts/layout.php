@@ -282,7 +282,7 @@ AppAsset::register($this);
 									 <ul class="nav navbar-nav float-left">
 										<li><a href="#">Dashboard</a></li>   
 										<li><a href="post_a_job.html" > Bookmark Jobs  </a></li>   
-										  <li><a href="post_a_job.html" > Applied Job  <span class="total">3</span></a></li>  
+										  <li><a href="post_a_job.html" > Applied Job  <span class="total">0</span></a></li>  
 											</ul>
 									</div><!--/.nav-collapse --> 
 								   </div>
@@ -448,6 +448,8 @@ AppAsset::register($this);
 	
 
 <!---------------------- Footer End ------------------------->
+
+
 <?php $this->endBody() ?>
 </body>
 </html>
