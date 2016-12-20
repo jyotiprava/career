@@ -491,7 +491,7 @@ AppAsset::register($this);
 		   </div>
 		</div>
 
-<!---------------------- Footer End ------------------------->s
+<!---------------------- Footer End ------------------------->
 <?php $this->endBody() ?>
 </body>
 </html>

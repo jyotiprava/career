@@ -20,6 +20,14 @@ $home=str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl());
 			   <?php
 			   foreach($dataProvider as $key=>$value)
 			   {
+                            if($value->LogoId!=0)
+                                {
+                                   $logo=$home.'/'.$value->logo->Doc; 
+                                }
+                                else
+                                {
+                                    $logo='../../frontend/web/images/user.png';
+                                }
 			   ?>
 					<div class="col-lg-3 col-md-6">
 						<div class="thumbnail">
@@ -37,7 +45,7 @@ $home=str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl());
 								</div>
 								<div class="clearfix"></div>
 							<div class="thumb thumb-rounded">
-								<img src="<?=$home.'/'.$value->logo->Doc;?>" alt=""> 
+								<img src="<?=$logo;?>" alt=""> 
 							</div>
 						
 					    	<div class="caption text-center">

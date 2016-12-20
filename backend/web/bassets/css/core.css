@@ -4735,7 +4735,8 @@ a.thumbnail:hover {
 .thumb-rounded,
 .thumb-rounded .caption-overflow,
 .thumb-rounded img {
-    border-radius: 50%
+    border-radius: 50%;
+height:140px;
 }
 .caption-overflow,
 .img-rounded+.zoom-image {
