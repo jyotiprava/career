@@ -37,10 +37,10 @@ AppAsset::register($this);
 			   <div class="closed">
 			      <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
 			   </div> 
-				<input type="text" class="form-control" name="name" id="name" placeholder="Name">  
-				<input type="text" class="form-control" name="name" id="name" placeholder="Contact Number"> 
-				<input type="text" class="form-control" name="name" id="name" placeholder="Email Id"> 
-				  <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+				<input type="text" class="form-control" id="contact_name" placeholder="Name">  
+				<input type="text" class="form-control" id="contact_number" placeholder="Contact Number" maxlength="10" onkeypress="return numbersonly(event)"> 
+				<input type="text" class="form-control" id="contact_email" placeholder="Email Id" onblur="return checkemail();"> 
+				  <select id="form-filter-location" data-minimum-results-for-search="Infinity" class="contact_from form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
 					<option value="1">Select  </option>
 					<option value="1">Fresher  </option>
 					<option value="1">Experience  </option>
@@ -49,8 +49,8 @@ AppAsset::register($this);
 					<option value="4"> Collage / Institute  </option>
 					<option value="4">  Others  </option> 
 				  </select> 
-		         <textarea class="form-control textarea1" placeholder="Message"></textarea>
-				 <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+		         <textarea class="form-control textarea1" id="contact_message" placeholder="Message"></textarea>
+				 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="contactfrom();">Send</button>
 			  </div>  
 	 </div> 
  <!--Sidebar_contact--> 
@@ -217,7 +217,7 @@ AppAsset::register($this);
 							
 							<li class="no-need prfl_img">
 								<a href="#" class="dropdown-toggle brdr orange_bg new_style" data-toggle="dropdown">    
-   								<img style="width: 43px;height: 43px;" src="images/user.png" alt="" class="img-responsive center-block "><?php echo Yii::$app->session['EmployerName']; ?>  </a> 
+   								<img style="width: 43px;height: 43px;" src="<?=Yii::$app->session['EmployerDP'];?>" alt="" class="img-responsive center-block "><?php echo Yii::$app->session['EmployerName']; ?>  </a> 
 								<ul class="dropdown-menu"> 
 									<li class=""><a href="<?= Url::toRoute(['site/companyprofile'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
 									<li class=""><a href="<?= Url::toRoute(['site/employereditprofile'])?>"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  

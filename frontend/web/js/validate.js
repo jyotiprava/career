@@ -48,7 +48,7 @@ jQuery(function(){
 document.getElementById("uploadBtn").onchange = function () {
     document.getElementById("uploadFile").html = this.value;
 };
-*/
+/
 function CheckEmail(email) {
 if (email!='') {
 $.ajax({
@@ -67,4 +67,43 @@ success:function(res) {
 }
 });
 }
+}*/
+
+function contactfrom()
+{
+var contact_name=$('#contact_name').val();
+var contact_number=$('#contact_number').val();
+var contact_email=$('#contact_email').val();
+var contact_from=$('.contact_from').val();
+var contact_message=$('#contact_message').val();
+var i=0;
+if (contact_name=='' || contact_number=='' || contact_email=='' || contact_from=='' || contact_message=='') {
+    var i=1;
+}
+
+if (i==1) {
+    alert("Please fill all field");
+    return false;
+}
+
+$.ajax({
+dataType: "json",
+type: 'GET',
+url: "index.php?r=site/contact",
+data: { contact_name: contact_name,contact_number:contact_number,contact_email:contact_email,contact_message:contact_message,contactfrom:contact_from, _crsf: "<?= $csrfToken?>"},
+success:function(res) {
+	alert(res);
+    location.reload();
+}
+});
+}
+
+function checkemail(){
+    var email = document.getElementById('contact_email');
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (!filter.test(email.value)) {
+    alert('Please provide a valid email address');
+    return false;
+ }
 }

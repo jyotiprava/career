@@ -24,6 +24,7 @@ use common\models\Position;
 use common\models\Documents;
 use common\models\Education;
 use common\models\Experience;
+use common\models\ContactUs;
 
 
 use yii\web\UploadedFile;
@@ -130,20 +131,61 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
+        $model = new ContactUs();
+        $contactname=Yii::$app->request->get()['contact_name'];
+        $contactnumber=Yii::$app->request->get()['contact_number'];
+        $contactemail=Yii::$app->request->get()['contact_email'];
+        $contactfrom=Yii::$app->request->get()['contactfrom'];
+        $contactmessage=Yii::$app->request->get()['contact_message'];
+        $model->ContactNumber=$contactnumber;
+        $model->Email=$contactemail;
+        $model->ContactFrom=$contactfrom;
+        $model->Message=$contactmessage;
+        $model->Name=$contactname;
+        $model->OnDate=date('Y-m-d');
+        if($model->save())
+        {
+            $msg='Thank you for contacting us. We will respond to you as soon as possible.';
+            
+            $to=$model->Email;
+                $from=Yii::$app->params['adminEmail'];
+                $subject="Thank you";
+                
+               $html= "<html>
+               <head>
+               <title>Thank you</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/jyoti/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:200px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/jyoti/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+                 <h3> Dear  $contactname, </h3>
+Thank you for contacting us. We will respond to you as soon as possible.!
+               <br/>
+               </span>
+               </h2>
+               </td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+               $mail= new ContactForm();
+               $mail->sendEmail($to,$from,$html,$subject);
         }
+        else
+        {
+            $msg='There was an error sending email.';
+        }
+       echo json_encode($msg); 
     }
 
     /**
@@ -301,7 +343,7 @@ class SiteController extends Controller
                 $model->save();
                 $name=$model->Name;
                 $to=$model->Email;
-                $from='Careerbugs@info.in';
+                $from=Yii::$app->params['adminEmail'];;
                 $subject="Verify your email id";
                 
                $html= "<html>
@@ -384,6 +426,19 @@ class SiteController extends Controller
         $model=new AllUser();
         $employerid= Yii::$app->session['Employerid'];
         $employerone=$model->find()->where(['UserId'=>$employerid])->one();
+        
+        if($employerone->LogoId!=0)
+        {
+            $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+            $pimage=$url.$employerone->logo->Doc;
+        }
+        else
+        {
+            $pimage='images/user.png';
+        }
+        $session = Yii::$app->session;
+        $session->open();
+        Yii::$app->session['EmployerDP']=$pimage;
         return $this->render('companyprofile',['employer'=>$employerone]);
         }
         else
@@ -471,6 +526,17 @@ class SiteController extends Controller
             {
                 $cv_id=0;
             }
+            
+            $photo = UploadedFile::getInstance($alluser, 'PhotoId');
+            if($photo)
+            {
+            $photo_id=$docmodel->imageUpload($photo,'PhotoId');
+            }
+            else
+            {
+                $photo_id=0;
+            }
+            
             $alluser->UserTypeId=2;
             if(Yii::$app->request->post()['AllUser']['CompanyName']!='')
             {
@@ -482,6 +548,7 @@ class SiteController extends Controller
             }
             $alluser->Password=md5(Yii::$app->request->post()['AllUser']['Password']);
             $alluser->CVId=$cv_id;
+            $alluser->PhotoId=$photo_id;
             $alluser->Ondate=date('Y-m-d');
             $alluser->save();
             
@@ -516,6 +583,45 @@ class SiteController extends Controller
                 Yii::$app->session['EmployeeEmail']=$alluser->Email;
                 Yii::$app->session['Employeeid']=$alluser->UserId;
                 Yii::$app->session['EmployeeName']=$alluser->Name;
+                
+                
+                $name=$alluser->Name;
+                $to=$alluser->Email;
+                $from=Yii::$app->params['adminEmail'];
+                $subject="Registration Success";
+                
+               $html= "<html>
+               <head>
+               <title>Registration Success</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/jyoti/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:200px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/jyoti/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+                 <h3> Dear  $name, </h3>
+Congratulations! You have been registered successfully on Careerbug!!
+               <br/>
+               </span>
+               </h2>
+               </td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+               $mail= new ContactForm();
+               $mail->sendEmail($to,$from,$html,$subject);
+                
+                
+                
                 
                 Yii::$app->session->setFlash('success', "Account Created Successfully");
                 return $this->redirect(['profilepage']);
@@ -616,9 +722,21 @@ class SiteController extends Controller
     {
         if(isset(Yii::$app->session['Employeeid']))
         {
-        $this->layout='layout';
         $alluser=new AllUser();
         $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
+        if($profile->PhotoId!=0)
+        {
+            $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+            $pimage=$url.$profile->photo->Doc;
+        }
+        else
+        {
+            $pimage='images/user.png';
+        }
+        $session = Yii::$app->session;
+        $session->open();
+        Yii::$app->session['EmployeeDP']=$pimage;
+        $this->layout='layout';
         return $this->render('profilepage',['profile'=>$profile]);
         }
         else

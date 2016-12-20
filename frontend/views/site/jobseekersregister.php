@@ -57,7 +57,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 									<input type="text" class="form-control" name="AllUser[MobileNo]" id="MobileNo"  placeholder="Enter your MobileNo" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" maxlength="10" required/>
 								</div>
 							</div>
-						</div> 
+						</div>
 						
 							<div class="form-group">
 							<label for="email" class="cols-sm-2 control-label">Address</label>
@@ -67,7 +67,19 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 									<input type="text" class="form-control" name="AllUser[Address]" id="address"  placeholder="Enter your Address" required/>
 								</div>
 							</div>
-						</div> 
+						</div>
+							
+						<div class="form-group">
+							<label for="confirm" class="cols-sm-2 control-label">Upload Photo  </label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+										<div class="input-group" style="font-size: 14px;">
+								    <input type="file" name="AllUser[PhotoId]" accept=
+"application/jpeg, application/png, application/jpg">
+										</div>
+								</div>
+							</div>
+						</div>
 						
 						<div class="form-group">
 							<label for="confirm" class="cols-sm-2 control-label">Country  </label>
@@ -137,7 +149,6 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 								</div>
 							</div>
 						</div>
-						
 			  
 			
 						<div class="form-group">
@@ -145,13 +156,14 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 										<div class="input-group" style="font-size: 14px;">
-								    <input type="file" name="AllUser[CVId]"required accept=
+								    <input type="file" name="AllUser[CVId]" accept=
 "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
 text/plain, application/pdf">
 										</div>
 								</div>
 							</div>
 						</div>
+						
 			</div> 
 						
 						

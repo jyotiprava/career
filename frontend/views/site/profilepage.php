@@ -9,7 +9,7 @@
 			  <div  id="profile-desc">
 			   <div class="col-md-2 col-sm-2 col-xs-12">
 			                 <div class="user-profile">
-                                    <img src="images/user.png" alt="" class="img-responsive center-block ">
+                                    <img src="<?=Yii::$app->session['EmployeeDP'];?>" alt="" class="img-responsive center-block ">
                                     <h3><?=$profile->Name;?></h3>
                                 </div> 
 			      	</div>
