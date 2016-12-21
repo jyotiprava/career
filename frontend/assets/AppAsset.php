@@ -23,7 +23,8 @@ class AppAsset extends AssetBundle
         'css/owl.transitions.css',
         
         'css/jslider.css',
-        'css/jslider.round.css'
+        'css/jslider.round.css',
+        'css/jquery-ui.css',
     ];
     public $js = [
         //'js/jquery.min.js',
@@ -43,6 +44,7 @@ class AppAsset extends AssetBundle
         
         'js/main.js',
         'js/validate.js',
+        'js/jquery-ui.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

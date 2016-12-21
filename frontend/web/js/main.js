@@ -27,6 +27,69 @@ jQuery(document).ready(function($) {
 				menu.removeAttr('style');
 			}
 		});
+		
+		//skill autocomplete
+		function split( val ) {
+        return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+        return split( term ).pop();
+    }
+    
+    $( "#skills" ).bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+            event.preventDefault();
+        }
+    })
+    .autocomplete({
+        minLength: 1,
+        source: function( request, response ) {
+            // delegate back to autocomplete, but extract the last term
+            $.getJSON("index.php?r=site/skill", { term : extractLast( request.term )},response);
+        },
+        focus: function() {
+            // prevent value inserted on focus
+            return false;
+        },
+       select: function( event, ui ) {
+			var terms = split( this.value );
+			var termsid=split($('#skillid').val());
+			if(terms.length <= 6) {
+				// remove the current input
+				terms.pop();termsid.pop();
+				// add the selected item
+				if (terms.length>0) {
+                   if (jQuery.inArray( ui.item.value, terms )==-1) {
+                    terms.push( ui.item.value );
+					termsid.push(ui.item.id);
+					}
+                }else
+				{
+					terms.push( ui.item.value );
+					termsid.push(ui.item.id);
+				}
+				
+				
+				// add placeholder to get the comma-and-space at the end
+				terms.push( "" );termsid.push("");
+				this.value = terms.join( ", " );
+				$('#skillid').val(termsid.join(","));
+				return false;
+			}else{
+				var last = terms.pop();
+				$(this).val(this.value.substr(0, this.value.length - last.length - 2)); // removes text from input
+				$(this).effect("highlight", {}, 1000);
+				$(this).attr("style","border: solid 1px red;");
+				return false;
+			}
+		}
+    });
+	//skill autocomplete
+		
+		
+		
+		
 	});
 	
 	////////////////////////////////////Home Slider

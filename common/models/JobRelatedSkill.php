@@ -33,7 +33,7 @@ class JobRelatedSkill extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['JobId', 'SkillId', 'IsDelete', 'OnDate'], 'required'],
+            [['JobId', 'SkillId','OnDate'], 'required'],
             [['JobId', 'SkillId', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['SkillId'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['SkillId' => 'SkillId']],

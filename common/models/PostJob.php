@@ -53,14 +53,16 @@ class PostJob extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['JobTitle', 'Location', 'Salary', 'Experience', 'JobType', 'CompanyName', 'Email', 'Phone', 'Website', 'Country', 'State', 'City', 'NoofVacancy', 'JobShift', 'JobDescription', 'JobSpecification', 'TechnicalGuidance', 'LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'IsDelete', 'OnDate'], 'required'],
-            [['Location', 'NoofVacancy', 'LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'IsDelete'], 'integer'],
+            [['JobTitle', 'Location', 'Salary', 'Experience', 'JobType', 'CompanyName', 'Email', 'Phone', 'Website', 'Country', 'State', 'City', 'NoofVacancy', 'JobShift', 'JobDescription', 'JobSpecification', 'TechnicalGuidance', 'LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'OnDate'], 'required'],
+            [['LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'IsDelete'], 'integer'],
             [['Website', 'JobDescription', 'JobSpecification', 'TechnicalGuidance'], 'string'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['JobTitle', 'Experience', 'CompanyName'], 'string', 'max' => 200],
             [['Salary', 'Email', 'JobShift'], 'string', 'max' => 150],
             [['JobType', 'Country', 'State', 'City'], 'string', 'max' => 100],
+            [['Location'],'string','max'=>400],
             [['Phone'], 'string', 'max' => 12],
+            [['NoofVacancy'],'string','max'=>20],
         ];
     }
 

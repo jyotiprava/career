@@ -1,9 +1,18 @@
+<?php
+$this->title = 'My Post';
+
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+$imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
+?>
+
 <div id="wrapper"><!-- start main wrapper -->
  
 		<div class="headline_inner">
 				<div class="row"> 
 			       <div class=" container"><!-- start headline section --> 
-						 <h2> Senior Management Executive – MER Coordinator   </h2>
+						 <h2> Senior Management Executive â€“ MER Coordinator   </h2>
 						<div class="clearfix"></div>
 					</div>
 			</div><!-- end headline section -->
@@ -155,4 +164,3 @@
 		
 		
 		<div class="border"></div>
-</div>
