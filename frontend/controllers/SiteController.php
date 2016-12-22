@@ -293,6 +293,18 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                 Yii::$app->session['EmployerEmail']=$model->Email;
                 
                 $employerone=$model->find()->where(['UserId'=>$rest->UserId])->one();
+                
+                if($employerone->LogoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$employerone->logo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+                Yii::$app->session['EmployerDP']=$pimage;
+        
                 return $this->render('companyprofile',['employer'=>$employerone]);
             }
             else
@@ -532,19 +544,6 @@ Congratulations! You have been registered successfully on Careerbug!!
         $model=new AllUser();
         $employerid= Yii::$app->session['Employerid'];
         $employerone=$model->find()->where(['UserId'=>$employerid])->one();
-        
-        if($employerone->LogoId!=0)
-        {
-            $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
-            $pimage=$url.$employerone->logo->Doc;
-        }
-        else
-        {
-            $pimage='images/user.png';
-        }
-        $session = Yii::$app->session;
-        $session->open();
-        Yii::$app->session['EmployerDP']=$pimage;
         return $this->render('companyprofile',['employer'=>$employerone]);
         }
         else
@@ -843,6 +842,16 @@ You need to confirm your email address $to in order to activate your Careerbug a
                 Yii::$app->session['Employeeid']=$rest->UserId;
                 Yii::$app->session['EmployeeName']=$rest->Name;
                 Yii::$app->session['EmployeeEmail']=$model->Email;
+                if($rest->PhotoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$rest->photo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+                Yii::$app->session['EmployeeDP']=$pimage;
                 return $this->redirect(['profilepage']);
             }
             else
@@ -909,18 +918,6 @@ You need to confirm your email address $to in order to activate your Careerbug a
         {
         $alluser=new AllUser();
         $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
-        if($profile->PhotoId!=0)
-        {
-            $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
-            $pimage=$url.$profile->photo->Doc;
-        }
-        else
-        {
-            $pimage='images/user.png';
-        }
-        $session = Yii::$app->session;
-        $session->open();
-        Yii::$app->session['EmployeeDP']=$pimage;
         $this->layout='layout';
         return $this->render('profilepage',['profile'=>$profile]);
         }
@@ -994,19 +991,36 @@ You need to confirm your email address $to in order to activate your Careerbug a
             $education->HighestQualification=Yii::$app->request->post()['AllUser']['HighestQualification'];
             $education->CourseId=Yii::$app->request->post()['AllUser']['CourseId'];
             $education->University=Yii::$app->request->post()['AllUser']['University'];
-            $education->PassingYear=Yii::$app->request->post()['AllUser']['DurationTo'];
             $education->SkillId=Yii::$app->request->post()['AllUser']['SkillId'];
             $education->save();
             
             if(Yii::$app->request->post()['AllUser']['CompanyName']!='')
             {
             $experience=Experience::find()->where(['UserId'=>$profile->UserId])->one();
+            if($experience)
+            {
             $experience->CompanyName=Yii::$app->request->post()['AllUser']['CompanyName'];
             $experience->PositionId=Yii::$app->request->post()['AllUser']['PositionId'];
             $experience->Experience=Yii::$app->request->post()['AllUser']['Experience'];
-            $experience->Salary=Yii::$app->request->post()['AllUser']['Salary'];
             $experience->save();
             }
+            else
+            {
+            $experience=new Experience();
+            $experience->UserId=$profile->UserId;
+            $experience->CompanyName=Yii::$app->request->post()['AllUser']['CompanyName'];
+            $experience->PositionId=Yii::$app->request->post()['AllUser']['PositionId'];
+            $experience->YearFrom=Yii::$app->request->post()['AllUser']['YearFrom'];
+            $experience->YearTo=Yii::$app->request->post()['AllUser']['YearTo'];
+            $experience->Experience=Yii::$app->request->post()['AllUser']['Experience'];
+            $experience->Salary=Yii::$app->request->post()['AllUser']['Salary'];
+            $experience->OnDate=date('Y-m-d');
+            $experience->save();
+            
+            }
+            }
+            
+            return $this->render('editprofile',['profile'=>$profile,'skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
             }
              else{
             return $this->render('editprofile',['profile'=>$profile,'skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);

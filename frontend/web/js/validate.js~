@@ -20,6 +20,14 @@ if (val.length!=10 && val!='') {
 }
 }
 
+function yearvalidate(year,id) {
+    if (year >= 1900 && year <= 2016) {
+} else {
+  alert(year + ' is an invalid year !');
+  $('#'+id).val('');
+}
+}
+
 function ConfirmPassword(val){
 if (val!=$('#password').val()) {
     alert('Password  and Confirm password Must Be Same.');
