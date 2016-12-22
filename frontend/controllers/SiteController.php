@@ -560,8 +560,16 @@ Congratulations! You have been registered successfully on Careerbug!!
         $docmodel=new Documents();        
         $employerid= Yii::$app->session['Employerid'];
         $employerone=$model->find()->where(['UserId'=>$employerid])->one();
+        if($employerone->load(Yii::$app->request->post())){
+            $employerone->save(); 
+           
+            Yii::$app->session->setFlash('success', 'Profile Updated Successfully.');
+            return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);           
+
+        }else{
+            return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);
+        }
         
-        return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);
     }
 
     public function actionYourpost()

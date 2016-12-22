@@ -11,6 +11,8 @@ use yii\data\ActiveDataProvider;
 use common\models\AllUser;
 use common\models\Education;
 use common\models\Experience;
+use common\models\ContactUs;
+
 
 /**
  * AboutController implements the CRUD actions for About model.
@@ -58,5 +60,11 @@ class ReportController extends Controller
     {
         $userdetail=AllUser::find()->where(['UserId'=>$userid])->one();
         return $this->render('candidatedetailview',['profile'=>$userdetail]);
+    }
+    
+     public function actionContactuslist()
+    {
+        $contactdetail=ContactUs::find()->orderBy(['UpdatedDate'=>SORT_DESC])->all();
+        return $this->render('contactuslist',['contactdetail'=>$contactdetail]);
     }
 }

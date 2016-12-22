@@ -232,7 +232,7 @@ AppAsset::register($this);
    								<img style="width: 43px;height: 43px;" src="<?=Yii::$app->session['EmployerDP'];?>" alt="" class="img-responsive center-block "><?php echo Yii::$app->session['EmployerName']; ?>  </a> 
 								<ul class="dropdown-menu"> 
 									<li class=""><a href="<?= Url::toRoute(['site/companyprofile'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
-									<li class=""><a href="<?= Url::toRoute(['site/employereditprofile'])?>"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
+									<li class=""><a href="<?= Url::toRoute(['site/companyprofileeditpage'])?>"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
 									<li class=""><a href="<?= Url::toRoute(['site/employerchangepassword'])?>"> <b class="fa fa-lock"></b> Change Password  </a></li> 
 									<li class=""><a href="<?= Url::toRoute(['site/employerlogout'])?>"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
 								</ul>
