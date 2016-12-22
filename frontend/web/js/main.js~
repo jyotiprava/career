@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
 	
 	
 	$('.date').datepicker();		
-	$( ".date" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
+	$( ".date" ).datepicker( "option", "dateFormat", 'yyyy-mm-dd' );
 		
 		setTimeout(function() {
             $('.alert').fadeOut('fast');

@@ -62,7 +62,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 				<div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="resume-box">
                                 <div class="heading-inner">
-                                    <p class="title">Educational Information  <span><?=$profile->educations[0]->DurationFrom;?> to <?=$profile->educations[0]->DurationTo;?></span></p>
+                                    <p class="title">Educational Information  <span><?=date('Y',strtotime($profile->educations[0]->DurationFrom));?> to <?=date('Y',strtotime($profile->educations[0]->DurationTo));?></span></p>
                                 </div>
                                 <div class="row education-box">
                                     <div class="col-md-4 col-xs-12 col-sm-4">
@@ -142,7 +142,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 				<div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="resume-box">
                                 <div class="heading-inner">
-                                    <p class="title">  Work Experience  <span><?=$profile->experiences[0]->YearFrom;?> to <?=$profile->experiences[0]->YearTo;?></span></p>
+                                    <p class="title">  Work Experience  <span><?=date('Y',strtotime($profile->experiences[0]->YearFrom));?> to <?=date('Y',strtotime($profile->experiences[0]->YearTo));?></span></p>
                                 </div>
                                 <div class="row education-box">
                                     <div class="col-md-4 col-xs-12 col-sm-4">

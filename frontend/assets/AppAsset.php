@@ -30,7 +30,6 @@ class AppAsset extends AssetBundle
         //'js/jquery.min.js',
         
         'bootstrap/js/bootstrap.min.js',
-        
         'js/jquery.easytabs.min.js',
         'js/modernizr.custom.49511.js',
         'js/owl.carousel.js',

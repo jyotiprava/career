@@ -217,12 +217,12 @@ text/plain, application/pdf">
 							<div class="cols-sm-8">
 								<div class="input-group" style="width: 33%;float: left;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[DurationFrom]" id="dfrom"  placeholder="From" required maxlength="4" onkeypress="return numbersonly(event)" onblur="yearvalidate(this.value,'dfrom');"/>
+									<input type="text" class="form-control date" name="AllUser[DurationFrom]" id="dfrom"  placeholder="From" required maxlength="4" onkeypress="return numbersonly(event)" />
 								</div>
 								
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[DurationTo]" id="dto"  placeholder="To" required maxlength="4" onkeypress="return numbersonly(event)" onblur="yearvalidate(this.value,'dto'); if($(this).val()<=$('#dfrom').val()){alert('Wrong Year Duration');$(this).val('');}"/>
+									<input type="text" class="form-control date" name="AllUser[DurationTo]" id="dto"  placeholder="To" required maxlength="4" onkeypress="return numbersonly(event)" onchange="if(new Date($(this).val()).getTime()<=new Date($('#dfrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 							</div>
 							
@@ -287,12 +287,12 @@ text/plain, application/pdf">
 							<label for="email" class="cols-sm-2 control-label">  Year    </label>
 							<div class="cols-sm-5">
 								<div class="input-group" style="width: 33%;float: left;">
-									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[YearFrom]" id="YearFrom"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)" onblur="yearvalidate(this.value,'YearFrom');"/>
+									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+									<input type="text" class="form-control date" name="AllUser[YearFrom]" id="YearFrom"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)"/>
 								</div>
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
-									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[YearTo]" id="YearTo"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onblur="yearvalidate(this.value,'YearTo');if($(this).val()<$('#YearFrom').val()){alert('Wrong Year Duration');$(this).val('');}"/>
+									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+									<input type="text" class="form-control date" name="AllUser[YearTo]" id="YearTo"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onchange="if(new Date($(this).val()).getTime()<=new Date($('#YearFrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 							</div>
 							
@@ -305,14 +305,14 @@ text/plain, application/pdf">
 							<div class="cols-sm-10">
 								<div class="input-group full">
 									 <select id="form-filter-location" name="AllUser[Experience]" data-minimum-results-for-search="Infinity" class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                <option value="1">Experience</option>
-                                <option value="2"> &gt; 1 Year   </option>
-                                <option value="3">   2 Year  </option>
-                                <option value="4">   3 Year  </option>
+                                <option value="Experience">Experience</option>
+                                <option value="1"> &gt; 1 Year   </option>
+                                <option value="2">   2 Year  </option>
+                                <option value="3">   3 Year  </option>
 								<option value="4">   4 Year  </option>
-								<option value="4">   5 Year  </option>
-								<option value="4">   6 Year  </option>
-								<option value="4">   7 Year  </option>
+								<option value="5">   5 Year  </option>
+								<option value="6">   6 Year  </option>
+								<option value="7">   7 Year  </option>
                               </select>
 								</div>
 							</div>
