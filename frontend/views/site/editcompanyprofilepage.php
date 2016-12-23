@@ -7,20 +7,49 @@ use yii\bootstrap\ActiveForm;
 $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
 ?>
+<style>
+  .editcontainer{
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    float: right;
+    cursor: pointer;
+}
+.select-wrapper {
+    background: url(images/edit.png) no-repeat;
+    background-size: cover;
+    display: block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+}
+#image_src {
+    width: 15px;
+    height: 15px;
+    margin-right: 100px;
+    opacity: 0;
+    filter: alpha(opacity=0); /* IE 5-7 */
+}
+</style>
 	<div id="wrapper"><!-- start main wrapper -->
 	 
 		 
 		<div class="inner_page second">
 			<div class="container">
 			  <div  id="profile-desc">
+			<?php $form = ActiveForm::begin(['options' => ['enctype'=>'multipart/form-data']]); ?>		        
 			   <div class="col-md-2 col-sm-2 col-xs-12">
 			                 <div class="user-profile">
-                                    <img src="<?php echo $url.$employer->logo->Doc ;?>" alt="<?php echo $employer->Name ;?>" class="img-responsive center-block ">
-                                    <h3><?php echo $employer->Name ;?></h3>
+                                    <img src="<?php echo $url.$employer->logo->Doc ;?>" alt="<?php echo $employer->Name ;?>" class="img-responsive center-block ">	<div class="editcontainer">
+					<span class="select-wrapper">
+					  <input type="file"  name="AllUser[LogoId]" id='image_src'/>
+					</span>
+				      </div>
+				    
+                                    <h3><input type="text" class="form-control" required name="AllUser[Name]" id="Name" value="<?php echo $employer->Name ;?>" placeholder="Name"></h3>
                                 </div> 
 			      	</div>
-			 <?php $form = ActiveForm::begin(['options' => ['enctype'=>'multipart/form-data']]); ?>
-		         <div class="col-md-10 col-sm-10 col-xs-12"> 
+			 <div class="col-md-10 col-sm-10 col-xs-12"> 
                             <div class="job-short-detail" id="edit_profile_page">
                                 <div class="heading-inner">
                                     <p class="title"> Company / Consultant details</p>

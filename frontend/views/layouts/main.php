@@ -187,7 +187,7 @@ AppAsset::register($this);
 								<ul class="dropdown-menu"> 
 									<li class=""><a href="<?= Url::toRoute(['site/profilepage'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
 									<li class=""><a href="edit_profile.html"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
-									<li class=""><a href="change_password.html"> <b class="fa fa-lock"></b> Change Password  </a></li> 
+									<li class=""><a href="<?= Url::toRoute(['site/employeechangepassword'])?>"> <b class="fa fa-lock"></b> Change Password  </a></li> 
 									<li class=""><a href="<?= Url::toRoute(['site/employeelogout'])?>"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
 								</ul>
 							</li> 

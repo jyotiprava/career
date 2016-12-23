@@ -51,7 +51,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							</div>
 							<div class="col-xs-12 col-sm-6">
 								<p class="omb_forgotPwd">
-									<a  href="<?= Url::toRoute(['site/employeeforgetpassword'])?>" >Forgot password?</a>
+									<a  href="<?= Url::toRoute(['site/employerforgetpassword'])?>" >Forgot password?</a>
 								</p>
 							</div>
 						</div> 

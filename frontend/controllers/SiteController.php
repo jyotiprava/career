@@ -9,7 +9,6 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\AllUser;
@@ -47,7 +46,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup','index','jobseach','employersregister','companyprofileeditpage'],
+                        'actions' => ['signup','index','jobseach','employersregister','companyprofileeditpage','resetpassword'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -251,24 +250,6 @@ Thank you for contacting us. We will respond to you as soon as possible.!
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
     // ------------------- ALL USER(Employers) Start -------------------//
     public function actionEmployerslogin()
     {
@@ -276,15 +257,17 @@ Thank you for contacting us. We will respond to you as soon as possible.!
         $this->layout='layout';        
         $model=new AllUser();
         if ($model->load(Yii::$app->request->post())) {
-            $isverified=$model->find()->where(['Email'=>$model->Email,'VerifyStatus'=>1,'UserTypeId'=>3,'IsDelete'=>0])->count();
-            if($isverified==0){
-                 Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
-                 return $this->render('employerslogin', ['model' => $model,]);
-            }else{
             $password=md5($model->Password);
-            $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>3,'IsDelete'=>0])->count();
-            if($cnt>0)
+            $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>3,'IsDelete'=>0])->one();
+            
+            if($rest)
             {
+                if($rest->VerifyStatus==0)
+                {
+                    Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
+                }
+                else
+                {
                 $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>3,'IsDelete'=>0])->one();
                 $session = Yii::$app->session;
                 $session->open();
@@ -306,13 +289,13 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                 Yii::$app->session['EmployerDP']=$pimage;
         
                 return $this->render('companyprofile',['employer'=>$employerone]);
+                }
             }
             else
             {
                 Yii::$app->session->setFlash('error', "Wrong Email Or Password");
                 return $this->render('employerslogin', ['model' => $model,]);
             }
-        }
         }else {
             return $this->render('employerslogin', ['model' => $model,]);
         }
@@ -385,7 +368,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                </tr>
                <tr>
                 <td><a href='http://45.58.34.139/career/frontend/web/index.php?r=site%2Femployersverifryemail&vkey=$vkey'>
-               <span style='display: block;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Verify Email</span>
+               <span style='display: block; height:50 px;width:100px;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Verify Email</span>
                </a></td>
                </tr>
                </tbody>
@@ -442,7 +425,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                <br><br>
                <span style='font-size:16px;line-height:1.5'>
                  <h3> Dear  $name, </h3>
-Congratulations! You have been registered successfully on Careerbug!!
+                    Congratulations! You have been registered successfully on Careerbug!!
                <br/>
                </span>
                </h2>
@@ -506,7 +489,7 @@ Congratulations! You have been registered successfully on Careerbug!!
                <br><br>
                <span style='font-size:16px;line-height:1.5'>
                  <h3> Dear  $name, </h3>
-Congratulations! You have been registered successfully on Careerbug!!
+                    Congratulations! You have been registered successfully on Careerbug!!
                <br/>
                </span>
                </h2>
@@ -559,11 +542,22 @@ Congratulations! You have been registered successfully on Careerbug!!
         $docmodel=new Documents();        
         $employerid= Yii::$app->session['Employerid'];
         $employerone=$model->find()->where(['UserId'=>$employerid])->one();
+        $oldlogo=$employerone->LogoId;
         if($employerone->load(Yii::$app->request->post())){
-            $employerone->save(); 
+            $logo = UploadedFile::getInstance($model, 'LogoId');
+                if($logo)
+                {
+                $logo_id=$docmodel->imageUpload($logo,'LogoId');
+                }
+                else
+                {
+                    $logo_id=$oldlogo;
+                }
+              $employerone->LogoId=$logo_id;
+              $employerone->save(); 
            
             Yii::$app->session->setFlash('success', 'Profile Updated Successfully.');
-            return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);           
+            return $this->redirect(['companyprofileeditpage']);           
 
         }else{
             return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);
@@ -832,9 +826,15 @@ You need to confirm your email address $to in order to activate your Careerbug a
           $model=new AllUser();
          if ($model->load(Yii::$app->request->post())){
             $password=md5($model->Password);
-            $cnt=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>2,'VerifyStatus'=>1,'IsDelete'=>0])->count();
-            if($cnt>0)
+            $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>2,'IsDelete'=>0])->one();
+            if($rest)
             {
+                if($rest->VerifyStatus==0)
+                {
+                    Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
+                }
+                else
+                {
                 $this->layout='layout';
                 $rest=$model->find()->where(['Email'=>$model->Email,'Password'=>$password,'UserTypeId'=>2,'IsDelete'=>0])->one();
                 $session = Yii::$app->session;
@@ -853,6 +853,7 @@ You need to confirm your email address $to in order to activate your Careerbug a
                 }
                 Yii::$app->session['EmployeeDP']=$pimage;
                 return $this->redirect(['profilepage']);
+                }
             }
             else
             {
@@ -880,17 +881,240 @@ You need to confirm your email address $to in order to activate your Careerbug a
     }
     
     
-    public function actionEmployeeforgetpassword()
+    public function actionEmployerforgetpassword()
     {
         $this->layout='layout';
-        return $this->render('employeeforgetpassword');
+        $model = new AllUser();
+        if ($model->load(Yii::$app->request->post())) {
+            $email=Yii::$app->request->post('AllUser')['Email'];
+            $chk=$model->find()->where(['Email'=>$email,'UserTypeId'=>3])->one();
+         if($chk)
+         {
+                $ucode='CB'.time();
+                $chk->VerifyKey=$ucode;
+                $chk->VerifyStatus=0;
+                $chk->save();
+                
+               // var_dump($chk->getErrors());
+                
+                $to=$email;
+                $from='careerbugs@info.in';
+                $subject="Reset Password";
+                
+               $html= "<html>
+               <head>
+               <title>Create a new password</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/career/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:150px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/career/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+               Please click in the link to create your new password
+               <br/>
+               <a href='http://45.58.34.139/career/frontend/web/index.php?r=site%2Fresetpassword&ucode=$ucode'>
+               <span style='display: block; height:50 px;width:100px;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Click Here</span>
+               </a>
+              
+               </span>
+               </h2>
+               </td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+                $mail= new ContactForm();
+               $mail->sendEmail($to,$from,$html,$subject);
+               Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+         }
+         else
+         {
+            Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+         }
+        }
+
+       return $this->render('employerforgetpassword',['model' => $model]);
     }
     
+      public function actionResetpassword($ucode)
+    {
+        $model = new AllUser();
+        $chk=$model->find()->where(['VerifyKey'=>$ucode,'UserTypeId'=>3])->one();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $chk->Password=md5($model->Password);
+            $chk->save();
+            Yii::$app->session->setFlash('success', 'New password has been saved.');
+            return $this->redirect(['employerslogin']);
+            }
+            else
+            {
+                if( $chk && $chk->VerifyStatus==0)
+                {
+                    $chk->VerifyStatus=1;
+                    $chk->save();
+                    return $this->render('resetpassword', ['ucode'=>$ucode,'model' => $model,]);
+                }
+                else{
+                    Yii::$app->session->setFlash('success', 'Please give your registered EmailId for create a new password.');
+                     return $this->redirect(['employerforgetpassword']); 
+                }
+            }
+    }
+    public function actionEmployerchangepassword()
+    {
+        $model = new AllUser();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $cpass=md5(Yii::$app->request->post('AllUser')['CPassword']);
+            $npass=Yii::$app->request->post('AllUser')['NPassword'];
+            $UserId=Yii::$app->request->post('AllUser')['UserId'];
+            $chk=$model->find()->where(['UserId'=>$UserId])->one();
+            if($chk->Password==$cpass){
+            $chk->Password=md5($npass);
+            $chk->save();
+            Yii::$app->session->setFlash('success', 'Password Has been Changed.');
+            return $this->redirect(['companyprofile']); 
+            
+            }else{
+            Yii::$app->session->setFlash('error', 'Incorrect Current Password.');
+            return $this->render('employerchangepassword', ['model'=>$model]); 
+            }
+            
+            }
+            else
+            {
+                return $this->render('employerchangepassword', ['model'=>$model]); 
+               
+            }
+    }
     public function actionForgetpassword()
     {
         $this->layout='layout';
-        return $this->render('forgetpassword');
+        $model = new AllUser();
+        if ($model->load(Yii::$app->request->post())) {
+          $email=Yii::$app->request->post('AllUser')['Email'];
+            $chk=$model->find()->where(['Email'=>$email,'UserTypeId'=>2])->one();
+         if($chk)
+         {
+                $ucode='CB'.time();
+                $chk->VerifyKey=$ucode;
+                $chk->VerifyStatus=0;               
+                $chk->save();
+                
+                //var_dump($chk->getErrors());
+                
+                $to=$email;
+                $from='careerbugs@info.in';
+                $subject="Reset Password";
+                
+               $html= "<html>
+               <head>
+               <title>Create a new password</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/career/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:150px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/career/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+               Please click in the link to create your new password
+               <br/>
+               <a href='http://45.58.34.139/career/frontend/web/index.php?r=site%2Fresetemppassword&ucode=$ucode'>
+               <span style='display: block; height:50 px;width:100px;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Click Here</span>
+               </a>
+              
+               </span>
+               </h2>
+               </td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+                $mail= new ContactForm();
+               $mail->sendEmail($to,$from,$html,$subject);
+               Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+         }
+         else
+         {
+            Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+         }
+        }
+
+       return $this->render('forgetpassword',['model' => $model]);
     }
+    
+      public function actionResetemppassword($ucode)
+    {
+        $model = new AllUser();
+        $chk=$model->find()->where(['VerifyKey'=>$ucode,'UserTypeId'=>2])->one();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $chk->Password=md5($model->Password);
+            $chk->save();
+            Yii::$app->session->setFlash('success', 'New password has been saved.');
+            return $this->redirect(['login']);
+            }
+            else
+            {
+                if($chk && $chk->VerifyStatus==0)
+                {
+                    $chk->VerifyStatus=1;
+                    $chk->save();
+                    return $this->render('resetemppassword', ['ucode'=>$ucode,'model' => $model,]);
+                }
+                else{
+                    Yii::$app->session->setFlash('success', 'Please give your registered EmailId for create a new password.');
+                     return $this->redirect(['forgetpassword']); 
+                }
+            }
+    }
+    
+    public function actionEmployeechangepassword()
+    {
+        $model = new AllUser();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $cpass=md5(Yii::$app->request->post('AllUser')['CPassword']);
+            $npass=Yii::$app->request->post('AllUser')['NPassword'];
+            $UserId=Yii::$app->request->post('AllUser')['UserId'];
+            $chk=$model->find()->where(['UserId'=>$UserId])->one();
+            if($chk->Password==$cpass){
+            $chk->Password=md5($npass);
+            $chk->save();
+            Yii::$app->session->setFlash('success', 'Password Has been Changed.');
+            return $this->redirect(['profilepage']); 
+            
+            }else{
+            Yii::$app->session->setFlash('error', 'Incorrect Current Password.');
+            return $this->render('employeechangepassword', ['model'=>$model]); 
+            }
+            
+            }
+            else
+            {
+                return $this->render('employeechangepassword', ['model'=>$model]); 
+               
+            }
+    }
+    
+    
+    
     
     public function actionRegister()
     {
