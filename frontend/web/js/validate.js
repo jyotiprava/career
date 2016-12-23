@@ -99,3 +99,19 @@ function checkemail(){
     return false;
  }
 }
+
+function closestatus(jobid) {
+    var r=confirm("Are you sure you want to close this Job?");
+    if (r==true) {
+        $.ajax({
+dataType: "json",
+type: 'GET',
+url: "index.php?r=site/closestatus",
+data: { jobid: jobid, _crsf: "<?= $csrfToken?>"},
+success:function(res) {
+	alert(res);
+    location.reload();
+}
+});
+    }
+}

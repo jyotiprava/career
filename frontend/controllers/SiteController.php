@@ -125,7 +125,7 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-
+    
     /**
      * Displays contact page.
      *
@@ -576,12 +576,48 @@ Congratulations! You have been registered successfully on Careerbug!!
         if(isset(Yii::$app->session['Employerid']))
         {
             $this->layout='layout';
-            return $this->render('yourpost');
+            $postjob=new PostJob();
+            $allpost=$postjob->find()->where(['EmployerId'=>Yii::$app->session['Employerid']])->orderBy(['OnDate'=>SORT_DESC])->all();
+            return $this->render('yourpost',['allpost'=>$allpost]);
         }
         else
         {
             return $this->redirect(['index']);
         }
+    }
+    
+    public function actionPostdetail($JobId)
+    {
+        if(isset(Yii::$app->session['Employerid']))
+        {
+            $this->layout='layout';
+            $postjob=new PostJob();
+            $allpost=$postjob->find()->where(['EmployerId'=>Yii::$app->session['Employerid'],'JobId'=>$JobId])->one();
+            return $this->render('postdetail',['allpost'=>$allpost]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }        
+    }
+    
+    public function actionClosestatus()
+    {
+        $jobid=Yii::$app->request->get()['jobid'];
+        $this->layout='layout';
+        $postjob=new PostJob();
+        $pdetail=$postjob->find()->where(['JobId'=>$jobid])->one();
+        $pdetail->JobStatus=1;
+        if($pdetail->save())
+        {
+           $msg="Job Closed Successfully";
+        }
+        else
+        {
+            $msg="There is some error please try again";
+        }
+        
+        echo json_encode($msg); 
     }
     
     public function actionPostajob()
@@ -610,7 +646,7 @@ Congratulations! You have been registered successfully on Careerbug!!
             }
             $postajob->LogoId=$logo_id;
             $postajob->EmployerId=Yii::$app->session['Employerid'];
-            $postajob->OnDate=date('Y-m-d');
+            $postajob->OnDate=date('Y-m-d H:i:s');
             $postajob->save();
             
             $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
@@ -630,7 +666,7 @@ Congratulations! You have been registered successfully on Careerbug!!
         }
         else
         {
-        return $this->render('postajob',['position'=>$allposition,'jobcategory'=>$allcategory]);
+        return $this->render('postajob',['model'=>$postajob,'position'=>$allposition,'jobcategory'=>$allcategory]);
         }
         }
         else

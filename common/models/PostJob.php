@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $JobId
  * @property string $JobTitle
- * @property integer $Location
+ * @property string $Location
  * @property string $Salary
  * @property string $Experience
  * @property string $JobType
@@ -20,7 +20,7 @@ use Yii;
  * @property string $Country
  * @property string $State
  * @property string $City
- * @property integer $NoofVacancy
+ * @property string $NoofVacancy
  * @property string $JobShift
  * @property string $JobDescription
  * @property string $JobSpecification
@@ -29,12 +29,16 @@ use Yii;
  * @property integer $EmployerId
  * @property integer $JobCategoryId
  * @property integer $PositionId
+ * @property integer $JobStatus
  * @property integer $IsDelete
  * @property string $OnDate
  * @property string $UpdatedDate
  *
  * @property AppliedJob[] $appliedJobs
  * @property JobRelatedSkill[] $jobRelatedSkills
+ * @property Position $position
+ * @property AllUser $employer
+ * @property JobCategory $jobCategory
  * @property ShortlistedCandidate[] $shortlistedCandidates
  */
 class PostJob extends \yii\db\ActiveRecord
@@ -53,16 +57,19 @@ class PostJob extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['JobTitle', 'Location', 'Salary', 'Experience', 'JobType', 'CompanyName', 'Email', 'Phone', 'Website', 'Country', 'State', 'City', 'NoofVacancy', 'JobShift', 'JobDescription', 'JobSpecification', 'TechnicalGuidance', 'LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'OnDate'], 'required'],
-            [['LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'IsDelete'], 'integer'],
-            [['Website', 'JobDescription', 'JobSpecification', 'TechnicalGuidance'], 'string'],
+            [['JobTitle', 'Location', 'Salary', 'Experience', 'JobType', 'CompanyName', 'Email', 'Phone', 'Website', 'Country', 'State', 'City', 'NoofVacancy', 'JobShift', 'JobDescription', 'JobSpecification', 'TechnicalGuidance', 'LogoId', 'EmployerId', 'JobCategoryId', 'PositionId',  'OnDate'], 'required'],
+            [['JobTitle', 'Website', 'JobDescription', 'JobSpecification', 'TechnicalGuidance'], 'string'],
+            [['LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'JobStatus', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
-            [['JobTitle', 'Experience', 'CompanyName'], 'string', 'max' => 200],
+            [['Location'], 'string', 'max' => 400],
             [['Salary', 'Email', 'JobShift'], 'string', 'max' => 150],
+            [['Experience', 'CompanyName'], 'string', 'max' => 200],
             [['JobType', 'Country', 'State', 'City'], 'string', 'max' => 100],
-            [['Location'],'string','max'=>400],
             [['Phone'], 'string', 'max' => 12],
-            [['NoofVacancy'],'string','max'=>20],
+            [['NoofVacancy'], 'string', 'max' => 20],
+            [['PositionId'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['PositionId' => 'PositionId']],
+            [['EmployerId'], 'exist', 'skipOnError' => true, 'targetClass' => AllUser::className(), 'targetAttribute' => ['EmployerId' => 'UserId']],
+            [['JobCategoryId'], 'exist', 'skipOnError' => true, 'targetClass' => JobCategory::className(), 'targetAttribute' => ['JobCategoryId' => 'JobCategoryId']],
         ];
     }
 
@@ -94,6 +101,7 @@ class PostJob extends \yii\db\ActiveRecord
             'EmployerId' => 'Employer ID',
             'JobCategoryId' => 'Job Category ID',
             'PositionId' => 'Position ID',
+            'JobStatus' => 'Job Status',
             'IsDelete' => 'Is Delete',
             'OnDate' => 'On Date',
             'UpdatedDate' => 'Updated Date',
@@ -107,6 +115,14 @@ class PostJob extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AppliedJob::className(), ['JobId' => 'JobId']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocDetail()
+    {
+        return $this->hasOne(Documents::className(), ['DocId' => 'LogoId']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -114,6 +130,30 @@ class PostJob extends \yii\db\ActiveRecord
     public function getJobRelatedSkills()
     {
         return $this->hasMany(JobRelatedSkill::className(), ['JobId' => 'JobId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosition()
+    {
+        return $this->hasOne(Position::className(), ['PositionId' => 'PositionId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmployer()
+    {
+        return $this->hasOne(AllUser::className(), ['UserId' => 'EmployerId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJobCategory()
+    {
+        return $this->hasOne(JobCategory::className(), ['JobCategoryId' => 'JobCategoryId']);
     }
 
     /**
