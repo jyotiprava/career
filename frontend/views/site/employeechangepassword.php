@@ -2,14 +2,15 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Request Password Reset';
+$this->title = 'Change Password';
 ?>
+
 	<div id="wrapper"><!-- start main wrapper -->
 		 
 		<div class="headline_inner">
 				<div class="row"> 
 			       <div class=" container"><!-- start headline section --> 
-						 <h2>Employee Request to Reset Password   </h2>
+						 <h2>Employee Change Password   </h2>
 						<div class="clearfix"></div>
 					</div>
 			</div><!-- end headline section -->
@@ -28,8 +29,22 @@ $this->title = 'Request Password Reset';
 								<?php $form = ActiveForm::begin(['options' => ['class' => 'omb_loginForm']]); ?>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
-										<input type="email" class="form-control"  name="AllUser[Email]" required  placeholder="Email address">
+										<input type="password" class="form-control"  name="AllUser[CPassword]" required  placeholder="Current Password">
 									</div>
+									<span class="help-block"></span>
+									
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-user"></i></span>
+										<input type="password" class="form-control" id="password"  name="AllUser[NPassword]" required  placeholder="New Password">
+										<input type="hidden" name="AllUser[UserId]" value="<?php echo Yii::$app->session['Employeeid']; ?>"/>
+									</div>
+									<span class="help-block"></span>
+									
+									   <div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-user"></i></span>
+										<input type="password" class="form-control"  onblur="return ConfirmPassword(this.value);" id="confirmpassword"  required placeholder="Confirm New Password">
+									</div>
+									
 									<span class="help-block"></span>
 														
 								 

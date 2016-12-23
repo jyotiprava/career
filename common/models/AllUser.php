@@ -65,9 +65,9 @@ class AllUser extends \yii\db\ActiveRecord
             [['Password'], 'string', 'max' => 150],
             [['VerifyKey','ContactNo'], 'string', 'max' => 400],
            // [['CVId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['CVId' => 'DocId']],
-            [['IndustryId'], 'exist', 'skipOnError' => true, 'targetClass' => Industry::className(), 'targetAttribute' => ['IndustryId' => 'IndustryId']],
+          //  [['IndustryId'], 'exist', 'skipOnError' => true, 'targetClass' => Industry::className(), 'targetAttribute' => ['IndustryId' => 'IndustryId']],
           //  [['PhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['PhotoId' => 'DocId']],
-            [['LogoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['LogoId' => 'DocId']],
+           // [['LogoId'], 'exist', 'skipOnError' => true, 'targetClass' => Documents::className(), 'targetAttribute' => ['LogoId' => 'DocId']],
             [['UserTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => UserType::className(), 'targetAttribute' => ['UserTypeId' => 'TypeId']],
         ];
     }
