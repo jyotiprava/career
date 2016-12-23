@@ -48,7 +48,7 @@ use dosamigos\tinymce\TinyMce;
                                 </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
-                                        <label>xxperiencce  </label>
+                                        <label>Experiencce  </label>
                                         <select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="PostJob[Experience]">
                                             <option value="Fresher">  Fresher</option>
                                             <option value="1">1 Years</option>
@@ -137,14 +137,14 @@ use dosamigos\tinymce\TinyMce;
 								  <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Email Address*</label>
-                                        <input type="email" placeholder="" name="PostJob[Email]" required class="form-control">
+                                        <input type="email" placeholder="" name="PostJob[Email]" value="<?=$empd['Email'];?>" required class="form-control">
                                     </div>
                                 </div>
 								  
 								  <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Phone:</label>
-                                        <input type="text" maxlength="10" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" id="MobileNo" placeholder="" name="PostJob[Phone]" class="form-control" required>
+                                        <input type="text" maxlength="10" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" id="MobileNo" placeholder="" value="<?=$empd['MobileNo'];?>" name="PostJob[Phone]" class="form-control" required>
                                     </div>
                                 </div>
 								

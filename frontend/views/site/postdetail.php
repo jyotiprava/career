@@ -94,11 +94,16 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                                     </li>
                                 </ul>
                             </div>
-                            
+                        <?php
+						if($allpost->JobStatus==0)
+						{
+						?>
                             <div class="apply-job" onclick="closestatus(<?=$allpost->JobId;?>);">
-                                    <i class="fa fa-trash-o"></i>Close Status
+                                  <a>  <i class="fa fa-trash-o"></i>Close Status</a>
                             </div> 
-                            
+                        <?php
+						}
+						?>
                     </div>
                         <div class="col-lg-9  col-md-8 col-sm-8 col-xs-12">
                             <div class="single-job-page-2 job-short-detail">

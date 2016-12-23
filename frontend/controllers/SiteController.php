@@ -629,6 +629,9 @@ Congratulations! You have been registered successfully on Careerbug!!
         $position=new Position();
         $jobcategory=new JobCategory();
         $docmodel=new Documents();
+        $alluser=new Alluser();
+        
+        $employerd=$alluser->find()->select(['MobileNo','Email'])->where(['UserId'=>Yii::$app->session['Employerid']])->one();
         
         $allposition=$position->find()->where("IsDelete=0")->all();
         $allcategory=$jobcategory->find()->where("IsDelete=0")->all();
@@ -666,7 +669,7 @@ Congratulations! You have been registered successfully on Careerbug!!
         }
         else
         {
-        return $this->render('postajob',['model'=>$postajob,'position'=>$allposition,'jobcategory'=>$allcategory]);
+        return $this->render('postajob',['model'=>$postajob,'position'=>$allposition,'jobcategory'=>$allcategory,'empd'=>$employerd]);
         }
         }
         else
