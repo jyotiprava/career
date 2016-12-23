@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
+use dosamigos\tinymce\TinyMce;
 ?>
   
 	<div id="wrapper"><!-- start main wrapper -->
@@ -47,7 +48,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                                 </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
-                                        <label>Experiencce  </label>
+                                        <label>xxperiencce  </label>
                                         <select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="PostJob[Experience]">
                                             <option value="Fresher">  Fresher</option>
                                             <option value="1">1 Years</option>
@@ -210,14 +211,37 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 								 
 								  <div class="col-md-12 col-sm-12 col-xs-12">
 								    <div class="form-group"><label>Job Description*  </label>
-								 <textarea class="form-control textarea" name="PostJob[JobDescription]"></textarea>
+										
+								<?= $form->field($model, 'JobDescription')->widget(TinyMce::className(), [
+									'options' => ['rows' => 6],'class'=>'form-control textarea-small',
+									'language' => 'en_CA',
+									'clientOptions' => [
+										'plugins' => [
+											"advlist autolink lists link charmap print preview anchor",
+											"searchreplace visualblocks code fullscreen",
+											"insertdatetime media table  paste spellchecker"
+										],
+										'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+									]
+								])->label(false);?>
                               </div> 
 							   
 							  </div>
 							  
 							   <div class="col-md-6 col-sm-12 col-xs-12">
 								    <div class="form-group"><label>Job Specification: </label>
-								 <textarea class="form-control textarea-small" name="PostJob[JobSpecification]"></textarea>
+								<?= $form->field($model, 'JobSpecification')->widget(TinyMce::className(), [
+									'options' => ['rows' => 6],'class'=>'form-control textarea-small',
+									'language' => 'en_CA',
+									'clientOptions' => [
+										'plugins' => [
+											"advlist autolink lists link charmap print preview anchor",
+											"searchreplace visualblocks code fullscreen",
+											"insertdatetime media table  paste spellchecker"
+										],
+										'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+									]
+								])->label(false);?>
                               </div> 
 							   
 							  </div>
@@ -225,7 +249,18 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							  
 							   <div class="col-md-6 col-sm-12 col-xs-12">
 								    <div class="form-group"><label>Technical Guidance:  </label>
-								 <textarea class="form-control textarea-small" name="PostJob[TechnicalGuidance]"></textarea>
+								<?= $form->field($model, 'TechnicalGuidance')->widget(TinyMce::className(), [
+									'options' => ['rows' => 6],'class'=>'form-control textarea-small',
+									'language' => 'en_CA',
+									'clientOptions' => [
+										'plugins' => [
+											"advlist autolink lists link charmap print preview anchor",
+											"searchreplace visualblocks code fullscreen",
+											"insertdatetime media table  paste spellchecker"
+										],
+										'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+									]
+								])->label(false);?>
                               </div> 
 							   
 							  </div>
