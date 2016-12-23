@@ -183,10 +183,10 @@ AppAsset::register($this);
 							
 							<li class="no-need prfl_img">
 								<a href="#" class="dropdown-toggle brdr orange_bg new_style" data-toggle="dropdown">    
-   								<img style="width: 43px;height: 43px;" src="images/user.png" alt="" class="img-responsive center-block "><?=Yii::$app->session['EmployeeName'];?>  </a> 
+   								<img style="width: 43px;height: 43px;" src="<?=Yii::$app->session['EmployeeDP'];?>" alt="" class="img-responsive center-block "><?=Yii::$app->session['EmployeeName'];?>  </a> 
 								<ul class="dropdown-menu"> 
 									<li class=""><a href="<?= Url::toRoute(['site/profilepage'])?>"> <b class="fa fa-user"></b>  My Profile</a></li> 
-									<li class=""><a href="edit_profile.html"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
+									<li class=""><a href="<?= Url::toRoute(['site/editprofile'])?>"><b class="fa fa-pencil-square-o"></b>   Edit Profile</a></li>  
 									<li class=""><a href="<?= Url::toRoute(['site/employeechangepassword'])?>"> <b class="fa fa-lock"></b> Change Password  </a></li> 
 									<li class=""><a href="<?= Url::toRoute(['site/employeelogout'])?>"> <b class="fa fa-power-off"></b> Log Out  </a></li>  
 								</ul>

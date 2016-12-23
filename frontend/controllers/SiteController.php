@@ -554,7 +554,17 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                     $logo_id=$oldlogo;
                 }
               $employerone->LogoId=$logo_id;
-              $employerone->save(); 
+              $employerone->save();
+              if($employerone->LogoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$employerone->logo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+                Yii::$app->session['EmployerDP']=$pimage;
            
             Yii::$app->session->setFlash('success', 'Profile Updated Successfully.');
             return $this->redirect(['companyprofileeditpage']);           
@@ -1246,6 +1256,17 @@ You need to confirm your email address $to in order to activate your Careerbug a
             $profile->CVId=$cv_id;
             $profile->PhotoId=$photo_id;
             $profile->save();
+            
+            if($profile->PhotoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$profile->photo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+              Yii::$app->session['EmployeeDP']=$pimage;
             
             $education=Education::find()->where(['UserId'=>$profile->UserId])->one();
             $education->HighestQualification=Yii::$app->request->post()['AllUser']['HighestQualification'];
