@@ -215,7 +215,7 @@ AppAsset::register($this);
 						
 						<!-- It will display when customer paid  for that -->		
 							<li class="no-need"> 
-							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
+							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Candidate List </a>
 							</li>  
 						<!-- It will display when customer paid  for that -->	
 

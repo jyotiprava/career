@@ -3764,6 +3764,7 @@ ul{margin:0; padding:0px;}
 #edit_profile_page  dd{ padding: 2.5px 0px;}
 .heading-inner{position:relative}
 .heading-inner a{position:absolute; right:0px; top:0px; background: #333 !Important; color:#fff; padding:14px ; display:block;}
+.heading-inner button{border: none;position:absolute; right:0px; top:0px; background: #333 !Important; color:#fff; padding:14px ; display:block;}
 
 #register h2 a{text-align:center; display:block;  background:#fff;   border: 1px solid #f16b22;}
 #register h2 a:hover{background:#f16b22}

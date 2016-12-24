@@ -53,9 +53,8 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                             <div class="job-short-detail" id="edit_profile_page">
                                 <div class="heading-inner">
                                     <p class="title"> Company / Consultant details</p>
+									<?= Html::submitButton('<i class="fa fa-floppy-o orange"></i> Save Changes') ?>
 									
-									<!--<a href="#">  <i class="fa fa-floppy-o orange"></i> Save Changes  </a>-->
-									<a href="#"> <i class="fa fa-floppy-o orange"></i> <input type="submit" value="Save Changes " style="border-color: #333;background-color: #333;padding: 5px 0px 5px 3px;height: 40px;width: 115px;margin-top: -10px; margin-right: -13px;"></a>
                                 </div>
 								 
                                 <dl>

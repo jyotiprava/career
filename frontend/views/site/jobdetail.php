@@ -1,5 +1,5 @@
 <?php
-$this->title = 'My Post';
+$this->title = $allpost->JobTitle;
 
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -95,15 +95,22 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                                 </ul>
                             </div>
                         <?php
-						if($allpost->JobStatus==0)
-						{
-						?>
-                            <div class="apply-job" onclick="closestatus(<?=$allpost->JobId;?>);">
-                                  <a>  <i class="fa fa-trash-o"></i>Close Status</a>
-                            </div> 
+                        if(Yii::$app->session['Employeeid'])
+                        {
+                        ?>
+                            <div class="apply-job">
+                                 <a href="<?= Url::toRoute(['site/applyjob','JobId'=>$allpost->JobId])?>" class=""> <i class="fa fa-upload"></i>Apply For Position</a>
+                            </div>
                         <?php
-						}
-						?>
+                        }else
+                        {
+                        ?>
+                            <div class="apply-job">
+                                 <a href="<?= Url::toRoute(['site/login','JobId'=>$allpost->JobId])?>" class=""> <i class="fa fa-upload"></i>Apply For Position</a>
+                            </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                         <div class="col-lg-9  col-md-8 col-sm-8 col-xs-12">
                             <div class="single-job-page-2 job-short-detail">
@@ -134,12 +141,5 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 				  
 
       </div>
-
-
- 
 		    </div>
-		 
-		
-		
-		
 		<div class="border"></div>

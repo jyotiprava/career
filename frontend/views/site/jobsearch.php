@@ -1,8 +1,15 @@
+<?php
+$this->title = 'Career Bugs';
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+$imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
+$url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+?>
+
+
 <div id="wrapper"><!-- start main wrapper -->
-	 
-  
-		 
-		
+
 		<div class="job_search"><!-- Start Recent Job -->
 			<div class="container">
 				<div class="row">
@@ -12,20 +19,20 @@
             <div class="panel-group" id="accordion">
 			 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne12">
-							 Latest</a>
-                        </h4>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne12"><h4 class="panel-title">
+							 Latest
+                        </h4></a>
                     </div>
                     <div id="collapseOne12" class="panel-collapse collapse in">
                         <div class="panel-body">
-                           <select class="form-control bfh-states" data-country="US" data-state="CA"><option value="">Select</option>
-										<option value="AL">1 Days</option>
-										<option value="AK">3 Days</option>
-										<option value="AS">  7 Days</option>
-										<option value="AS">  15 Days</option>
-										<option value="AS">  30 Days</option>
-						             </select>
+								<select class="form-control" onchange="getlatestjob(this.value);">
+										<option value="">Select</option>
+										<option value="1">1 Days</option>
+										<option value="3">3 Days</option>
+										<option value="7">7 Days</option>
+										<option value="15">15 Days</option>
+										<option value="30">30 Days</option>
+						        </select>
                         </div>
                     </div>
                 </div>
@@ -34,15 +41,14 @@
 				
 			  <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne13">
-							 Role</a>
-                        </h4>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne13"><h4 class="panel-title">
+							 Role
+                        </h4></a>
                     </div>
                     <div id="collapseOne13" class="panel-collapse collapse">
                         <div class="panel-body">
                            <select class="form-control bfh-states" data-country="US" data-state="CA"><option value="">Select</option>
-						   <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AS">American Samoa</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="AF">Armed Forces Africa</option><option value="AA">Armed Forces Americas</option><option value="AC">Armed Forces Canada</option><option value="AE">Armed Forces Europe</option><option value="AM">Armed Forces Middle East</option><option value="AP">Armed Forces Pacific</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District of Columbia</option><option value="FM">Federated States Of Micronesia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="GU">Guam</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MH">Marshall Islands</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="MP">Northern Mariana Islands</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PW">Palau</option><option value="PA">Pennsylvania</option><option value="PR">Puerto Rico</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VI">Virgin Islands</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select>
+						   </select>
                         </div>
                     </div>
                 </div>
@@ -58,7 +64,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <select class="form-control bfh-states" data-country="US" data-state="CA"><option value="">Select</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AS">American Samoa</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="AF">Armed Forces Africa</option><option value="AA">Armed Forces Americas</option><option value="AC">Armed Forces Canada</option><option value="AE">Armed Forces Europe</option><option value="AM">Armed Forces Middle East</option><option value="AP">Armed Forces Pacific</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District of Columbia</option><option value="FM">Federated States Of Micronesia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="GU">Guam</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MH">Marshall Islands</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="MP">Northern Mariana Islands</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PW">Palau</option><option value="PA">Pennsylvania</option><option value="PR">Puerto Rico</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VI">Virgin Islands</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select>
+                            <select class="form-control bfh-states" data-country="US" data-state="CA"><option value="">Select</option></select>
                         </div>
                     </div>
                 </div>
@@ -177,11 +183,17 @@
 			<div class="spacer-5"></div>
         <div class="widget"> 
                                     <ul class="categories-module">
-                                        <li> <a href=""> Computer and IT <span>(1021)</span> </a> </li>
-                                        <li> <a href=""> Construction / Facilities <span>(54)</span> </a> </li>
-                                        <li> <a href=""> Telecommunications<span>(13)</span> </a> </li>
-                                        <li> <a href=""> Real Estate<span>(23)</span> </a> </li>
-                                        <li> <a href=""> Healthcare <span>(42)</span> </a> </li>
+                                       <?php
+								if($hotcategory)
+								{
+								foreach($hotcategory as $hkey=>$hvalue)
+								{
+								?>
+								<li> <a href="<?= Url::toRoute(['site/jobsearch','JobCategoryId'=>$hvalue->JobCategoryId])?>"> <?=$hvalue->CategoryName;?> <span>(<?=$hvalue->cnt;?>)</span> </a> </li>
+								<?php
+								}
+								}
+								?>
                                     </ul>
                                 </div>
 					</div>
@@ -190,24 +202,28 @@
 					
 					<div class="col-lg-9  col-md-9 col-sm-9 col-xs-12"  > 
 	 
-		 
-					 
+		 <?php
+		if($alljob)
+		{
+		foreach($alljob as $jkey=>$jvalue)
+		{
+		?>
 		 <div class="item-list">
-                <a href="">
+                <a href="<?= Url::toRoute(['site/jobdetail','JobId'=>$jvalue->JobId])?>">
                 <div class="col-sm-12 add-desc-box">
                   <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
+                    <h5 class="add-title"><?=$jvalue->JobTitle;?></h5>
                     <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
+                      <span class="category"><?=$jvalue->position->Position;?></span> -
+                      <span class="item-location"><i class="fa fa-map-marker"></i><?=$jvalue->Location;?></span> <br>
+                    <span> <strong><?=$jvalue->CompanyName;?></strong> </span>
 					</div>
                     <div class="info bottom">
 					    <div class="col-sm-3 col-xs-3">
 					    	<span class="styl">Experience : </span>  
 					    </div>
 						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
+							<span class="category"><?php if($jvalue->Experience!='Fresher'){ echo $jvalue->Experience.' Year';}else{echo $jvalue->Experience;}?></span>  
                       </div>
 					 </div> 
 					  <div class="info bottom">
@@ -215,7 +231,16 @@
 					    	<span class="styl">Keyskills : </span>  
 					    </div>
 						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
+							<span class="category">
+								<?php
+								$jskill='';
+								foreach($jvalue->jobRelatedSkills as $k=>$v)
+								{
+								$jskill.=$v->skill->Skill.' , ';
+								}
+								echo $jskill;
+								?>
+							</span>  
                       </div>
 					 </div>
 					 
@@ -224,7 +249,7 @@
 					    	<span class="styl">Job Description : </span>  
 					    </div>
 						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
+							<span class="category"><?=substr(htmlspecialchars_decode($jvalue->JobDescription),0,150).'...';?></span>  
                       </div>
 					 </div>
 					 
@@ -233,421 +258,23 @@
 					    	<span class="styl">Salary Range </span>  
 					    </div>
 						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
+							<span class="category"><?=$jvalue->Salary;?></span>  
                       </div>
 					 </div> 
 					 
 					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
+						<span class="category" style="text-align:right">    Posted By <?=$jvalue->employer->Name.' ('.date('d M Y, h:i A',strtotime($jvalue->OnDate)).')';?></span> 
                     </div> 
                   </div>
                 </div>
                 </a>
               </div>
-			  
-			  
-			   			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
+		<?php
+		}
+		}
+		?>
 					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-			  
-			  
-			  
-			  			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
-					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-			  
-			  
-			  
-			  
-			  			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
-					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-			  
-			  
-			  			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
-					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-					 
-					 
-	
-			  
-			  			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
-					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-			  
-			  
-			  
-			  
-			  			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
-					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-			  
-			  
-			  			 
-		 <div class="item-list">
-                <a href="">
-                <div class="col-sm-12 add-desc-box">
-                  <div class="add-details">
-                    <h5 class="add-title"> Kolkata Metro Urgent Requirement Apply Now Male/Female Fresher </h5>
-                    <div class="info"> 
-                      <span class="category">Accountant</span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> Kolkata</span> <br>
-                    <span> <strong> SSCS WORLD PVT LTD </strong> </span>
-					</div>
-                    <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Experience : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">5years</span>  
-                      </div>
-					 </div> 
-					  <div class="info bottom">
-					     <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Keyskills : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">voice, international, technical, cce, Fresher,  , tso, inbound, outbound,...</span>  
-                      </div>
-					 </div>
-					 
-					   <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Job Description : </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">WKindly mention  **AVINET-LPT**  on top of resume.  " WALK-IN ...</span>  
-                      </div>
-					 </div>
-					 
-					  <div class="info bottom">
-					    <div class="col-sm-3 col-xs-3">
-					    	<span class="styl">Salary Range </span>  
-					    </div>
-						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category">1,00,000 - 2,00,000 P.A. Salary + inc</span>  
-                      </div>
-					 </div> 
-					 
-					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By Rohit Jaiswal (13 Nov 2016, 12:21 AM)</span> 
-                    </div> 
-                  </div>
-                </div>
-                </a>
-              </div>
-			  
-					 
-					 				 
-					 
-					 
-					 <ul class="pagination">
+					 <ul class="pagination" style="display: none;">
 								<li class="active"><a href="#">1</a></li>
 								<li><a href="#">2</a></li>
 								<li><a href="#">3</a></li>

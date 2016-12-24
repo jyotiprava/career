@@ -29,7 +29,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 </head>
 
-<body class="navbar-bottom">
+<body class="navbar-bottom" onload="alertload()">
 <?php $this->beginBody() ?>
 	<!-- Main navbar -->
 	<div class="navbar navbar-inverse">
@@ -261,6 +261,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 
 			<!-- Main content -->
 			<div class="content-wrapper">
+				<?= Alert::widget() ?>
 				<?= $content ?>
 			</div>
 			<!-- /main content -->
@@ -293,7 +294,13 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 		</div>
 	</div>
 	<!-- /footer -->
-
+	<script type="text/javascript">
+		function alertload() {
+		setTimeout(function() {
+            $('.alert').fadeOut('fast');
+            }, 3000); // <-- time in milliseconds
+        }
+	</script>
 </body>
 
 <?php $this->endBody() ?>
