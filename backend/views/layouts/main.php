@@ -247,7 +247,9 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 								<li><a href="index.html"><i class="icon-puzzle4"></i> <span>Social Icons</span></a></li> 
 							    <li><a href="index.html"><i class="icon-puzzle4"></i> <span>  Developed Block</span></a></li> 
 									
-								  
+								<li class="navigation-header"><span>News Letter</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
+								
+								<li> <a href="<?=Url::to(['site/newslettersubscriber']);?>"><i class="icon-puzzle4"></i> <span>Newsletter Subscriber</span></a> </li>
 
 							</ul>
 						</div>

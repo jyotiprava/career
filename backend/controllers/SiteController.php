@@ -23,7 +23,7 @@ use common\models\ContactUs;
 use common\models\PostJob;
 use common\models\JobCategory;
 use common\models\JobRelatedSkill;
-
+use common\models\NewsLetter;
 
 
 /**
@@ -41,7 +41,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer'],
+                        'actions' => ['login', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer','newslettersubscriber','deletenews'],
                         'allow' => true,
                     ],
                     [
@@ -169,6 +169,30 @@ class SiteController extends Controller
         $employer->IsDelete=1;
         $employer->save();   
         return $this->redirect(['allemployer']);
+    }
+    
+    public function actionNewslettersubscriber()
+    {
+        $news=new NewsLetter();
+        $allnewsletter=$news->find()->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        return $this->render('newslettersubscriber',['allnews'=>$allnewsletter]);
+    }
+    
+    public function actionDeletenews($id)
+    {
+        $news=new NewsLetter();
+        $newsone=$news->find()->where(['NewsLetterId'=>$id])->one();
+        $newsone->IsDelete=1;
+        if($newsone->save())
+        {
+            Yii::$app->session->setFlash('success', 'Email Deleted Succesfully');
+        }
+        else
+        {
+            Yii::$app->session->setFlash('error', 'There is some error , please try again');
+        }
+        
+        return $this->redirect(['newslettersubscriber']);
     }
     
 }

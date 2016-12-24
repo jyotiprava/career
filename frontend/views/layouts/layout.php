@@ -45,10 +45,10 @@ AppAsset::register($this);
 			<div class="contact_form" id="right_side_form">
 			   <h2 class="banner_heading">How we can <small> Help you ? </small>     </h2>  
 			   <div class="closed">
-			      <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
+			      <a href="javascript:void(0)" style="display: block !important;"><i class="fa fa-times" aria-hidden="true"></i></a>
 			   </div> 
 				<input type="text" class="form-control" id="contact_name" placeholder="Name">  
-				<input type="text" class="form-control" id="contact_number" placeholder="Contact Number" maxlength="10" onkeypress="return numbersonly(event)"> 
+				<input type="text" class="form-control" id="contact_number" onblur="contactvlidation(this.value);" placeholder="Contact Number" maxlength="10" onkeypress="return numbersonly(event)"> 
 				<input type="text" class="form-control" id="contact_email" placeholder="Email Id" onblur="return checkemail();"> 
 				  <select id="form-filter-location" data-minimum-results-for-search="Infinity" class="contact_from form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
 					<option value="1">Select  </option>
@@ -384,26 +384,32 @@ AppAsset::register($this);
 			<div class="container"><!-- Container -->
 				<div class="row">
 					<div class="col-md-3 footer-widget"><!-- Text Widget -->
-						<h6 class="widget-title"><img src="images/footer-logo.png"></h6>
+						<h6 class="widget-title">About Us</h6>
 						<div class="textwidget">
 							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
 						</div>
 					</div><!-- Text Widget -->
 					
-					<div class="col-md-2 footer-widget"><!-- Footer Menu Widget -->
-						<h6 class="widget-title">Useful Links</h6>
+					<div class="col-lg-3  col-md-3 col-sm-3 col-xs-12  footer-widget"><!-- Footer Menu Widget -->
+						<h6 class="widget-title">Hot Categories</h6>
 						<div class="footer-widget-nav">
 							<ul>
-								<li><a href="#">Home</a></li>
-								<li><a href="#"> Job Search</a></li>
-								<li><a href="#">Post a Job</a></li>
-								<li><a href="#">Post a Resume</a></li>
-							 
+							  <?php
+							  if(isset(Yii::$app->view->params['hotcategory']))
+							  {
+								foreach(Yii::$app->view->params['hotcategory'] as $hk=>$hval)
+								{
+								?>
+								<li><a href="<?= Url::toRoute(['site/jobsearch','JobCategoryId'=>$hval->JobCategoryId])?>"><?=$hval->CategoryName;?></a></li>
+							  <?php
+								}
+							  }
+							  ?>
 							</ul>
 						</div>
 					</div><!-- Footer Menu Widget -->
 					
-					<div class="col-md-4 footer-widget"><!-- Recent Tweet Widget -->
+					<div class="col-md-3 footer-widget"><!-- Recent Tweet Widget -->
 						<h6 class="widget-title">Recent Tweets</h6>
 						<div class="recent-twitt">
 							<p>
@@ -418,6 +424,14 @@ AppAsset::register($this);
 					</div><!-- Recent Tweet Widget -->
 
 					<div class="col-md-3 footer-widget"><!-- News Leter Widget -->
+					<div id="contact_details">
+					  <h6 class="widget-title"> Contact Us</h6> 
+					      <p> <i class="fa fa-envelope colored"></i>  <a href="">  Email: info@careerbugs.com  </p>
+						  <p> <i class="fa fa-envelope colored opac"></i>  <a href=""> &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp career@careerbugs.com</a></p>
+						  <p> <i class="fa fa-phone"></i> Phone: 1800 200 245 </a></p>
+						  <p> <i class="fa fa-map-marker colored"></i>Address: Cf 318 Sector Saltlake </a></p>
+						  
+					  </div>
 						<h6 class="widget-title">Singn For news Letter</h6>
 						<div class="textwidget">
 							<p>At vero eos et accusamus et iusto odio dignissimos ducimus</p>
@@ -425,23 +439,45 @@ AppAsset::register($this);
 
 						<form role="form">
 							<div class="form-group">
-								<input type="email" class="input-newstler">
+								<input type="email" id="news_email" class="input-newstler" style="color: #fff;">
 							</div>
-							<button type="button" class="btn-newstler">Sign Up</button>
+							<button type="button" class="btn-newstler" onclick="newsletter();">Sign Up</button>
 						</form>
-						<a href="#" target="blank"><i class="media-footer footer-twitt"></i></a>
-						<a href="#" target="blank"><i class="media-footer footer-fb"></i></a>
-						<a href="#" target="blank"><i class="media-footer footer-linkedin"></i></a>
-						<a href="#" target="blank"><i class="media-footer footer-yahoo"></i></a>
-						<a href="#" target="blank"><i class="media-footer footer-blog"></i></a>
-						<a href="#" target="blank"><i class="media-footer footer-rss"></i></a>
 					</div><!-- News Leter Widget -->
 					<div class="clearfix"></div>
 				</div>
 
-				<div class="footer-credits"><!-- Footer credits -->
-					2014 © <a href="">Career Bugs</a>. All Rights Reserved.
-				</div><!-- Footer credits -->
+				<div id="footer"><!-- Footer -->
+			<div class="container"><!-- Container -->
+				<div class="row">
+					 
+					   <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+						 <li><a href="#"><i class="fa fa-google-plus"></i></a>
+                        </li>
+                    </ul>
+				 
+				</div>
+			</div><!-- Container -->
+		</div>
+		
+		
+		
+		
+		<div class="developed_by_e-developed_technology">
+	      <div class="row">
+			 <div class="col-md-6">
+			   <p>	2017 © <a href="">Career Bugs</a>. All Rights Reserved.</p>
+			   </div>
+			  <div class="col-md-6">
+			   <a href="" target="_blank">Designed by <span> E-developed Technology </span></a>
+			   </div>
+		   </div>
+		</div>
 				
 			</div><!-- Container -->
 </div><!-- Footer -->

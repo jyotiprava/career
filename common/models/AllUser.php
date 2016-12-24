@@ -55,7 +55,7 @@ class AllUser extends \yii\db\ActiveRecord
         return [
 
             [['UserTypeId', 'EntryType', 'Name', 'Email', 'MobileNo', 'Address', 'Country', 'State', 'City', 'PinCode', 'Password', 'Ondate'], 'required'],
-            [['UserTypeId', 'CVId', 'IndustryId', 'PhotoId', 'IsDelete','VerifyStatus'], 'integer'],
+            [['UserTypeId', 'CVId', 'IndustryId', 'PhotoId', 'IsDelete','VerifyStatus','ForgotStatus'], 'integer'],
             [['CompanyDesc'], 'string'],
             [['Ondate', 'UpdatedDate'], 'safe'],
             [['EntryType', 'Country', 'State', 'City'], 'string', 'max' => 100],

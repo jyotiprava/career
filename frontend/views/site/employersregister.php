@@ -140,7 +140,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 								<div class="input-group full">
 									<select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Country]" required id="countryId">
 										<option value="">Select Country</option>
-										<option value="India" countryid="101">India</option>
+										<option value="India" countryid="101" selected="selected">India</option>
 										</select>
 								</div>
 							</div>

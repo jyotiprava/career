@@ -69,7 +69,7 @@ class IndustryController extends Controller
             $model->OnDate=date('Y-m-d');
             if($model->save())
             {
-                Yii::$app->session->setFlash('success', "Course Created Successfully");
+                Yii::$app->session->setFlash('success', "Industry Created Successfully");
             }
             else
             {
@@ -93,8 +93,17 @@ class IndustryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save())
+            {
+                Yii::$app->session->setFlash('success', "Industry Updated Successfully");
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "There is some error Please try again");
+                return $this->refresh();
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -112,7 +121,14 @@ class IndustryController extends Controller
     {
         $model=$this->findModel($id);
         $model->IsDelete=1;
-        $model->save();
+       if($model->save())
+            {
+                Yii::$app->session->setFlash('success', "Industry Deleted Successfully");
+            }
+            else
+            {
+                Yii::$app->session->setFlash('success', "There is some error please try again");
+            }
 
         return $this->redirect(['index']);
     }

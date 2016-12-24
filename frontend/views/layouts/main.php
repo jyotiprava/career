@@ -35,10 +35,10 @@ AppAsset::register($this);
 			<div class="contact_form" id="right_side_form">
 			   <h2 class="banner_heading">How we can <small> Help you ? </small>     </h2>  
 			   <div class="closed">
-			      <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
+			      <a href="javascript:void(0)" style="display: block !important;"><i class="fa fa-times" aria-hidden="true"></i></a>
 			   </div> 
 				<input type="text" class="form-control" id="contact_name" placeholder="Name">  
-				<input type="text" class="form-control" id="contact_number" placeholder="Contact Number" maxlength="10" onkeypress="return numbersonly(event)"> 
+				<input type="text" class="form-control" id="contact_number" onblur="contactvlidation(this.value);" placeholder="Contact Number" maxlength="10" onkeypress="return numbersonly(event)"> 
 				<input type="text" class="form-control" id="contact_email" placeholder="Email Id" onblur="return checkemail();"> 
 				  <select id="form-filter-location" data-minimum-results-for-search="Infinity" class="contact_from form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
 					<option value="1">Select  </option>
@@ -371,60 +371,48 @@ AppAsset::register($this);
 <div id="footer"><!-- Footer -->
 			<div class="container"><!-- Container -->
 				<div class="row">
-					 
+					<div class="col-md-3 footer-widget"><!-- Text Widget -->
+						<h6 class="widget-title">About Us</h6>
+						<div class="textwidget">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+						</div>
+					</div><!-- Text Widget -->
+					
 					<div class="col-lg-3  col-md-3 col-sm-3 col-xs-12  footer-widget"><!-- Footer Menu Widget -->
 						<h6 class="widget-title">Hot Categories</h6>
 						<div class="footer-widget-nav">
 							<ul>
-								<li><a href="#">Computer And IT</a></li>
-								<li><a href="#"> Construction / Facilities</a></li>
-								<li><a href="#">Telecommunications</a></li>
-								<li><a href="#">Real Estate</a></li>
-								<li><a href="#">Computer And IT</a></li>
-								<li><a href="#"> Construction / Facilities</a></li>
-								<li><a href="#">Telecommunications</a></li>
-								<li><a href="#">Real Estate</a></li>
-							 
+								 <?php
+							  if(isset(Yii::$app->view->params['hotcategory']))
+							  {
+								foreach(Yii::$app->view->params['hotcategory'] as $hk=>$hval)
+								{
+								?>
+								<li><a href="<?= Url::toRoute(['site/jobsearch','JobCategoryId'=>$hval->JobCategoryId])?>"><?=$hval->CategoryName;?></a></li>
+							  <?php
+								}
+							  }
+							  ?>
 							</ul>
 						</div>
 					</div><!-- Footer Menu Widget -->
-					 
-                       <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12  footer-widget"><!-- Footer Menu Widget -->
-						<h6 class="widget-title">Jobseeker    </h6>
-						<div class="footer-widget-nav">
-							<ul>
-								<li><a href="#">Computer And IT</a></li>
-								<li><a href="#"> Construction / Facilities</a></li>
-								<li><a href="#">Telecommunications</a></li>
-								<li><a href="#">Real Estate</a></li>
-								<li><a href="#">Computer And IT</a></li>
-								<li><a href="#"> Construction / Facilities</a></li>
-								<li><a href="#">Telecommunications</a></li>
-								<li><a href="#">Real Estate</a></li>
-							 
-							</ul>
-						</div>
-					</div>  
-					 <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12  footer-widget"><!-- Footer Menu Widget -->
-						<h6 class="widget-title">Recruiter  </h6>
-						<div class="footer-widget-nav">
-							<ul>
-								<li><a href="#">Computer And IT</a></li>
-								<li><a href="#"> Construction / Facilities</a></li>
-								<li><a href="#">Telecommunications</a></li>
-								<li><a href="#">Real Estate</a></li>
-								<li><a href="#">Computer And IT</a></li>
-								<li><a href="#"> Construction / Facilities</a></li>
-								<li><a href="#">Telecommunications</a></li>
-								<li><a href="#">Real Estate</a></li>
-							 
-							</ul>
-						</div>
-					</div>  
 					
-					<div class="col-lg-3  col-md-3 col-sm-3 col-xs-12  footer-widget"> 
-					
-					 <div id="contact_details">
+					<div class="col-md-3 footer-widget"><!-- Recent Tweet Widget -->
+						<h6 class="widget-title">Recent Tweets</h6>
+						<div class="recent-twitt">
+							<p>
+								Just released Lotus Flower, a Flexible Multi-Purpose Shop Theme <a href="#">http://t.co/0dyw2cdli5</a>
+							</p>
+							<div class="hastag">#Themeforest #WordPress 04:29 AM Oct 31</div>
+							<p>
+								Just released Lotus Flower, a Flexible Multi-Purpose Shop Theme <a href="#">http://t.co/0dyw2cdli5</a>
+							</p>
+							<div class="hastag">#Themeforest #WordPress 04:29 AM Oct 31</div>
+						</div>
+					</div><!-- Recent Tweet Widget -->
+
+					<div class="col-md-3 footer-widget"><!-- News Leter Widget -->
+					<div id="contact_details">
 					  <h6 class="widget-title"> Contact Us</h6> 
 					      <p> <i class="fa fa-envelope colored"></i>  <a href="">  Email: info@careerbugs.com  </p>
 						  <p> <i class="fa fa-envelope colored opac"></i>  <a href=""> &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp career@careerbugs.com</a></p>
@@ -432,34 +420,22 @@ AppAsset::register($this);
 						  <p> <i class="fa fa-map-marker colored"></i>Address: Cf 318 Sector Saltlake </a></p>
 						  
 					  </div>
-					  
-						<h6 class="widget-title sig1">Singn For news Letter</h6>
-							
-							<div class="single-widget"> 
-										<input autocomplete="off" name="keyword" type="text" class="col-xs-15 subscribeInputBox" placeholder="Your email address">
-										<button class="col-xs-7 btn btn-theme-secondary subscribeBtn reset-padding">Subscribe</button> 
-								 <div class="clearfix"></div>
-					      	</div>
-						
-						
-					  <p>Register now to get updates on latest Vacancy.</p>
-					  
-					 
-			
-			          </div><!-- News Leter Widget -->
+						<h6 class="widget-title">Singn For news Letter</h6>
+						<div class="textwidget">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus</p>
+						</div>
+
+						<form role="form">
+							<div class="form-group">
+								<input type="email" id="news_email" class="input-newstler" style="color: #fff;">
+							</div>
+							<button type="button" class="btn-newstler" onclick="newsletter();">Sign Up</button>
+						</form>
+					</div><!-- News Leter Widget -->
 					<div class="clearfix"></div>
 				</div>
 
-				 
-				
-			</div><!-- Container -->
-		</div><!-- Footer -->
-		
-		
-		
-		
-		
-		<div id="footer"><!-- Footer -->
+				<div id="footer"><!-- Footer -->
 			<div class="container"><!-- Container -->
 				<div class="row">
 					 
@@ -490,6 +466,9 @@ AppAsset::register($this);
 			   </div>
 		   </div>
 		</div>
+				
+			</div><!-- Container -->
+</div><!-- Footer -->
 
 <!---------------------- Footer End ------------------------->
 <?php $this->endBody() ?>

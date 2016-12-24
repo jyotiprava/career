@@ -470,11 +470,20 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 				{
 				foreach($allcompany as $ckey=>$cvalue)
 				{
+					if($cvalue->docDetail)
+					{
+						$doc=$url.$cvalue->docDetail->Doc;
+					}
+					else
+					{
+						$doc=$imageurl.'images/user.png';
+					}
 					?>
 					<a href="<?=$cvalue->Website;?>" target="_blank"><div class="company" style="background: #fff;">
-						<img src="<?=$url.$cvalue->docDetail->Doc;?>" class="img-responsive" alt="company-post" />
+						<img src="<?=$doc;?>" class="img-responsive" alt="company-post" style="height: 100px;"/>
 					</div></a>
 				<?php
+					
 				}
 				}
 				?>
@@ -685,12 +694,12 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 		         <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12">
 				  <img src="images/business.png">
 		   	          <p>Company  </p>
-                    <a href="<?= Url::toRoute(['site/jobseekersregister'])?>">Register  </a>
+                    <a href="<?= Url::toRoute(['site/employersregister'])?>">Register  </a>
 				  </div>	
 					  <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 new">
 		   	        <img src="images/employee.png">
 					 <p>Employee  </p>
-                    <a href="<?= Url::toRoute(['site/employersregister'])?>">  Register</a>
+                    <a href="<?= Url::toRoute(['site/jobseekersregister'])?>">  Register</a>
 				  </div>	
 				    <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12">
 				  	  <img src="images/campus.png">

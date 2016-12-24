@@ -163,7 +163,7 @@ use dosamigos\tinymce\TinyMce;
                                         <label>Country</label> 
                                         <select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"  id="countryId" name="PostJob[Country]">
 										<option value="">Select Country</option>
-										<option value="India" countryid="101">India</option>
+										<option value="India" countryid="101" selected="selected">India</option>
 										</select>
 								        </div>
 								   </div>

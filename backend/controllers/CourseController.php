@@ -122,8 +122,14 @@ class CourseController extends Controller
     {
         $model=$this->findModel($id);
         $model->IsDelete=1;
-        $model->save();
-
+        if($model->save())
+            {
+                Yii::$app->session->setFlash('success', "Course Deleted Successfully");
+            }
+            else
+            {
+                Yii::$app->session->setFlash('success', "There is some error please try again");
+            }
         return $this->redirect(['index']);
     }
 

@@ -27,6 +27,7 @@ use common\models\ContactUs;
 use common\models\PostJob;
 use common\models\JobCategory;
 use common\models\JobRelatedSkill;
+use common\models\NewsLetter;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -99,8 +100,13 @@ class SiteController extends Controller
         //hot categories
         $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId as JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
         
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         //companies who posted job
         $companylogo=$postjob->find()->select(['CompanyName','LogoId','Website'])->groupBy(['CompanyName'])->all();
+        
         $this->layout='main';
         
         return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo]);
@@ -108,6 +114,10 @@ class SiteController extends Controller
     
     public function actionJobdetail()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $JobId=Yii::$app->request->get()['JobId'];
         $postjob=new PostJob();
@@ -211,6 +221,68 @@ Thank you for contacting us. We will respond to you as soon as possible.!
         }
        echo json_encode($msg); 
     }
+    
+    public function actionNewsletter()
+    {
+        $model = new NewsLetter();
+        $news_email=Yii::$app->request->get()['news_email'];
+        $cnt=$model->find()->where(['Email'=>$news_email])->one();
+        if($cnt)
+        {
+            $msg="You have already signup for News Letter with this email";
+        }
+        else
+        {
+            $model->Email=$news_email;
+            $model->IsDelete=0;
+            $model->OnDate=date('Y-m-d');
+            if($model->save())
+            {
+                
+                $to=$model->Email;
+                $from=Yii::$app->params['adminEmail'];
+                $subject="News Letter";
+                
+               $html= "<html>
+               <head>
+               <title>News Letter</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/career/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:200px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/career/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+                 <h3> Dear , $to</h3>
+Thank you for connecting with us.
+               <br/>
+               </span>
+               </h2>
+               </td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+               $mail= new ContactForm();
+               $mail->sendEmail($to,$from,$html,$subject);
+               
+                $msg="Successfully Signup For News Letter";
+            }
+            else
+            {
+                $msg="There is some error please try again";
+            }
+        }
+        
+        echo json_encode($msg);
+    }
 
     /**
      * Displays about page.
@@ -277,6 +349,11 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     public function actionEmployerslogin()
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
+        
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';        
         $model=new AllUser();
         if ($model->load(Yii::$app->request->post())) {
@@ -288,6 +365,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                 if($rest->VerifyStatus==0)
                 {
                     Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
+                    return $this->render('employerslogin', ['model' => $model,]);
                 }
                 else
                 {
@@ -332,6 +410,11 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     public function actionEmployersregister()
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
+        
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
        
         $model=new AllUser();
@@ -401,7 +484,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                $mail= new ContactForm();
                $mail->sendEmail($to,$from,$html,$subject);
                Yii::$app->session->setFlash('success', 'Check your email for EmailId Verification.');
-               return $this->render('index');
+               return $this->redirect(['index']);
         } 
         }else{            
             return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
@@ -415,6 +498,10 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     
     public function actionEmployersverifryemail($vkey)
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $alluser=new AllUser();
         $userone=$alluser->find()->where(['VerifyKey'=>$vkey])->one();
@@ -478,6 +565,10 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     
     public function actionEmployeeverifyemail($vkey)
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $alluser=new AllUser();
         $userone=$alluser->find()->where(['VerifyKey'=>$vkey])->one();
@@ -546,6 +637,10 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     {
         if(isset(Yii::$app->session['Employerid']))
         {
+            $jobcategory=new JobCategory();
+            $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+            Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $model=new AllUser();
         $employerid= Yii::$app->session['Employerid'];
@@ -559,6 +654,10 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     }
     public function actionCompanyprofileeditpage()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $model=new AllUser();
         $allindustry= ArrayHelper::map(Industry::find()->where(['IsDelete'=>0])->all(),'IndustryId','IndustryName');
@@ -590,7 +689,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
                 Yii::$app->session['EmployerDP']=$pimage;
            
             Yii::$app->session->setFlash('success', 'Profile Updated Successfully.');
-            return $this->redirect(['companyprofileeditpage']);           
+            return $this->redirect(['companyprofile']);           
 
         }else{
             return $this->render('editcompanyprofilepage',['employer'=>$employerone,'industry'=>$allindustry]);
@@ -602,6 +701,10 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     {
         if(isset(Yii::$app->session['Employerid']))
         {
+            $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
             $this->layout='layout';
             $postjob=new PostJob();
             $allpost=$postjob->find()->where(['EmployerId'=>Yii::$app->session['Employerid']])->orderBy(['OnDate'=>SORT_DESC])->all();
@@ -617,6 +720,11 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     {
         if(isset(Yii::$app->session['Employerid']))
         {
+            $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        
             $this->layout='layout';
             $postjob=new PostJob();
             $allpost=$postjob->find()->where(['EmployerId'=>Yii::$app->session['Employerid'],'JobId'=>$JobId])->one();
@@ -631,7 +739,6 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     public function actionClosestatus()
     {
         $jobid=Yii::$app->request->get()['jobid'];
-        $this->layout='layout';
         $postjob=new PostJob();
         $pdetail=$postjob->find()->where(['JobId'=>$jobid])->one();
         $pdetail->JobStatus=1;
@@ -651,6 +758,11 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     {
         if(isset(Yii::$app->session['Employerid']))
         {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        
         $this->layout='layout';
         $postajob=new PostJob();
         $position=new Position();
@@ -727,13 +839,17 @@ Thank you for contacting us. We will respond to you as soon as possible.!
         unset(Yii::$app->session['Employerid']);
         unset(Yii::$app->session['EmployerName']);
         unset(Yii::$app->session['EmployerEmail']);
-        return $this->render('index');
+        return $this->redirect(['index']);
     }
     
     // ------------------- ALL USER(Employers) End -------------------//
     
     public function actionJobsearch()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $postjob=new PostJob();
         
@@ -754,6 +870,10 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     
     public function actionHirecandidate()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         return $this->render('hirecandidate');
     }
@@ -761,6 +881,11 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     public function actionJobseekersregister()
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
+        
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $skill=new Skill();
         $position=new Position();
@@ -918,6 +1043,7 @@ You need to confirm your email address $to in order to activate your Careerbug a
                 if($rest->VerifyStatus==0)
                 {
                     Yii::$app->session->setFlash('error', 'Please Check your mail for Email Verification.');
+                    return $this->render('login', ['model' => $model,]);
                 }
                 else
                 {
@@ -963,12 +1089,16 @@ You need to confirm your email address $to in order to activate your Careerbug a
         unset(Yii::$app->session['Employeeid']);
         unset(Yii::$app->session['EmployeeName']);
         unset(Yii::$app->session['EmployeeEmail']);
-        return $this->render('index');
+        return $this->redirect(['index']);
     }
     
     
     public function actionEmployerforgetpassword()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $model = new AllUser();
         if ($model->load(Yii::$app->request->post())) {
@@ -978,7 +1108,7 @@ You need to confirm your email address $to in order to activate your Careerbug a
          {
                 $ucode='CB'.time();
                 $chk->VerifyKey=$ucode;
-                $chk->VerifyStatus=0;
+                $chk->ForgotStatus=0;
                 $chk->save();
                 
                // var_dump($chk->getErrors());
@@ -1043,11 +1173,18 @@ You need to confirm your email address $to in order to activate your Careerbug a
             }
             else
             {
-                if( $chk && $chk->VerifyStatus==0)
+                if( $chk)
                 {
-                    $chk->VerifyStatus=1;
+                    if($chk->ForgotStatus==0)
+                    {
+                    $chk->ForgotStatus=1;
                     $chk->save();
                     return $this->render('resetpassword', ['ucode'=>$ucode,'model' => $model,]);
+                    }
+                    else
+                    {
+                        Yii::$app->session->setFlash('error', 'Your reset password link expired');
+                    }
                 }
                 else{
                     Yii::$app->session->setFlash('success', 'Please give your registered EmailId for create a new password.');
@@ -1057,6 +1194,10 @@ You need to confirm your email address $to in order to activate your Careerbug a
     }
     public function actionEmployerchangepassword()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $model = new AllUser();
         
         if ($model->load(Yii::$app->request->post())) {
@@ -1084,6 +1225,10 @@ You need to confirm your email address $to in order to activate your Careerbug a
     }
     public function actionForgetpassword()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         $model = new AllUser();
         if ($model->load(Yii::$app->request->post())) {
@@ -1093,7 +1238,7 @@ You need to confirm your email address $to in order to activate your Careerbug a
          {
                 $ucode='CB'.time();
                 $chk->VerifyKey=$ucode;
-                $chk->VerifyStatus=0;               
+                $chk->ForgotStatus=0;               
                 $chk->save();
                 
                 //var_dump($chk->getErrors());
@@ -1158,11 +1303,18 @@ You need to confirm your email address $to in order to activate your Careerbug a
             }
             else
             {
-                if($chk && $chk->VerifyStatus==0)
+                if($chk)
                 {
-                    $chk->VerifyStatus=1;
+                    if($chk->ForgotStatus==0)
+                    {
+                    $chk->ForgotStatus=1;
                     $chk->save();
                     return $this->render('resetemppassword', ['ucode'=>$ucode,'model' => $model,]);
+                    }
+                    else
+                    {
+                       Yii::$app->session->setFlash('error', 'Your reset password link expired');  
+                    }
                 }
                 else{
                     Yii::$app->session->setFlash('success', 'Please give your registered EmailId for create a new password.');
@@ -1205,6 +1357,11 @@ You need to confirm your email address $to in order to activate your Careerbug a
     public function actionRegister()
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
+            
+            $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         return $this->render('register');
         }
@@ -1216,6 +1373,10 @@ You need to confirm your email address $to in order to activate your Careerbug a
     
     public function actionSearchcandidate()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         return $this->render('searchcandidate');
     }
@@ -1228,6 +1389,11 @@ You need to confirm your email address $to in order to activate your Careerbug a
         {
         $alluser=new AllUser();
         $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
+        
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         $this->layout='layout';
         return $this->render('profilepage',['profile'=>$profile]);
         }
@@ -1239,6 +1405,10 @@ You need to confirm your email address $to in order to activate your Careerbug a
     
     public function actionEditprofile()
     {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
         if(isset(Yii::$app->session['Employeeid']))
         {
          $alluser=new AllUser();
@@ -1341,7 +1511,9 @@ You need to confirm your email address $to in order to activate your Careerbug a
             }
             }
             
-            return $this->render('editprofile',['profile'=>$profile,'skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
+            //return $this->render('editprofile',['profile'=>$profile,'skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
+            Yii::$app->session->setFlash('success', "Profile Updated Successfully");
+            return $this->redirect(['profilepage']);
             }
              else{
             return $this->render('editprofile',['profile'=>$profile,'skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
