@@ -178,7 +178,8 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 								 <li class="navigation-header"><span style=" font-weight: bold;font-size: 14px; text-align: center;">   Candidate List</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
 								 
 									<li><a href="#"><i class="icon-home4"></i> <span> Upload Resume   </span></a></li> 
-									<li><a href="<?=Url::to(['report/candidatelist']);?>"><i class="icon-home4"></i> <span> Candidate List     </span></a></li>  
+									<li><a href="<?=Url::to(['report/candidatelist']);?>"><i class="icon-home4"></i> <span> Candidate List     </span></a></li>
+                                                                        <li><a href="<?=Url::to(['site/allemployee']);?>"><i class="icon-width"></i> <span>All Candidate</span></a></li> 	
                                                                         <li><a href="<?=Url::to(['report/contactuslist']);?>"><i class="icon-home4"></i> <span> Contactus Details     </span></a></li>  
 								 
    
@@ -187,7 +188,9 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 					               <li class="navigation-header"><span style=" font-weight: bold;font-size: 14px; text-align: center;"> Company List</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
 								 
 									<li><a href="<?=Url::to(['report/companylist']);?>"><i class="icon-width"></i> <span>Total Company List</span></a></li> 
-								<!-- /main -->
+                                                                        <li><a href="<?=Url::to(['site/allemployer']);?>"><i class="icon-width"></i> <span>All Company</span></a></li> 
+								
+                                                                <!-- /main -->
 								
 								
 								
@@ -212,8 +215,8 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
   
 								   <li class="navigation-header"><span> Home page Job  </span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
 								 
-									<li><a href="#"><i class="icon-stack"></i> <span> Total Job  </span></a></li>
-									<li><a href="#"><i class="icon-stack"></i> <span> Total Job Opening  </span></a></li> 
+									<!--<li><a href="#"><i class="icon-stack"></i> <span> Total Job  </span></a></li>-->
+									<li><a href="<?=Url::to(['site/alljob']);?>"><i class="icon-stack"></i> <span> Total Job Opening  </span></a></li> 
 
  
  

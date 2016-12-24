@@ -7,6 +7,25 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 
+use common\models\AllUser;
+use common\models\Industry;
+use common\models\UserType;
+use yii\heleprs\Url;
+
+
+use common\models\Skill;
+use common\models\Course;
+use common\models\Position;
+use common\models\Documents;
+use common\models\Education;
+use common\models\Experience;
+use common\models\ContactUs;
+use common\models\PostJob;
+use common\models\JobCategory;
+use common\models\JobRelatedSkill;
+
+
+
 /**
  * Site controller
  */
@@ -22,7 +41,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer'],
                         'allow' => true,
                     ],
                     [
@@ -96,4 +115,60 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    
+    public function actionAlljob()
+    {
+        $model = new PostJob();
+        $alljob = $model->find()->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        return $this->render('alljob', [
+                'model' => $alljob,
+            ]);
+    }
+    public function actionDeletejob($id)
+    {
+        $model = new PostJob();
+        $job = $model->find()->where(['JobId'=>$id])->one();
+        $job->IsDelete=1;
+        $job->save();      
+        return $this->redirect(['alljob']);
+    }
+
+    
+    public function actionAllemployee()
+    {
+        $model = new AllUser();
+        $allemployee = $model->find()->where(['IsDelete'=>0,'UserTypeId'=>2])->orderBy(['Ondate'=>SORT_DESC])->all();
+        
+        return $this->render('allemployee', [
+                'model' => $allemployee,
+            ]);
+    }
+    
+    public function actionDeleteemployee($id)
+    {
+        $model = new AllUser();
+        $employee = $model->find()->where(['UserId'=>$id])->one();
+        $employee->IsDelete=1;
+        $employee->save();      
+        return $this->redirect(['allemployee']);
+    }
+    
+    public function actionAllemployer()
+    {
+        $model = new AllUser();
+        $allemployer = $model->find()->where(['IsDelete'=>0,'UserTypeId'=>3])->orderBy(['OnDate'=>SORT_DESC])->all();
+        
+        return $this->render('allemployer', [
+                'model' => $allemployer,
+            ]);
+    }
+    public function actionDeleteemployer($id)
+    {
+        $model = new AllUser();
+        $employer = $model->find()->where(['UserId'=>$id])->one();
+        $employer->IsDelete=1;
+        $employer->save();   
+        return $this->redirect(['allemployer']);
+    }
+    
 }

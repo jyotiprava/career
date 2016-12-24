@@ -773,7 +773,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
             $alluser->PhotoId=$photo_id;
             $alluser->Ondate=date('Y-m-d');
             $vkey='CB'.time();
-            $model->VerifyKey=$vkey;
+            $alluser->VerifyKey=$vkey;
             $alluser->save();
             
             $education=new Education;
