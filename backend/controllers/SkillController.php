@@ -67,8 +67,15 @@ class SkillController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->OnDate=date('Y-m-d');
-            $model->save();
-            return $this->redirect(['index']);
+            if($model->save())
+            {
+                Yii::$app->session->setFlash('success', "Course Created Successfully");
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "There is some error Please try again");
+            }
+            return $this->redirect(['create']);
         } else {
             return $this->render('create', [
                 'model' => $model,

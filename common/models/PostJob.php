@@ -46,6 +46,7 @@ class PostJob extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $cnt,$CategoryName;
     public static function tableName()
     {
         return 'PostJob';

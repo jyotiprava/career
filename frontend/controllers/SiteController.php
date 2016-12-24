@@ -89,7 +89,30 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $postjob=new PostJob();
+        //Recent Job
+        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        
+        //Top Job
+        $topjob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(5)->all();
+        
+        //hot categories
+        $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId as JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
+        
+        //companies who posted job
+        $companylogo=$postjob->find()->select(['CompanyName','LogoId','Website'])->groupBy(['CompanyName'])->all();
+        $this->layout='main';
+        
+        return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo]);
+    }
+    
+    public function actionJobdetail()
+    {
+        $this->layout='layout';
+        $JobId=Yii::$app->request->get()['JobId'];
+        $postjob=new PostJob();
+        $postdetail=$postjob->find()->where(['JobId'=>$JobId,'JobStatus'=>0])->one();
+        return $this->render('jobdetail',['allpost'=>$postdetail]);
     }
 
     /**
@@ -653,7 +676,7 @@ Thank you for contacting us. We will respond to you as soon as possible.!
             }
             $postajob->LogoId=$logo_id;
             $postajob->EmployerId=Yii::$app->session['Employerid'];
-            $postajob->OnDate=date('Y-m-d H:i:s');
+            $postajob->OnDate=date('Y-m-d h:i:s');
             $postajob->save();
             
             $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
@@ -712,7 +735,21 @@ Thank you for contacting us. We will respond to you as soon as possible.!
     public function actionJobsearch()
     {
         $this->layout='layout';
-        return $this->render('jobsearch');
+        $postjob=new PostJob();
+        
+        //All Job
+        if(isset(Yii::$app->request->get()['JobCategoryId']))
+        {
+        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0,'JobCategoryId'=>Yii::$app->request->get()['JobCategoryId']])->orderBy(['OnDate'=>SORT_DESC])->all();
+        }
+        else
+        {
+        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        }
+        
+        //hot categories
+        $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
+        return $this->render('jobsearch',['alljob'=>$alljob,'hotcategory'=>$hotcategory]);
     }
     
     public function actionHirecandidate()

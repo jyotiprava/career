@@ -54,7 +54,8 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                             <div class="job-short-detail" id="edit_profile_page">
                                 <div class="heading-inner">
                                     <p class="title">Profile detail</p>
-									<a href="">  <input type="submit" value="Save Changes " style="border-color: #333;background-color: #333;padding: 5px 0px 5px 3px;height: 40px;width: 115px;margin-top: -10px; margin-right: -13px;"></a>
+									<?= Html::submitButton('<i class="fa fa-floppy-o orange"></i> Save Changes') ?>
+									
                                 </div>
                                 <dl>
                                      
@@ -63,7 +64,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                                         <input type="text" class="form-control" name="AllUser[MobileNo]" onkeypress="return numbersonly(event)" onblur="return IsMobileno(this.value);" maxlength="10" id="MobileNo" value="<?=$profile->MobileNo;?>" required> </dd>
 
                                     <dt>Email:</dt>
-                                    <dd><input type="email" class="form-control" name="AllUser[Email]" value="<?=$profile->Email;?>" id="email" placeholder="martine-aug234@domain.com"></dd>
+                                    <dd><input type="email" class="form-control" name="AllUser[Email]" value="<?=$profile->Email;?>" id="email" placeholder="martine-aug234@domain.com" readonly></dd>
  
                                     <dt>Address:</dt> 
 									<dd><input type="text" class="form-control" name="AllUser[Address]" id="address" value="<?=$profile->Address;?>" placeholder="234 Uptown new City Tower "></dd>
@@ -385,9 +386,6 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 				?>
 							
 							
-						<div class="form-group ">
-							<?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg btn-block login-button']) ?>
-						</div>
 						
                         </div>
 	

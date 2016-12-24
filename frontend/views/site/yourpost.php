@@ -41,7 +41,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                     <h5 class="add-title"><?=$value->JobTitle;?></h5>
                     <div class="info"> 
                       <span class="category"><?=$value->position->Position;?></span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i> <?=$value->City;?></span> <br>
+                      <span class="item-location"><i class="fa fa-map-marker"></i> <?=$value->Location;?></span> <br>
                     <span> <strong><?=$value->CompanyName;?></strong> </span>
 					</div>
                     <div class="info bottom">
@@ -89,7 +89,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 					 </div> 
 					 
 					<div class="info bottom"> 
-						<span class="category" style="text-align:right">    Posted By <?=Yii::$app->session['EmployerName'].' ('.date('d M Y, H:i A',strtotime($value->OnDate)).')';?></span> 
+						<span class="category" style="text-align:right">    Posted By <?=Yii::$app->session['EmployerName'].' ('.date('d M Y, h:i A',strtotime($value->OnDate)).')';?></span> 
                     </div> 
                   </div>
                 </div>
