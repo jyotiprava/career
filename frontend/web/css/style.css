@@ -53,28 +53,28 @@ hr{
 }
 
 .style-list-1{
-    list-style-image: url(../images/list-1.html);
+    list-style-image: url(/careerbug/frontend/web/images/list-1.html);
 	margin:15px 0;
 	padding:0 0 0 15px;
 	font-size:14px;
 	color:#7f7f7f;
 }
 .style-list-2{
-    list-style-image: url(../images/list-2.html);
+    list-style-image: url(/careerbug/frontend/web/images/list-2.html);
 	margin:15px 0;
 	padding:0 0 0 15px;
 	font-size:14px;
 	color:#7f7f7f;
 }
 .style-list-3{
-    list-style-image: url(../images/list-3.html);
+    list-style-image: url(/careerbug/frontend/web/images/list-3.html);
 	margin:15px 5px;
 	padding:0 0 0 15px;
 	font-size:14px;
 	color:#7f7f7f;
 }
 .style-list-4{
-    list-style-image: url(../images/list-4.html);
+    list-style-image: url(/careerbug/frontend/web/images/list-4.html);
 	margin:15px 5px;
 	padding:0 0 0 15px;
 	font-size:14px;
@@ -127,10 +127,10 @@ hr{
 }
 
 
-.headline {background:url(../images/background.jpg) no-repeat;
+.headline {background:url(/careerbug/frontend/web/images/background.jpg) no-repeat;
 background-size:cover;}
 
-.bg-full{background:url(../images/rep.png) repeat}
+.bg-full{background:url(/careerbug/frontend/web/images/rep.png) repeat}
 
 .top-line{
 	width:100%;
@@ -268,7 +268,7 @@ nav{text-align: right;
 	height:auto;
 	background:#318ecc;
 	/*min-height:558px;
-	/*background:#2980b9 url(../images/headline-bg.png) center no-repeat;*/
+	/*background:#2980b9 url(/careerbug/frontend/web/images/headline-bg.png) center no-repeat;*/
 }
 .main-slider img{
 	width:100%;
@@ -328,10 +328,24 @@ a:focus{text-decoration:none !important}
 	position:relative;
 	margin-top:-0;
 	padding:14px 0 25px 0;
-    background:url(../images/background.jpg) no-repeat;
+    background:url(/careerbug/frontend/web/images/background.jpg) no-repeat;
     background-size:cover;}
 
 .headline_inner h2{color:#fff; padding: 0 0 0 20px; text-align: center;}
+
+
+
+.headline_inner_campus{
+	position:relative;
+	margin-top:-0;
+	padding:80px 0;
+    background:url(/careerbug/frontend/web/images/campus-banner.jpg) no-repeat;
+    background-size:cover;}
+
+.headline_inner_campus h2{color:#fff; padding: 0 0 0 20px; text-align: center;}
+
+
+
 
 .border{height:2px; background:#edecec}
 
@@ -422,7 +436,7 @@ a:focus{text-decoration:none !important}
 	font-size:12px;
 	padding:0 35px 0 15px;
 	width:100%;
-	background-image:url('images/magnifying-glass.png');
+	background-image:url('/careerbug/frontend/web/images/magnifying-glass.png');
 	background-repeat:no-repeat;
 	background-position:right;
 }
@@ -438,7 +452,7 @@ a:focus{text-decoration:none !important}
 	font-size:12px;
 	padding:0 35px 0 15px;
 	width:100%;
-	background-image:url('images/pin-blue.png');
+	background-image:url('/careerbug/frontend/web/images/pin-blue.png');
 	background-repeat:no-repeat;
 	background-position:right;
 }
@@ -777,7 +791,7 @@ a:focus{text-decoration:none !important}
 .search-form{
 	border:1px solid #e3e3e3;
 	height:43px;
-	background:#fafafa url(../images/search-icon.html)no-repeat;
+	background:#fafafa url(/careerbug/frontend/web/images/search-icon.html)no-repeat;
 	padding:0 10px 0 35px;
 	box-shadow:none;
 }
@@ -1110,7 +1124,7 @@ a:focus{text-decoration:none !important}
 	box-shadow:none;
 }
 .post-job-form select, .post-resume-form select{
-	background: #FFF url('images/down-arrow.html') no-repeat right;
+	background: #FFF url('/careerbug/frontend/web/images/down-arrow.html') no-repeat right;
     appearance:none;
     -webkit-appearance:none;
     -moz-appearance: none;
@@ -1134,7 +1148,7 @@ a:focus{text-decoration:none !important}
 	border-radius:20px;
 	-moz-border-radius:20px;
 	-webkit-border-radius:20px;
-	background:#fcfcfc url(../images/upload.html) left no-repeat;
+	background:#fcfcfc url(/careerbug/frontend/web/images/upload.html) left no-repeat;
 }
 .post-job-form .upload input, .post-resume-form .upload input{
     width: 91px !important;
@@ -1612,12 +1626,12 @@ position: relative;
 	
 }
 .prev{
-	background: url(../images/job-opening-nav-prev.png)no-repeat;
+	background: url(/careerbug/frontend/web/images/job-opening-nav-prev.png)no-repeat;
 	margin-left:-1px;
 }
 
 .next{
-	background: url(../images/job-opening-nav-next.png)no-repeat;
+	background: url(/careerbug/frontend/web/images/job-opening-nav-next.png)no-repeat;
 	margin-left:-1px;
 }
 
@@ -1693,7 +1707,7 @@ position: relative;
 	font-size:16px;
 }
 .icon-upload{
-	background: url(../images/icon-upload.png) no-repeat;
+	background: url(/careerbug/frontend/web/images/icon-upload.png) no-repeat;
 	width:12px;
 	height:16px;
 	display:inline-block;
@@ -1712,7 +1726,7 @@ position: relative;
 /*--------------------------------------------------------------------------------*/
 .job-status{
 	width:100%;
-	background:url(../images/banner-1.jpg) no-repeat; 
+	background:url(/careerbug/frontend/web/images/banner-1.jpg) no-repeat; 
 	background-size:cover;
 	min-height:477px;
 
@@ -2004,7 +2018,7 @@ position: relative;
 #footer{
 	width:100%;
 	height:auto;
-	background:#343434 url(../images/footer-bg.jpg) no-repeat center center; background-size:cover;
+	background:#343434 url(/careerbug/frontend/web/images/footer-bg.jpg) no-repeat center center; background-size:cover;
  
 	border-top:1px solid #414141;
 	padding:18px 0;
@@ -2094,7 +2108,7 @@ position: relative;
 	background-repeat:no-repeat;
 	margin-right:5px;
 	margin-top:28px;
-	background:url(../images/icon-media-footer.png)0 0 no-repeat;
+	background:url(/careerbug/frontend/web/images/icon-media-footer.png)0 0 no-repeat;
 }
 
 
@@ -3382,7 +3396,7 @@ aside {
     width: 100%;
 }
 .call-to-action-1 {
-    background: rgba(60, 146, 202, 0.7) url("../images/index5-1.jpg") no-repeat fixed center top / cover ;
+    background: rgba(60, 146, 202, 0.7) url("..//careerbug/frontend/web/images/index5-1.jpg") no-repeat fixed center top / cover ;
     overflow-y: hidden;
 }
 .load-more-btn {
@@ -3730,7 +3744,7 @@ ul{margin:0; padding:0px;}
   .job-oppening-title-right h4{   font-weight: 400;
     color: #565656;
     font-size: 24px;
-    margin: 31px 0 24px 0;}
+    margin: 31px 0 33px 0;}
 	
 	#contact_number p{text-align:center; font-size:24px;}
 	
@@ -3764,7 +3778,6 @@ ul{margin:0; padding:0px;}
 #edit_profile_page  dd{ padding: 2.5px 0px;}
 .heading-inner{position:relative}
 .heading-inner a{position:absolute; right:0px; top:0px; background: #333 !Important; color:#fff; padding:14px ; display:block;}
-.heading-inner button{border: none;position:absolute; right:0px; top:0px; background: #333 !Important; color:#fff; padding:14px ; display:block;}
 
 #register h2 a{text-align:center; display:block;  background:#fff;   border: 1px solid #f16b22;}
 #register h2 a:hover{background:#f16b22}
@@ -3961,22 +3974,21 @@ p.title_profile {
 
 
 @media only screen and (max-width: 767px) { 
-#select_per_page .col-sm-8 label {
-    padding: 7px 0 0 0;
-    font-size: 12px !important
-}
-
-
+#heading_top{padding:0px}
+.banner_heading{font-size: 20px;}
+.upload_resume_main{margin:20px 0 0 0}
+.form-control { font-size: 12px;} 
+.step-to h1, #company-post h1, .testimony h1 { font-size: 22px;line-height: 30px;}
+.bg-full{width:88%; margin:0 auto;     padding-bottom: 20px !Important;}
+.applied_job {  top: -20px !important; }
+#select_per_page .col-sm-8 label {padding: 7px 0 0 0;font-size: 12px !important}
 .extra_mar .btn.btn-primary.dropdown-toggle{margin:0 auto; display:block}
 .small-23  img{width:100%}
 .small-23 .after_login_image {padding:2px;}
-.recent-job h4 { 
-    font-size: 18px;
-}
+.recent-job h4 { margin: 35px 0 24px 0; font-size: 16px;}
 #landing_select {margin: 7px 0 24px 0 !important; padding: 0;}
- 
 .head_right{display:none}
-	.ds{display:block !important}
+.ds{display:block !important}
 .upload_resume_main p { text-align: center !important;font-size: 12px !important;}
 #mobile_design{margin:80px 0 0 0}
 .margin_top{margin-top:40px;}
@@ -4099,11 +4111,11 @@ p.title_profile{font-size:18px; text-align:center; margin:20px 0 40px 0; color:#
     position: fixed;
     z-index:99999;
     top: 0;
-    left: 0;
+    left: 0; border:0px;
     background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 20px;
 }
 
 .top_nav a {
@@ -4120,7 +4132,7 @@ p.title_profile{font-size:18px; text-align:center; margin:20px 0 40px 0; color:#
 .top_nav .closebtn {
     position: absolute;
     top: 0;
-    right: 25px;  z-index:999999;
+    right: 0;  z-index:999999;
     font-size: 36px;
     margin-left: 50px;
 }
@@ -4141,7 +4153,7 @@ ul.social-buttons li a {
   display: block;
   background-color: #f16b22;
   height: 35px;
-  width: 35px;
+  width: 35px;padding: 0;
   border-radius: 0;
   font-size: 20px;
   line-height: 40px;
@@ -4240,7 +4252,7 @@ margin: 6px auto 0; display: block; text-align:center;}
 
 .checkbox label input[type="checkbox"],
 .radio label input[type="radio"] {
-    display: block;
+    display: none;
 }
 
 .checkbox label input[type="checkbox"] + .cr > .cr-icon,
@@ -4272,7 +4284,7 @@ margin: 6px auto 0; display: block; text-align:center;}
 
 .upload_resume_main{background:#f2722c; padding:20px 0}
 .upload_resume_main p{ color:#fff;padding: 7px 0 0 0; text-align:right; font-size:24px;}
-.adban_block img{width:100%}
+.adban_block img{width:100%; margin-bottom:20px}
 
 .image-preview-input.upload_btn	{width: 176px;  padding: 10px 0 0 0;  text-align: center; font-size: 15px; background: #f2722c; color: #fff;}
 
@@ -4285,3 +4297,24 @@ margin: 6px auto 0; display: block; text-align:center;}
     font-size: 11px; }
 .mar_less h4{ margin:10px 0 10px 0}
 #landing_select{margin: 31px 0 24px 0;}
+
+
+#campus_right{ 
+    text-align: left;
+    margin:   0;
+    font-size: 12px;
+} 
+
+#campus_right p.omb_forgotPwd a{ 
+    text-align: left;
+    margin: 13px 0 0 0;
+    font-size: 12px;
+} 
+.cols-sm-10 p{font-size:10px; margin:10px 0}
+#campus_right h2{ margin:0 0 20px 0;     font-size: 18px;}
+#campus_left h2{ margin:0 0 20px 0;     font-size: 18px;}
+
+.margin_0auto{margin:0 auto 20px; float:none; clear:both; overflow:hidden}
+#slider-thumbs ul{list-style:none; margin:0px; padding:0px;}
+
+.responsive_logo{width:75%; margin:0 auto; display:block}

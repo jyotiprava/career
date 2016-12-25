@@ -59,7 +59,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							</div>
 						</div>
 						
-							<div class="form-group">
+						<div class="form-group">
 							<label for="email" class="cols-sm-2 control-label">Address</label>
 							<div class="cols-sm-10">
 								<div class="input-group">

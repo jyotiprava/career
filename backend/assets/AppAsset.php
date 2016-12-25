@@ -21,8 +21,9 @@ class AppAsset extends AssetBundle
 	 
     ];
     public $js = [
+		//'bassets/js/pages/dashboard.js',
         'bassets/js/plugins/loaders/pace.min.js',
-		'bassets/js/core/libraries/jquery.min.js',
+		//'bassets/js/core/libraries/jquery.min.js',
 		'bassets/js/core/libraries/bootstrap.min.js',
 		'bassets/js/plugins/loaders/blockui.min.js',
 		'bassets/js/core/app.js',
@@ -33,7 +34,7 @@ class AppAsset extends AssetBundle
 		'bassets/js/plugins/forms/selects/bootstrap_multiselect.js',
 		'bassets/js/plugins/ui/moment/moment.min.js',
 		'bassets/js/plugins/pickers/daterangepicker.js',
-		'bassets/js/pages/dashboard.js'
+		
     ];
     public $depends = [
         'yii\web\YiiAsset',

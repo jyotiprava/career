@@ -372,9 +372,12 @@ AppAsset::register($this);
 			<div class="container"><!-- Container -->
 				<div class="row">
 					<div class="col-md-3 footer-widget"><!-- Text Widget -->
-						<h6 class="widget-title">About Us</h6>
+					<?php
+					$aboutus=Yii::$app->view->params['footerabout'];
+					?>
+						<h6 class="widget-title"><?=$aboutus->Heading;?></h6>
 						<div class="textwidget">
-							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+							<?=htmlspecialchars_decode($aboutus->Content);?>
 						</div>
 					</div><!-- Text Widget -->
 					
@@ -398,26 +401,27 @@ AppAsset::register($this);
 					</div><!-- Footer Menu Widget -->
 					
 					<div class="col-md-3 footer-widget"><!-- Recent Tweet Widget -->
-						<h6 class="widget-title">Recent Tweets</h6>
-						<div class="recent-twitt">
-							<p>
-								Just released Lotus Flower, a Flexible Multi-Purpose Shop Theme <a href="#">http://t.co/0dyw2cdli5</a>
-							</p>
-							<div class="hastag">#Themeforest #WordPress 04:29 AM Oct 31</div>
-							<p>
-								Just released Lotus Flower, a Flexible Multi-Purpose Shop Theme <a href="#">http://t.co/0dyw2cdli5</a>
-							</p>
-							<div class="hastag">#Themeforest #WordPress 04:29 AM Oct 31</div>
+						<?php
+					$thirdblock=Yii::$app->view->params['footerthirdblock'];?>
+						<h6 class="widget-title"><?=$thirdblock->Heading;?></h6>
+						<div class="footer-widget-nav">
+							<ul>
+								<li><a href="<?= Url::toRoute(['site/index']);?>">Home</a></li>
+								<li><a href="<?= Url::toRoute(['site/jobsearch']);?>">Job Search</a></li>
+								<li><a href="<?= Url::toRoute(['site/employerslogin']);?>">Post a Job</a></li>
+								<li><a href="<?= Url::toRoute(['site/login']);?>">Post a Resume</a></li>
+							     <li><a href="<?= Url::toRoute(['site/feedback']);?>">Feedback</a></li>
+							</ul>
 						</div>
 					</div><!-- Recent Tweet Widget -->
 
 					<div class="col-md-3 footer-widget"><!-- News Leter Widget -->
 					<div id="contact_details">
-					  <h6 class="widget-title"> Contact Us</h6> 
-					      <p> <i class="fa fa-envelope colored"></i>  <a href="">  Email: info@careerbugs.com  </p>
-						  <p> <i class="fa fa-envelope colored opac"></i>  <a href=""> &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp career@careerbugs.com</a></p>
-						  <p> <i class="fa fa-phone"></i> Phone: 1800 200 245 </a></p>
-						  <p> <i class="fa fa-map-marker colored"></i>Address: Cf 318 Sector Saltlake </a></p>
+					<?php
+					$contactus=Yii::$app->view->params['footercontact'];
+					?>
+					  <h6 class="widget-title"><?=$contactus->Heading;?></h6> 
+					     <?=htmlspecialchars_decode($contactus->Content);?>
 						  
 					  </div>
 						<h6 class="widget-title">Singn For news Letter</h6>
@@ -438,15 +442,36 @@ AppAsset::register($this);
 				<div id="footer"><!-- Footer -->
 			<div class="container"><!-- Container -->
 				<div class="row">
-					 
+					 <?php
+					 $socialicon=Yii::$app->view->params['footersocialicon'];
+					 ?>
 					   <ul class="list-inline social-buttons">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-						 <li><a href="#"><i class="fa fa-google-plus"></i></a>
-                        </li>
+						 <?php
+						 if($socialicon->IsTwitter==1)
+						 {
+						 ?>
+                        <li><a href="<?=$socialicon->TwitterLink;?>" target="_blank"><i class="fa fa-twitter"></i></a></li>
+						<?php
+						 }
+						 if($socialicon->IsFacebook==1)
+						 {
+						 ?>
+                        <li><a href="<?=$socialicon->FacebookLink;?>" target="_blank"><i class="fa fa-facebook"></i></a></li>
+						<?php
+						 }
+						 if($socialicon->IsLinkedin==1)
+						 {
+						 ?>
+                        <li><a href="<?=$socialicon->LinkedinLink;?>" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+						<?php
+						 }
+						 if($socialicon->IsGoogleplus==1)
+						 {
+						 ?>
+                        <li><a href="<?=$socialicon->GoogleplusLink;?>" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+						<?php
+						 }
+						 ?>
                     </ul>
 				 
 				</div>
@@ -459,10 +484,16 @@ AppAsset::register($this);
 		<div class="developed_by_e-developed_technology">
 	      <div class="row">
 			 <div class="col-md-6">
-			   <p>	2017 © <a href="">Career Bugs</a>. All Rights Reserved.</p>
+			   <?php
+					$copyright=Yii::$app->view->params['footercopyright'];
+					echo htmlspecialchars_decode($copyright->Content);?>
+					
 			   </div>
 			  <div class="col-md-6">
-			   <a href="" target="_blank">Designed by <span> E-developed Technology </span></a>
+			   <?php
+					$dblock=Yii::$app->view->params['footerdeveloperblock'];
+					echo htmlspecialchars_decode($dblock->Content);?>
+					
 			   </div>
 		   </div>
 		</div>

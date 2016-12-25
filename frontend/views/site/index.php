@@ -123,7 +123,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     <h5 class="add-title"><?=$jvalue->JobTitle;?></h5>
                     <div class="info"> 
                       <span class="category"><?=$jvalue->position->Position;?></span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i><?=$jvalue->Location;?></span> <br>
+                      <span class="item-location"><i class="fa fa-map-marker"></i> <?=$jvalue->Location;?></span> <br>
                     <span> <strong><?=$jvalue->CompanyName;?></strong> </span>
 					</div>
                     <div class="info bottom">
@@ -409,7 +409,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 				<div id="step-image">
 					<div class="step-by-container">
 						<div class="step-by">
-							 <a  href="login.html">
+							 <a  href="#">
 							<div class="step-by-inner">
 								<div class="step-by-inner-img">
 									<img src="images/step-icon-1.png" alt="step" />
@@ -421,7 +421,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								
 						<div class="step-by">
 							 
-							 <a  href="<?= Url::toRoute(['site/login'])?>"><div class="step-by-inner">
+							 <a  href="#"><div class="step-by-inner">
 								<div class="step-by-inner-img">
 									<img src="images/step-icon-2.png" alt="step" />
 								</div>
@@ -431,7 +431,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								
 						<div class="step-by">
 							 
-							 <a  href="<?= Url::toRoute(['site/login'])?>"><div class="step-by-inner">
+							 <a  href="#"><div class="step-by-inner">
 								<div class="step-by-inner-img">
 									<img src="images/step-icon-3.png" alt="step" />
 								</div>
@@ -441,7 +441,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								
 						<div class="step-by">
 							 
-							 <a  href="<?= Url::toRoute(['site/jobsearch'])?>"><div class="step-by-inner">
+							 <a  href="#"><div class="step-by-inner">
 								<div class="step-by-inner-img">
 									<img src="images/step-icon-4.png" alt="step" />
 								</div>
@@ -502,186 +502,67 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 		
 		<div class="testimony">
 			<div class="container">
-				<h1>What People Say About Us</h1>
-				<p>
-					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas mo
-				</p>
+				<h1><?=$peoplesayblock->Heading;?></h1>
+				<?=htmlspecialchars_decode($peoplesayblock->Content);?>
 					
 			</div>
 			<div id="sync2" class="owl-carousel">
+				<?php
+				foreach($allfeedback as $fk=>$fvalue)
+				{
+					if($fvalue->docDetail)
+					{
+						$doc=$url.$fvalue->docDetail->Doc;
+					}
+					else
+					{
+						$doc=$imageurl.'images/user.png';
+					}
+				?>
 				<div class="testimony-image">
-					<img src="images/upload/testimony-image-1.jpg" class="img-responsive" alt="testimony"/>
+					<img src="<?=$doc;?>" class="img-responsive" alt="testimony"/>
 				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-2.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-3.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-4.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-5.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-6.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-7.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-8.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-9.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				<div class="testimony-image">
-					<img src="images/upload/testimony-image-10.jpg" class="img-responsive" alt="testimony"/>
-				</div>
-				
+				<?php
+				}
+				?>
 			</div>
 			
 			<div id="sync1" class="owl-carousel">
+				<?php
+				foreach($allfeedback as $fk=>$fvalue1)
+				{
+					?>
 				<div class="testimony-content container">
+					<?=htmlspecialchars_decode($fvalue1->Message);?>
 					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum .
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
+						<?php echo $fvalue1->Name.','.$fvalue1->Designation.','.$fvalue1->Companyname;?>
 					</p>
 					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
+						<?php
+						if($fvalue1->Twitterlink!='')
+						{
+						?>
+						<a href="<?=$fvalue1->Twitterlink;?>" target="blank"><i class="fa fa-twitter twit"></i></a>
+						<?php
+						}
+						if($fvalue1->LinkedinLink!='')
+						{
+						?>
+						<a href="<?=$fvalue1->LinkedinLink;?>" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
+						<?php
+						}
+						if($fvalue1->Facebooklink!='')
+						{
+						?>
+						<a href="<?=$fvalue1->Facebooklink;?>" target="blank"><i class="fa fa-facebook fb"></i></a>
+						<?php
+						}
+						?>
 					</div>
 				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum .
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum .
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum .
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia.
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate.
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum .
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum . At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum .
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.	
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
-				<div class="testimony-content container">
-					<p>
-						"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
-						
-					</p>
-					<p>
-						John Grasin, CEO, IT-Planet
-					</p>
-					<div class="media-testimony">
-						<a href="#" target="blank"><i class="fa fa-twitter twit"></i></a>
-						<a href="#" target="blank"><i class="fa fa-linkedin linkedin"></i></a>
-						<a href="#" target="blank"><i class="fa fa-facebook fb"></i></a>
-					</div>
-				</div>
+				<?php
+				}
+				?>
 			</div>
 		</div>
 		

@@ -28,6 +28,14 @@ use common\models\PostJob;
 use common\models\JobCategory;
 use common\models\JobRelatedSkill;
 use common\models\NewsLetter;
+use common\models\FooterAboutus;
+use common\models\FooterContactus;
+use common\models\FooterCopyright;
+use common\models\FooterDevelopedblock;
+use common\models\SocialIcon;
+use common\models\FooterThirdBlock;
+use common\models\Feedback;
+use common\models\PeoplesayBlock;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -100,23 +108,96 @@ class SiteController extends Controller
         //hot categories
         $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId as JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
         
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         //companies who posted job
         $companylogo=$postjob->find()->select(['CompanyName','LogoId','Website'])->groupBy(['CompanyName'])->all();
         
+        $peoplesayblock=new PeoplesayBlock();
+        $pb=$peoplesayblock->find()->one();
+        
+        //all feedback
+        $fdbk=new Feedback();
+        $allfeedback=$fdbk->find()->where(['IsApprove'=>1])->orderBy(['OnDate'=>'SORT_DESC'])->all();
+        
         $this->layout='main';
         
-        return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo]);
+        return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo,'peoplesayblock'=>$pb,'allfeedback'=>$allfeedback]);
     }
     
     public function actionJobdetail()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $JobId=Yii::$app->request->get()['JobId'];
@@ -350,9 +431,42 @@ Thank you for connecting with us.
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';        
         $model=new AllUser();
@@ -403,7 +517,15 @@ Thank you for connecting with us.
         }
         else
         {
-            return $this->redirect(['index']);
+            if(isset(Yii::$app->session['Employerid']))
+               {
+                return $this->redirect(['companyprofile']);
+               }
+               else
+               {
+                return $this->redirect(['index']);
+               }
+            
         }
     }
     
@@ -411,9 +533,42 @@ Thank you for connecting with us.
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
        
@@ -498,9 +653,42 @@ Thank you for connecting with us.
     
     public function actionEmployersverifryemail($vkey)
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $alluser=new AllUser();
@@ -565,9 +753,42 @@ Thank you for connecting with us.
     
     public function actionEmployeeverifyemail($vkey)
     {
+       //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $alluser=new AllUser();
@@ -637,9 +858,42 @@ Thank you for connecting with us.
     {
         if(isset(Yii::$app->session['Employerid']))
         {
-            $jobcategory=new JobCategory();
-            $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
-            Yii::$app->view->params['hotcategory']=$allhotcategory;
+            //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $model=new AllUser();
@@ -654,9 +908,42 @@ Thank you for connecting with us.
     }
     public function actionCompanyprofileeditpage()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $model=new AllUser();
@@ -701,9 +988,42 @@ Thank you for connecting with us.
     {
         if(isset(Yii::$app->session['Employerid']))
         {
-            $jobcategory=new JobCategory();
+           //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
             $this->layout='layout';
             $postjob=new PostJob();
@@ -720,9 +1040,42 @@ Thank you for connecting with us.
     {
         if(isset(Yii::$app->session['Employerid']))
         {
-            $jobcategory=new JobCategory();
+            //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         
             $this->layout='layout';
@@ -758,9 +1111,42 @@ Thank you for connecting with us.
     {
         if(isset(Yii::$app->session['Employerid']))
         {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         
         $this->layout='layout';
@@ -846,9 +1232,42 @@ Thank you for connecting with us.
     
     public function actionJobsearch()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $postjob=new PostJob();
@@ -870,9 +1289,42 @@ Thank you for connecting with us.
     
     public function actionHirecandidate()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         return $this->render('hirecandidate');
@@ -882,9 +1334,37 @@ Thank you for connecting with us.
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
         
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
         
         $this->layout='layout';
         $skill=new Skill();
@@ -1034,6 +1514,44 @@ You need to confirm your email address $to in order to activate your Careerbug a
     public function actionLogin()
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
+            
+            //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
           $model=new AllUser();
          if ($model->load(Yii::$app->request->post())){
             $password=md5($model->Password);
@@ -1078,7 +1596,14 @@ You need to confirm your email address $to in order to activate your Careerbug a
         }
         else
         {
-            return $this->redirect(['index']);
+            if(isset(Yii::$app->session['Employeeid']))
+               {
+                return $this->redirect(['profilepage']);
+               }
+               else
+               {
+                return $this->redirect(['index']);
+               }
         }
     }
     
@@ -1095,9 +1620,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
     
     public function actionEmployerforgetpassword()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $model = new AllUser();
@@ -1194,9 +1752,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
     }
     public function actionEmployerchangepassword()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $model = new AllUser();
         
@@ -1225,9 +1816,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
     }
     public function actionForgetpassword()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         $model = new AllUser();
@@ -1325,6 +1949,38 @@ You need to confirm your email address $to in order to activate your Careerbug a
     
     public function actionEmployeechangepassword()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
         $model = new AllUser();
         
         if ($model->load(Yii::$app->request->post())) {
@@ -1358,9 +2014,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
     {
         if(!isset(Yii::$app->session['Employerid']) && !isset(Yii::$app->session['Employeeid'])){
             
-            $jobcategory=new JobCategory();
+           //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         return $this->render('register');
@@ -1373,9 +2062,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
     
     public function actionSearchcandidate()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         return $this->render('searchcandidate');
@@ -1390,9 +2112,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
         $alluser=new AllUser();
         $profile=$alluser->find()->where(['UserId'=>Yii::$app->session['Employeeid']])->one();
         
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
         return $this->render('profilepage',['profile'=>$profile]);
@@ -1405,9 +2160,42 @@ You need to confirm your email address $to in order to activate your Careerbug a
     
     public function actionEditprofile()
     {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
         $jobcategory=new JobCategory();
         $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         if(isset(Yii::$app->session['Employeeid']))
         {
@@ -1525,6 +2313,208 @@ You need to confirm your email address $to in order to activate your Careerbug a
             return $this->redirect(['index']);
         }
         
+    }
+    
+    
+    public function actionJobedit()
+    {
+        if(isset(Yii::$app->session['Employerid'])){
+          
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+        $this->layout='layout';
+        $JobId=Yii::$app->request->get()['JobId'];
+        $postjob=new PostJob();
+        $postdetail=$postjob->find()->where(['JobId'=>$JobId])->one();
+        
+        $position=new Position();
+        $jobcategory=new JobCategory();
+        $allposition=$position->find()->where("IsDelete=0")->all();
+        $allcategory=$jobcategory->find()->where("IsDelete=0")->all();
+        
+        $logoold=$postdetail->LogoId;
+        
+        if ($postdetail->load(Yii::$app->request->post())) {
+            $logo = UploadedFile::getInstance($postdetail, 'LogoId');
+            if($logo)
+            {
+            $logo_id=$docmodel->imageUpload($logo,'CompanyLogo');
+            }
+            else
+            {
+                $logo_id=$logoold;
+            }
+            $postdetail->LogoId=$logo_id;
+            $postdetail->save();
+            
+            $jobrelatedskill=new JobRelatedSkill();
+            $allskill=$jobrelatedskill->find()->where(['JobId'=>$JobId])->delete();
+            $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
+            foreach($skill as $key=>$value)
+            {
+                if($value!='')
+                {
+                $jobrelatedskill=new JobRelatedSkill();
+                $jobrelatedskill->JobId=$postajob->JobId;
+                $jobrelatedskill->SkillId=$value;
+                $jobrelatedskill->OnDate=date('Y-m-d');
+                $jobrelatedskill->save();
+                }
+            }
+            Yii::$app->session->setFlash('success', 'Job Post Edited Successfully');
+            return $this->redirect(['yourpost']);
+        }
+        else
+        {
+        return $this->render('jobedit',['allpost'=>$postdetail,'position'=>$allposition,'jobcategory'=>$allcategory]);
+        }
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
+    }
+    
+    public function actionFeedback()
+    {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+        $docmodel=new Documents();
+        
+        $this->layout='layout';
+        $feedback=new Feedback();
+        if ($feedback->load(Yii::$app->request->post())) {
+            $logo = UploadedFile::getInstance($feedback, 'Logo');
+                if($logo)
+                {
+                $logo_id=$docmodel->imageUpload($logo,'Feedbackphoto');
+                }
+                else
+                {
+                    $logo_id=0;
+                }
+                $feedback->Logo=$logo_id;
+                $feedback->IsDelete=0;
+                $feedback->OnDate=date('Y-m-d');
+            if($feedback->save())
+            {
+                $to=$feedback->Email;
+                $from=Yii::$app->params['adminEmail'];
+                $subject="Thank you for your feedback";
+                
+               $html= "<html>
+               <head>
+               <title>Feedback</title>
+               </head>
+               <body>
+               <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
+                <tbody><tr>
+                                       <td><img src='http://45.58.34.139/career/frontend/web/images/logo.png' title='Career Bugs' alt='Career Bugs' style='margin-top:10px;width:200px;'></td>
+                                   </tr>
+                                   <tr>
+                                       <td style='height:30px'></td>
+                                   </tr>
+                           <tr>
+                                       <td style='font-size:18px'><h2 style='width:85%;font-weight:normal;background:#ffffff;padding:5%;margin:auto'>Welcome to <a href='http://45.58.34.139/career/frontend/web' target='_blank'> Career Bugs </a>
+               <br><br>
+               <span style='font-size:16px;line-height:1.5'>
+                 <h3> Dear , $to</h3>
+Thank you for your feedback
+               <br/>
+               </span>
+               </h2>
+               </td>
+               </tr>
+               </tbody>
+               </table>
+               </body>
+               </html>";
+               $mail= new ContactForm();
+               $mail->sendEmail($to,$from,$html,$subject);
+               
+                Yii::$app->session->setFlash('success', "Thank you for your feedback");
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error', "There is some error please try again");
+            }
+            
+            return $this->render('feedback',['feedback'=>$feedback]);
+        }
+        else
+        {
+            return $this->render('feedback',['feedback'=>$feedback]);
+        }
     }
     
     

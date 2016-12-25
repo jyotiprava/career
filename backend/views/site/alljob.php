@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				   <th><a href="#">Ph No.</a></th>
 				   <th><a href="#">Location</a></th>
 				   <th><a href="#">Action</a></th>
+				   <th><a href="#">Top Job</a></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,17 +35,17 @@ $this->params['breadcrumbs'][] = $this->title;
 			       <td><?=$i;?></td>
 			       <td> <?=date("d-m-Y",strtotime($value->OnDate));?></td>
 			       <td> <?=$value->JobTitle;?></td>
-                               <td>  <?=$value->CompanyName;?></td>
-                               <td><?=$value->Email;?></td>
-                               <td><?=$value->Phone;?></td>
+                   <td><?=$value->CompanyName;?></td>
+                  <td><?=$value->Email;?></td>
+                  <td><?=$value->Phone;?></td>
 			       <td><?=$value->Location;?></td>
 			       <td>
-				<span class="glyphicon glyphicon-eye-open"></span>
 				<a href="/career/backend/web/index.php?r=site%2Fdeletejob&amp;id=<?=$value->JobId;?>" title="Delete" aria-label="Delete" data-confirm="Are you sure you want to delete this job?" data-method="post" data-pjax="0">
 				<span class="glyphicon glyphicon-trash"></span></a>
-				</span>
-				</a>
 			       </td>
+				   <td>
+						   <input type="checkbox" value="<?=$value->TopJob;?>" <?php if($value->TopJob==1) echo "checked='checked'";?> onclick="topjob(<?=$value->TopJob;?>,<?=$value->JobId;?>);"/>
+				   </td>
 			</tr>
 <?php }}else{ ?>
 			<tr>
@@ -57,3 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
+<script type="text/javascript">
+		 function topjob(topjob,jobid) {
+            $.ajax({url:"<?= Url::toRoute(['site/topjob']);?>&id="+jobid+"&tpjob="+topjob,
+				   success:function(results)
+				   {
+				         location.reload(); 
+				   }
+			});
+         }
+</script>
