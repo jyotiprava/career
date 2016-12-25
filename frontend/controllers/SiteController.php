@@ -28,6 +28,7 @@ use common\models\PostJob;
 use common\models\JobCategory;
 use common\models\JobRelatedSkill;
 use common\models\NewsLetter;
+use common\models\AppliedJob;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -47,7 +48,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup','index','jobseach','employersregister','companyprofileeditpage','resetpassword'],
+                        'actions' => ['signup','index','jobseach','employersregister','companyprofileeditpage','resetpassword','applyjob'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -1527,5 +1528,43 @@ You need to confirm your email address $to in order to activate your Careerbug a
         
     }
     
+    public function actionApplyjob($JobId)
+    {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        if(isset(Yii::$app->session['Employeeid']))
+        {
+            $model = new AppliedJob();
+            $alreadyapplied = $model->find()->where(['IsDelete'=>0,'JobId'=>$JobId,'UserId'=>Yii::$app->session['Employeeid']])->one();
+            if($alreadyapplied>0){
+            if($alreadyapplied->Status=='Bookmark'){
+                $alreadyapplied->Status="Applied";
+                $alreadyapplied->save();
+                Yii::$app->session->setFlash('success', "Applied Job Sucescsfully");
+                }else{                
+                Yii::$app->session->setFlash('error', "You have already applied for this Job.");
+                }
+            }else{
+            $model->JobId = $JobId;
+            $model->UserId = Yii::$app->session['Employeeid'];
+            $model->OnDate = date("Y-m-d");
+            $model->Status ="Applied";
+            $model->save();
+            //var_dump($model->getErrors());
+            Yii::$app->session->setFlash('success', "Applied Job Sucescsfully");
+            }
+            return $this->redirect(['index']);
+        
+        }else{
+            return $this->redirect(['login']);
+        }
+       
+    }
+    
+    public function actionApplidjob()
+    {
+        
+    }
     
 }
