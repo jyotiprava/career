@@ -1,0 +1,12 @@
+.edit_job{
+    background: #f16b22 none repeat scroll 0 0;
+    position: absolute;
+    right: 0px;
+    top: 20px;
+    color:#fff;
+    font-size:12px;
+    padding:5px;
+height:30px;
+}
+
+.edit_job a{color:#fff;}

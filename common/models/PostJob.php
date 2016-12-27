@@ -60,7 +60,7 @@ class PostJob extends \yii\db\ActiveRecord
         return [
             [['JobTitle', 'Location', 'Salary', 'Experience', 'JobType', 'CompanyName', 'Email', 'Phone', 'Website', 'Country', 'State', 'City', 'NoofVacancy', 'JobShift', 'JobDescription', 'JobSpecification', 'TechnicalGuidance', 'LogoId', 'EmployerId', 'JobCategoryId', 'PositionId',  'OnDate'], 'required'],
             [['JobTitle', 'Website', 'JobDescription', 'JobSpecification', 'TechnicalGuidance'], 'string'],
-            [['LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'JobStatus', 'IsDelete'], 'integer'],
+            [['LogoId', 'EmployerId', 'JobCategoryId', 'PositionId', 'JobStatus', 'IsDelete','TopJob'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['Location'], 'string', 'max' => 400],
             [['Salary', 'Email', 'JobShift'], 'string', 'max' => 150],

@@ -31,14 +31,17 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 						?>
 						
 		<div class="item-list">
-                <a href="<?= Url::toRoute(['site/postdetail','JobId'=>$value->JobId])?>">
+                
                 <div class="col-sm-12 add-desc-box">
 						<div class="applied_job" style="background: <?=$background;?>">
 								<p><?=$status;?></p>
-							  </div>
+						</div>
+						<div class="edit_job">
+								<a href="<?= Url::toRoute(['site/jobedit','JobId'=>$value->JobId])?>"><p><i class="fa fa-edit"></i> Edit Job</p></a>
+						</div>
 						
                   <div class="add-details">
-                    <h5 class="add-title"><?=$value->JobTitle;?></h5>
+                    <a href="<?= Url::toRoute(['site/postdetail','JobId'=>$value->JobId])?>"><h5 class="add-title"><?=$value->JobTitle;?></h5></a>
                     <div class="info"> 
                       <span class="category"><?=$value->position->Position;?></span> -
                       <span class="item-location"><i class="fa fa-map-marker"></i> <?=$value->Location;?></span> <br>
@@ -93,7 +96,6 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                     </div> 
                   </div>
                 </div>
-                </a>
               </div>
  <?php
 				}

@@ -118,7 +118,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 								<div class="media-body">
 									<span class="media-heading text-semibold"><?=Yii::$app->user->identity->Name;?></span>
 									<div class="text-size-mini text-muted">
-										<i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+										<i class="icon-pin text-size-small"></i> &nbsp;India
 									</div>
 								</div>
 
@@ -233,22 +233,20 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl();
 							      
 								 <li> <a href="index.html"><i class="icon-puzzle4"></i> <span>  Candidate Step</span></a> </li>
 								 <li> <a href="index.html"><i class="icon-puzzle4"></i> <span>Companies Logo Block </span></a> </li>
-								 <li> <a href="index.html"><i class="icon-puzzle4"></i> <span>  People Say Block</span></a> </li>
+								 <li> <a href="<?=Url::to(['footer/peoplesayblock']);?>"><i class="icon-puzzle4"></i> <span> People Say Block</span></a> </li>
+								 <li> <a href="<?=Url::to(['footer/allfeedback']);?>"><i class="icon-puzzle4"></i> <span> All Feedback</span></a> </li>
 								
 								
 								<!-- Extensions -->
 								<li class="navigation-header"><span>Footer</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
-								<li> <a href="index.html"><i class="icon-puzzle4"></i> <span>First Block</span></a> </li>
-								<li> <a href="#"><i class="icon-puzzle4"></i> <span>Second Block</span></a> </li>
-								<li><a href="index.html"><i class="icon-puzzle4"></i> <span>Third Block</span></a></li>
-								<li><a href="index.html"><i class="icon-puzzle4"></i> <span>  Contact Us</span></a></li>
-								<li><a href="index.html"><i class="icon-puzzle4"></i> <span>Social Icons</span></a></li> 
-								<li><a href="index.html"><i class="icon-puzzle4"></i> <span>Copy Right</span></a></li> 
-								<li><a href="index.html"><i class="icon-puzzle4"></i> <span>Social Icons</span></a></li> 
-							    <li><a href="index.html"><i class="icon-puzzle4"></i> <span>  Developed Block</span></a></li> 
-									
+								<li> <a href="<?=Url::to(['footer/aboutindex']);?>"><i class="icon-puzzle4"></i> <span>First Block</span></a> </li>
+								<li> <a href=""><i class="icon-puzzle4"></i> <span>Second Block</span></a> </li>
+								<li><a href="<?=Url::to(['footer/thirdindex']);?>"><i class="icon-puzzle4"></i> <span>Third Block</span></a></li>
+								<li><a href="<?=Url::to(['footer/contactindex']);?>"><i class="icon-puzzle4"></i> <span>  Contact Us</span></a></li>
+								<li><a href="<?=Url::to(['footer/socialiconindex']);?>"><i class="icon-puzzle4"></i> <span>Social Icons</span></a></li> 
+								<li><a href="<?=Url::to(['footer/copyrightindex']);?>"><i class="icon-puzzle4"></i> <span>Copy Right</span></a></li> 
+							    <li><a href="<?=Url::to(['footer/developedblock']);?>"><i class="icon-puzzle4"></i> <span>  Developed Block</span></a></li> 
 								<li class="navigation-header"><span>News Letter</span> <i class="icon-menu" title="" data-original-title="Extensions"></i></li>
-								
 								<li> <a href="<?=Url::to(['site/newslettersubscriber']);?>"><i class="icon-puzzle4"></i> <span>Newsletter Subscriber</span></a> </li>
 
 							</ul>

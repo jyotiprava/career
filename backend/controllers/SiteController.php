@@ -41,7 +41,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer','newslettersubscriber','deletenews'],
+                        'actions' => ['login', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer','newslettersubscriber','deletenews','topjob'],
                         'allow' => true,
                     ],
                     [
@@ -124,6 +124,23 @@ class SiteController extends Controller
                 'model' => $alljob,
             ]);
     }
+    
+    public function actionTopjob($id,$tpjob)
+    {
+        $model = new PostJob();
+        $job = $model->find()->where(['JobId'=>$id])->one();
+        if($tpjob==1)
+        {
+            $tjb=0;
+        }
+        else{
+            $tjb=1;
+        }
+        $job->TopJob=$tjb;
+        $job->save();      
+        echo json_encode(1);
+    }
+    
     public function actionDeletejob($id)
     {
         $model = new PostJob();
