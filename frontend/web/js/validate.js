@@ -156,3 +156,11 @@ success:function(res) {
 });
     }
 }
+
+$(function(){
+   $('.salary').click(function(){
+var checkedValues = $('.salary').map(function () {
+        return this.value;
+    }).get();
+   });
+});
