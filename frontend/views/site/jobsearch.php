@@ -47,7 +47,15 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     </div>
                     <div id="collapseOne13" class="panel-collapse collapse">
                         <div class="panel-body">
-                           <select class="form-control bfh-states" data-country="US" data-state="CA"><option value="">Select</option>
+                           <select class="form-control" onchange="getjobrole(this.value);"><option value="">Select</option>
+						   <?php
+						   foreach($role as $rk=>$rvalue)
+						   {
+						   ?>
+						   <option value="<?=$rvalue->PositionId;?>"><?=$rvalue->Position;?></option>
+						   <?php
+						   }
+						   ?>
 						   </select>
                         </div>
                     </div>
@@ -64,7 +72,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <select class="form-control bfh-states" data-country="US" data-state="CA"><option value="">Select</option></select>
+                            <select class="form-control bfh-states states" onchange="getstatejob(this.value);"><option value="">Select</option></select>
                         </div>
                     </div>
                 </div>
@@ -78,39 +86,39 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body"> 
 						            <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="">
+									   <div class="checkbox"> <label> <input type="checkbox" value="0-12500">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span> 0 - 1.5 Lakh   </label>
 								      </div>	 
 							       </span>
 								 
 								     <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="">
+									   <div class="checkbox"> <label> <input type="checkbox" value="12500-25000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>1.5 - 3Lakh  </label>
 								      </div>	 
 							       </span>
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="">
+									   <div class="checkbox"> <label> <input type="checkbox" value="25000-50000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>3 - 6 Lakh   </label>
 								      </div>	 
 							       </span>
 								   
 								   
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="">
+									   <div class="checkbox"> <label> <input type="checkbox" value="50000-84000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>6 - 10 Lakh  </label>
 								      </div>	 
 							       </span>
 								  
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="">
+									   <div class="checkbox"> <label> <input type="checkbox" value="84000-125000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>10 - 15 Lakh  </label>
 								      </div>	 
 							       </span>
 								   
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="">
+									   <div class="checkbox"> <label> <input type="checkbox" value="125000-208000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>15 - 25 Lakh   </label>
 								      </div>	 
 							       </span> 
@@ -129,7 +137,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                            
 						         <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="">
+									<label> <input type="checkbox" value="Work From Home">
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span> Work From Home 
 									</label>
 								  </div>	 
@@ -137,7 +145,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								 
 								  <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="">
+									<label> <input type="checkbox" value="Part Time">
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Part Time Jobs 
 									</label>
 								  </div>	 
@@ -145,7 +153,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								 
 								  <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="">
+									<label> <input type="checkbox" value="Full Time">
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Full Time Jobs
 									</label>
 								  </div>	 
@@ -154,7 +162,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								 
 								  <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="">
+									<label> <input type="checkbox" value="Internships">
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Internships
 									</label>
 								  </div>	 
@@ -200,7 +208,10 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					
 					 
 					
-					<div class="col-lg-9  col-md-9 col-sm-9 col-xs-12"  > 
+					<div class="col-lg-9  col-md-9 col-sm-9 col-xs-12"  >
+						<div class="pannel_header margin_top">
+								<h4>All Job</h4>
+						</div>
 	 
 		 <?php
 		if($alljob)
@@ -292,4 +303,16 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 		
 		<div class="border"></div>
 </div>
+
+<script type="text/javascript">
+		function getlatestjob(val) {
+            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&latest="+val;
+        }
+		function getjobrole(val) {
+            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&role="+val;
+        }
+		function getstatejob(val) {
+            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&state="+val
+        }
+</script>
 	 

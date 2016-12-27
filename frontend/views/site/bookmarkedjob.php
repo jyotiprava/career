@@ -1,5 +1,5 @@
 <?php
-$this->title = 'Applied Job';
+$this->title = 'Bookmarked Job';
 //var_dump($model);
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -23,7 +23,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					 <div class="col-lg-9  col-md-9 col-sm-9 col-xs-12"  id="mobile_design">
 	  
 					 
-					   <h4><i class="glyphicon glyphicon-briefcase"></i>   You Have applied <?=Yii::$app->session['NoofjobApplied']; ?> Jobs</h4>
+					   <h4><i class="glyphicon glyphicon-briefcase"></i>   You Have Bookmarked <?=Yii::$app->session['NoofjobApplied']; ?> Jobs</h4>
 				
 				<?php
 				if($model)
@@ -37,7 +37,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					       
 					       <div class="col-sm-12 add-desc-box">
 							       <div class="applied_job">
-								 <p>Applied Job</p>
+								 <p>Bookmarked</p>
 							       </div>
 							       
 							       

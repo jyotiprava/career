@@ -75,6 +75,14 @@ jQuery(document).ready(function($) {
 				
 				// add placeholder to get the comma-and-space at the end
 				terms.push( "" );termsid.push("");
+				var allskill='';
+				for(var t=0;t<terms.length;t++)
+				{
+					if (terms[t]) {
+						allskill+='<div id="loc'+termsid[t]+'" style="width:auto;float:left;margin-left:10px;background:red;"><div style="width:auto;float:left;padding:5px;">'+terms[t]+'</div><span onclick="removeskill('+terms[t]+','+termsid[t]+');" style="width:auto; float:left;margin-top:-5px;cursor:pointer;color:#fff; margin-left:5px;font-size:16px;">x</span></div>';
+                    }
+				}
+				$('#allskill').html(allskill);
 				this.value = terms.join( ", " );
 				$('#skillid').val(termsid.join(","));
 				return false;

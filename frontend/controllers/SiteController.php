@@ -109,6 +109,9 @@ class SiteController extends Controller
         //hot categories
         $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId as JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
         
+        //top job
+        $topjobopening=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0,'TopJob'=>1])->all();
+        
         //footer section
         
         //first block
@@ -158,7 +161,7 @@ class SiteController extends Controller
         
         $this->layout='main';
         
-        return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo,'peoplesayblock'=>$pb,'allfeedback'=>$allfeedback]);
+        return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo,'peoplesayblock'=>$pb,'allfeedback'=>$allfeedback,'topjobopening'=>$topjobopening]);
     }
     
     public function actionJobdetail()
@@ -588,6 +591,7 @@ Thank you for connecting with us.
                 $model->Password=md5($model->Password);
                 $vkey='CB'.time();
                 $model->VerifyKey=$vkey;
+                $model->VerifyStatus=1;
                 $model->Ondate=date('Y-m-d');
                 $logo = UploadedFile::getInstance($model, 'LogoId');
                 if($logo)
@@ -603,11 +607,11 @@ Thank you for connecting with us.
                 $name=$model->Name;
                 $to=$model->Email;
                 $from=Yii::$app->params['adminEmail'];;
-                $subject="Verify your email id";
+                $subject="Registration Success";
                 
                $html= "<html>
                <head>
-               <title>Verify your email id</title>
+               <title>Registration Success</title>
                </head>
                <body>
                <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
@@ -622,16 +626,11 @@ Thank you for connecting with us.
                <br><br>
                <span style='font-size:16px;line-height:1.5'>
                  <h3> Dear  $name, </h3>
-                Just click the button below (it only takes a couple of seconds). You won’t be asked to log in as its simply a verification of the ownership of this email address.
+                    Congratulations! You have been registered successfully on Careerbug!!
                <br/>
                </span>
                </h2>
                </td>
-               </tr>
-               <tr>
-                <td><a href='http://45.58.34.139/careerbug/frontend/web/index.php?r=site%2Femployersverifryemail&vkey=$vkey'>
-               <span style='display: block; height:50 px;width:100px;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Verify Email</span>
-               </a></td>
                </tr>
                </tbody>
                </table>
@@ -639,8 +638,25 @@ Thank you for connecting with us.
                </html>";
                $mail= new ContactForm();
                $mail->sendEmail($to,$from,$html,$subject);
-               Yii::$app->session->setFlash('success', 'Check your email for EmailId Verification.');
-               return $this->redirect(['index']);
+               //Yii::$app->session->setFlash('success', 'Check your email for EmailId Verification.');
+               
+               $session = Yii::$app->session;
+                $session->open();
+                Yii::$app->session['Employerid']=$model->UserId;
+                Yii::$app->session['EmployerName']=$model->Name;
+                Yii::$app->session['EmployerEmail']=$model->Email;
+                if($model->LogoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$model->logo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+                Yii::$app->session['EmployerDP']=$pimage;
+                
+               return $this->redirect(['thankyou']);
         } 
         }else{            
             return $this->render('employersregister', ['model' => $model,'industry'=>$allindustry]);
@@ -1278,14 +1294,35 @@ Thank you for connecting with us.
         {
         $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0,'JobCategoryId'=>Yii::$app->request->get()['JobCategoryId']])->orderBy(['OnDate'=>SORT_DESC])->all();
         }
+        elseif(isset(Yii::$app->request->get()['latest']))
+        {
+            $latest=Yii::$app->request->get()['latest'];
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0])->andWhere(['>', 'DATE( `OnDate` )', "(DATE(NOW( ) - INTERVAL $latest DAY))"])->orderBy(['OnDate'=>SORT_DESC])->all();
+        }
+        elseif(isset(Yii::$app->request->get()['role']))
+        {
+            $role=Yii::$app->request->get()['role'];
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0,'PositionId'=>$role])->orderBy(['OnDate'=>SORT_DESC])->all();
+        }
+        elseif(isset(Yii::$app->request->get()['state']))
+        {
+            $state=Yii::$app->request->get()['state'];
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0,'State'=>$state])->orderBy(['OnDate'=>SORT_DESC])->all();
+        }
         else
         {
         $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
         }
         
+        
+        //position
+        $position=new Position();
+        $allposition=$position->find()->where(['IsDelete'=>0])->all();
+        
+        //
         //hot categories
         $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
-        return $this->render('jobsearch',['alljob'=>$alljob,'hotcategory'=>$hotcategory]);
+        return $this->render('jobsearch',['alljob'=>$alljob,'hotcategory'=>$hotcategory,'role'=>$allposition]);
     }
     
     public function actionHirecandidate()
@@ -1425,6 +1462,7 @@ Thank you for connecting with us.
             $alluser->Ondate=date('Y-m-d');
             $vkey='CB'.time();
             $alluser->VerifyKey=$vkey;
+            $alluser->VerifyStatus=1;
             $alluser->save();
             
             $education=new Education;
@@ -1458,11 +1496,11 @@ Thank you for connecting with us.
                 $name=$alluser->Name;
                 $to=$alluser->Email;
                 $from=Yii::$app->params['adminEmail'];
-                $subject="Please confirm your Careerbug account.";
+                $subject="Registration Success";
                 
                $html= "<html>
                <head>
-               <title>Please confirm your Careerbug account.</title>
+               <title>Registration Success</title>
                </head>
                <body>
                <table style='width:500px;height:auto;margin:auto;font-family:arial;color:#4d4c4c;background:#efefef;text-align:center'>
@@ -1477,18 +1515,11 @@ Thank you for connecting with us.
                <br><br>
                <span style='font-size:16px;line-height:1.5'>
                  <h3> Dear  $name, </h3>
-You need to confirm your email address $to in order to activate your Careerbug account, Activating your account will give you more benefits and better control.
+                    Congratulations! You have been registered successfully on Careerbug!!
                <br/>
                </span>
-               <br/>
-               <h3 style='font-size:18px;'>Please click the link below to confirm your account.</h3>
                </h2>
                </td>
-               </tr>
-                <tr>
-                <td><a href='http://45.58.34.139/careerbug/frontend/web/index.php?r=site%2Femployeeverifyemail&vkey=$vkey'>
-               <span style='display: block;color: #ffffff;text-decoration: none;font-size: 14px;text-align: center;font-family: 'Open Sans',Gill Sans,Arial,Helvetica,sans-serif;font-weight: bold;line-height: 45px;'>Verify Email</span>
-               </a></td>
                </tr>
                </tbody>
                </table>
@@ -1497,11 +1528,24 @@ You need to confirm your email address $to in order to activate your Careerbug a
                $mail= new ContactForm();
                $mail->sendEmail($to,$from,$html,$subject);
                 
+                $session = Yii::$app->session;
+                $session->open();
+                Yii::$app->session['Employeeid']=$alluser->UserId;
+                Yii::$app->session['EmployeeName']=$alluser->Name;
+                Yii::$app->session['EmployeeEmail']=$alluser->Email;
+                if($alluser->PhotoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$alluser->photo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+                Yii::$app->session['EmployeeDP']=$pimage;
                 
-                
-                
-                Yii::$app->session->setFlash('success', "Account Created Successfully");
-                return $this->redirect(['profilepage']);
+                //Yii::$app->session->setFlash('success', "Account Created Successfully");
+                return $this->redirect(['thankyou']);
             }
         }
         else{
@@ -2488,6 +2532,94 @@ You need to confirm your email address $to in order to activate your Careerbug a
         
     }
     
+    
+    
+    
+    public function actionBookmark($JobId)
+    {
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        if(isset(Yii::$app->session['Employeeid']))
+        {
+            $model = new AppliedJob();
+            $alreadyapplied = $model->find()->where(['IsDelete'=>0,'JobId'=>$JobId,'UserId'=>Yii::$app->session['Employeeid']])->one();
+            if($alreadyapplied>0){
+            if($alreadyapplied->Status=='Bookmark'){               
+                Yii::$app->session->setFlash('error', "You have already bookmarked for this Job.");
+                }else{                
+                Yii::$app->session->setFlash('error', "You have already Applied for this Job.");                
+                }
+            }else{
+            $model->JobId = $JobId;
+            $model->UserId = Yii::$app->session['Employeeid'];
+            $model->OnDate = date("Y-m-d");
+            $model->Status ="Bookmark";
+            $model->save();
+            
+            $noofjobapplied=$model->find()->where(['Status'=>'Applied','UserId'=> Yii::$app->session['Employeeid']])->count();
+            Yii::$app->session['NoofjobApplied']=$noofjobapplied;
+            
+            //var_dump($model->getErrors());
+            Yii::$app->session->setFlash('success', "You have Bookmarked a job.");
+            }
+            return $this->redirect(['index']);
+        
+        }else{
+            return $this->redirect(['login']);
+        }
+       
+    }
+    
+    public function actionBookmarkjob()
+    {
+        //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+        $this->layout='layout';
+        $model=new AppliedJob();
+        $appliedjobs = $model->find()->where(['IsDelete'=>0,'Status'=>'Bookmark','UserId'=>Yii::$app->session['Employeeid']])->all();
+        
+        return $this->render('bookmarkedjob',['model'=>$appliedjobs,]);
+        
+    }
+    
+    
     public function actionJobedit()
     {
         if(isset(Yii::$app->session['Employerid'])){
@@ -2540,7 +2672,7 @@ You need to confirm your email address $to in order to activate your Careerbug a
         $allcategory=$jobcategory->find()->where("IsDelete=0")->all();
         
         $logoold=$postdetail->LogoId;
-        
+         $docmodel=new Documents();
         if ($postdetail->load(Yii::$app->request->post())) {
             $logo = UploadedFile::getInstance($postdetail, 'LogoId');
             if($logo)
@@ -2555,14 +2687,14 @@ You need to confirm your email address $to in order to activate your Careerbug a
             $postdetail->save();
             
             $jobrelatedskill=new JobRelatedSkill();
-            $allskill=$jobrelatedskill->find()->where(['JobId'=>$JobId])->delete();
+            JobRelatedSkill::deleteAll(['JobId' => $JobId]);
             $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
             foreach($skill as $key=>$value)
             {
                 if($value!='')
                 {
                 $jobrelatedskill=new JobRelatedSkill();
-                $jobrelatedskill->JobId=$postajob->JobId;
+                $jobrelatedskill->JobId=$postdetail->JobId;
                 $jobrelatedskill->SkillId=$value;
                 $jobrelatedskill->OnDate=date('Y-m-d');
                 $jobrelatedskill->save();
@@ -2687,6 +2819,49 @@ Thank you for your feedback
         {
             return $this->render('feedback',['feedback'=>$feedback]);
         }
+    }
+    
+    public function actionThankyou()
+    {
+       //footer section
+        
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+        
+        return $this->render('thankyou');
     }
     
     

@@ -3,9 +3,12 @@ $this->title = 'Job Edit';
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap\ActiveForm;use dosamigos\tinymce\TinyMce;
+
+
 $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
-use dosamigos\tinymce\TinyMce;
+$url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+
 ?>
   
 	<div id="wrapper"><!-- start main wrapper -->
@@ -36,8 +39,18 @@ use dosamigos\tinymce\TinyMce;
 								<div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Key Skill</label>
-                                        <input type="text" placeholder=" " id="skills" required class="form-control">
-										<input type="hidden" id="skillid" name="PostJob[KeySkill]" />
+										<?php
+										$allskill=$allpost->jobRelatedSkills;
+										$skillid='';$skillname='';
+										foreach($allskill as $key=>$value)
+										{
+											$skillid.=$value->SkillId.',';
+											$skillname.=$value->skill->Skill.', ';
+										}
+										?>
+                                        <input type="text" value="<?=$skillname;?>" id="skills" required class="form-control">
+										<div id="allskill" style="width: 100%; margin-top: 5px; height: 25px; padding: 3px;font-size:12px; color: #fff;"></div>
+										<input type="hidden" value="<?=$skillid;?>" id="skillid" name="PostJob[KeySkill]" />
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -161,10 +174,7 @@ use dosamigos\tinymce\TinyMce;
 								  <div class="col-md-6 col-sm-6 col-xs-12">
 								  <div class="form-group">
                                         <label>Country</label> 
-                                        <select class="questions-category countries form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"  id="countryId" name="PostJob[Country]">
-										<option value="">Select Country</option>
-										<option value="India" countryid="101" selected="selected">India</option>
-										</select>
+										<input type="text" value="<?=$allpost->Country;?>" name="PostJob[Country]" required class="form-control">
 								        </div>
 								   </div>
 								   
@@ -172,17 +182,13 @@ use dosamigos\tinymce\TinyMce;
 								 <div class="col-md-6 col-sm-6 col-xs-12">
 								     <div class="form-group">
                                         <label>State</label>
-										 <select class="questions-category states form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"  id="stateId" name="PostJob[State]" required>
-										<option value="">Select State</option>
-										</select> 
+										 <input type="text" value="<?=$allpost->State;?>" name="PostJob[State]" required class="form-control">
 								     </div>
 							     </div>
 											  <div class="col-md-6 col-sm-6 col-xs-12">
 											   <div class="form-group">
 												<label>City</label>
-												<select class="questions-category cities form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"  id="cityId" name="PostJob[City]" required>
-												<option value="">Select City</option>
-											</select>
+												<input type="text" value="<?=$allpost->City;?>" name="PostJob[City]" required class="form-control">
 												</div>
 										   </div>
 										
@@ -267,6 +273,19 @@ use dosamigos\tinymce\TinyMce;
 							  
 							  <div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="form-group">
+									<div class="company-img">
+										<?php
+										if($allpost->docDetail)
+										{
+											$doc=$url.$allpost->docDetail->Doc;
+										}
+										else
+										{
+											$doc=$imageurl.'images/user.png';
+										}
+										?>
+                                        <img src="<?=$doc;?>" class="img-responsive" alt="">
+                                    </div>
 								<label for="logo">Logo <span>(Optional)</span> <small>Max. file size: 8 MB.</small></label>
 								<div class="upload">
 									<input type="file" id="logo" name="PostJob[LogoId]" >

@@ -226,6 +226,10 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 
                             </aside>
                         </div>
+						  <?php
+						  if($topjobopening)
+							{
+							?>
 					  	<div id="job-opening">
 							<div class="job-opening-top"> 
 							<div class="widget-heading fl-left"><span class="title">Top Job Opening</span></div>
@@ -239,63 +243,41 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 							<div class="clearfix"></div>
 							<br/>
 							<div id="job-opening-carousel" class="owl-carousel">
-							
+							<?php
+								foreach($topjobopening as $tk=>$tval)
+								{
+									if($tval->docDetail)
+									{
+										$doc=$url.$tval->docDetail->Doc;
+									}
+									else
+									{
+										$doc=$imageurl.'images/user.png';
+									}
+								?>
 								<div class="item-home">
-									<div class="job-opening">
-										<img src="images/upload/dummy-job-open-1.png" class="img-responsive" alt="dummy-job-opening" />
+									<a href="<?= Url::toRoute(['site/jobdetail','JobId'=>$tval->JobId])?>"><div class="job-opening">
+										<img src="<?=$doc;?>" class="img-responsive" alt="dummy-job-opening" />
 										
 										<div class="job-opening-content">
-											HR Manager
-											<p>
-												Place for worlds best shipping company and work with great level efficiency to break trough in new career.
-											</p>
+											<?=$tval->JobTitle;?><br/>
+											<p><?=substr(htmlspecialchars_decode($tval->JobDescription),0,150);?></p>
 										</div>
 										
 										<div class="job-opening-meta clearfix">
-											<div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>San Fransisco</div>
-											<div class="meta-job-type meta-block"><i class="fa fa-user"></i>Full Time</div>
+											<div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i><?=$tval->Location;?></div>
+											<div class="meta-job-type meta-block"><i class="fa fa-user"></i><?=$tval->JobType;?></div>
 										</div>
-									</div>
+									</div></a>
 								</div>
-								
-								<div class="item-home">
-									<div class="job-opening">
-										<img src="images/upload/dummy-job-open-2.png" class="img-responsive" alt="dummy-job-opening" />
-										
-										<div class="job-opening-content">
-											Head Shop Manager
-											<p>
-												Place for worlds best shipping company and work with great level efficiency to break trough in new career.
-											</p>
-										</div>
-										
-										<div class="job-opening-meta clearfix">
-											<div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>Denver</div>
-											<div class="meta-job-type meta-block"><i class="fa fa-user"></i>Full Time</div>
-										</div>
-									</div>
-								</div>
-								<div class="item-home">
-									<div class="job-opening">
-										<img src="images/upload/dummy-job-open-1.png" class="img-responsive" alt="dummy-job-opening" />
-										
-										<div class="job-opening-content">
-											Head Shop Manager
-											<p>
-												Place for worlds best shipping company and work with great level efficiency to break trough in new career.
-											</p>
-										</div>
-										
-										<div class="job-opening-meta clearfix">
-											<div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>San Fransisco</div>
-											<div class="meta-job-type meta-block"><i class="fa fa-user"></i>Washington</div>
-										</div>
-									</div>
-								</div>
-								
+								<?php
+								}
+							?>
 							</div>
 						</div>
-						 
+						 <?php
+							}
+							?>
 						 
 						<div class="spacer-4"></div> 
 						<div class="widget-heading"><span class="title">Hot Categories </span></div>
