@@ -119,7 +119,7 @@ class SiteController extends Controller
     public function actionAlljob()
     {
         $model = new PostJob();
-        $alljob = $model->find()->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        $alljob = $model->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
         return $this->render('alljob', [
                 'model' => $alljob,
             ]);

@@ -435,18 +435,16 @@ AppAsset::register($this);
 					     <?=htmlspecialchars_decode($contactus->Content);?>
 						  
 					  </div>
-						<h6 class="widget-title">Singn For news Letter</h6>
-						<div class="textwidget">
-							<p>At vero eos et accusamus et iusto odio dignissimos ducimus</p>
-						</div>
+					  <h6 class="widget-title sig1">Singn For news Letter</h6>
+							
+							<div class="single-widget"> 
+										<input autocomplete="off" type="email" id="news_email" type="text" class="col-xs-15 subscribeInputBox" placeholder="Your email address">
+										<button class="col-xs-7 btn btn-theme-secondary subscribeBtn reset-padding" onclick="newsletter();">Subscribe</button> 
+								 <div class="clearfix"></div>
+					      	</div>
 
-						<form role="form">
-							<div class="form-group">
-								<input type="email" id="news_email" class="input-newstler" style="color: #fff;">
-							</div>
-							<button type="button" class="btn-newstler" onclick="newsletter();">Sign Up</button>
-						</form>
-					</div><!-- News Leter Widget -->
+					  <p>Register now to get updates on latest Vacancy.</p>
+
 					<div class="clearfix"></div>
 				</div>
 

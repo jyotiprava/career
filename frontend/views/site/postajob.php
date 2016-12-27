@@ -81,8 +81,8 @@ use dosamigos\tinymce\TinyMce;
                                         <select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="PostJob[JobType]">
                                             <option value="Full Time">Full Time</option>
                                             <option value="Part Time">Part Time</option>
-                                            <option value="Remote">Remote</option>
-                                            <option value="Freelancer">Freelancer</option>
+                                            <option value="Work From Home">Work From Home </option>
+                                            <option value="Internships">Internships </option>
                                         </select> 
                                     </div>
                                 </div>
