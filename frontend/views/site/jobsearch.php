@@ -86,32 +86,32 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body"> 
 						            <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="0-12500">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="0-12500">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span> 0 - 1.5 Lakh   </label>
 								      </div>	 
 							       </span>
 								 
 								     <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="12500-25000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="12500-25000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>1.5 - 3Lakh  </label>
 								      </div>	 
 							       </span>
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="25000-50000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="25000-50000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>3 - 6 Lakh   </label>
 								      </div>	 
 							       </span>
 								   
 								   
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="50000-84000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="50000-84000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>6 - 10 Lakh  </label>
 								      </div>	 
 							       </span>
 								  
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="84000-125000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="84000-125000">
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>10 - 15 Lakh  </label>
 								      </div>	 
 							       </span>
