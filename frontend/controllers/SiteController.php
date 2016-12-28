@@ -39,6 +39,7 @@ use common\models\PeoplesayBlock;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
+use yii\data\Pagination;
 /**
  * Site controller
  */
@@ -100,7 +101,50 @@ class SiteController extends Controller
     {
         $postjob=new PostJob();
         //Recent Job
-        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        if(isset(Yii::$app->request->post()['indexsearch']))
+        {
+            $keyname=Yii::$app->request->post()['keyname'];
+            $indexlocation=Yii::$app->request->post()['indexlocation'];
+            $experience=Yii::$app->request->post()['experience'];
+            $salary=Yii::$app->request->post()['salary'];
+            
+            if($salary!='')
+                {
+                    if(Yii::$app->request->post()['salary']!='')
+                    {
+                    $salaryrange=$salary;
+                    
+                        $sal=explode("-",$salary);
+
+                    $min=$sal[0];$max=$sal[1];
+                    }
+                    else{$min='';$max='';}
+                }else{$min='';$max='';}
+            
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])
+            ->andFilterWhere(['or',
+                ['like', 'JobTitle', $keyname],
+                ['like', 'CompanyName', $keyname],])
+            ->andFilterWhere(['Location'=>$indexlocation,'Experience'=>$experience])
+            ->andFilterWhere(['<=','Salary',$max])
+                ->orderBy(['OnDate'=>SORT_DESC]);
+        }
+        else
+        {
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC]);
+        }
+        $pages = new Pagination(['totalCount' => $alljob->count()]);
+        if(isset(Yii::$app->request->get()['perpage']))
+        {
+            $pages->defaultPageSize=Yii::$app->request->get()['perpage'];
+        }
+        else
+        {
+            $pages->defaultPageSize=10;
+        }
+		$alljob = $alljob->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
         
         //Top Job
         $topjob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(5)->all();
@@ -160,7 +204,7 @@ class SiteController extends Controller
         
         $this->layout='main';
         
-        return $this->render('index',['alljob'=>$alljob,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo,'peoplesayblock'=>$pb,'allfeedback'=>$allfeedback,'topjobopening'=>$topjobopening]);
+        return $this->render('index',['alljob'=>$alljob,'pages' => $pages,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo,'peoplesayblock'=>$pb,'allfeedback'=>$allfeedback,'topjobopening'=>$topjobopening]);
     }
     
     public function actionJobdetail()
@@ -1291,27 +1335,66 @@ Thank you for connecting with us.
         //All Job
         if(isset(Yii::$app->request->get()['JobCategoryId']))
         {
-        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0,'JobCategoryId'=>Yii::$app->request->get()['JobCategoryId']])->orderBy(['OnDate'=>SORT_DESC])->all();
-        }
-        elseif(isset(Yii::$app->request->get()['latest']))
-        {
-            $latest=Yii::$app->request->get()['latest'];
-            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0])->andWhere(['>', 'DATE( `OnDate` )', "(DATE(NOW( ) - INTERVAL $latest DAY))"])->orderBy(['OnDate'=>SORT_DESC])->all();
-        }
-        elseif(isset(Yii::$app->request->get()['role']))
-        {
-            $role=Yii::$app->request->get()['role'];
-            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0,'PositionId'=>$role])->orderBy(['OnDate'=>SORT_DESC])->all();
-        }
-        elseif(isset(Yii::$app->request->get()['state']))
-        {
-            $state=Yii::$app->request->get()['state'];
-            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0,'State'=>$state])->orderBy(['OnDate'=>SORT_DESC])->all();
+            $jobcategoryid=Yii::$app->request->get()['JobCategoryId'];
         }
         else
         {
-        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+            $jobcategoryid='';
         }
+        $latest='';$role='';$state='';$jobtype=array();
+        if(isset(Yii::$app->request->get()['latest']))
+        {
+            $latest=Yii::$app->request->get()['latest'];
+        }
+        if(isset(Yii::$app->request->get()['role']))
+        {
+            $role=Yii::$app->request->get()['role'];
+        }
+        if(isset(Yii::$app->request->get()['state']))
+        {
+            $state=Yii::$app->request->get()['state'];
+        }
+        if(isset(Yii::$app->request->get()['salaryrange']) && Yii::$app->request->get()['salaryrange']!='')
+        {
+            if(Yii::$app->request->get()['salaryrange']!='')
+            {
+            $salaryrange=explode(",",Yii::$app->request->get()['salaryrange']);
+            foreach($salaryrange as $key=>$value)
+            {
+                $sal=explode("-",$value);
+                $salary[]=trim($sal[0]);
+                $salary[]=trim($sal[1]);
+            }
+            $min=min($salary);$max=max($salary);
+            }
+            else{$min='';$max='';}
+        }else{$min='';$max='';}
+        if(isset(Yii::$app->request->get()['jobtype']) && Yii::$app->request->get()['jobtype']!='')
+        {
+            $jobtype=explode(",",Yii::$app->request->get()['jobtype']);
+        }
+            
+        $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])->
+        andFilterWhere([
+                        'JobCategoryId'=>$jobcategoryid,
+                        'PositionId'=>$role,
+                        'State'=>$state,
+                        'JobType'=>$jobtype
+            ])->andFilterWhere(['<=','Salary',$max])
+            ->andFilterWhere(['>', 'DATE( `OnDate` )', "(DATE(NOW( ) - INTERVAL $latest DAY))"])->orderBy(['OnDate'=>SORT_DESC]);
+        
+        $pages = new Pagination(['totalCount' => $alljob->count()]);
+        if(isset(Yii::$app->request->get()['perpage']))
+        {
+            $pages->defaultPageSize=Yii::$app->request->get()['perpage'];
+        }
+        else
+        {
+            $pages->defaultPageSize=10;
+        }
+		$alljob = $alljob->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
         
         
         //position
@@ -1321,7 +1404,7 @@ Thank you for connecting with us.
         //
         //hot categories
         $hotcategory=$postjob->find()->select(['count(*) as cnt','JobCategory.CategoryName as CategoryName','JobCategory.JobCategoryId'])->joinWith(['jobCategory'])->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->groupBy(['PostJob.JobCategoryId'])->all();
-        return $this->render('jobsearch',['alljob'=>$alljob,'hotcategory'=>$hotcategory,'role'=>$allposition]);
+        return $this->render('jobsearch',['alljob'=>$alljob,'pages'=>$pages,'hotcategory'=>$hotcategory,'role'=>$allposition]);
     }
     
     public function actionHirecandidate()

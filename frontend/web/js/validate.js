@@ -157,10 +157,48 @@ success:function(res) {
     }
 }
 
+function removeskill(terms,termsid) {
+    $('#loc'+termsid).remove();
+    var skillid=$('#skillid').val();
+    skillid=skillid.split(termsid+',').join('');
+    $('#skillid').val(skillid);
+    var skills=$('#skills').val();
+    skills=skills.replace(terms+', ','');
+    $('#skills').val(skills);
+}
+
+function getsearch() {
+    var latest=$('#latest').val();
+				var position=$('#position').val();
+				var state=$('#state').val();
+				var salary = $('.salary:checked').map(function () {
+						return this.value;
+					}).get();
+				var jobtype = $('.jobtype:checked').map(function () {
+						return this.value;
+					}).get();
+            window.location.href="index.php?r=site/jobsearch&latest="+latest+"&role="+position+"&state="+state+"&salaryrange="+salary+"&jobtype="+jobtype;
+}
+
+function getresultperpage(perpage,page) {
+    window.location.href="index.php?r=site/"+page+"&perpage="+perpage;
+}
+
+function indexsearch() {
+    var keyname=$('#indexsearch').val();
+    var indexlocation=$('#indexlocation').val();
+    var experience=$('#experience').val();
+    var salary=$('#salary').val();
+}
+
+
 $(function(){
    $('.salary').click(function(){
-var checkedValues = $('.salary').map(function () {
-        return this.value;
-    }).get();
+            getsearch();    
+   });
+   
+   
+   $('.jobtype').click(function(){
+            getsearch(); 
    });
 });
