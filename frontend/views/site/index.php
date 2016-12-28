@@ -15,7 +15,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 						
 						<h2 class="banner_heading">Find a <span>Job </span> You Will <span>  Love </span> </h2>
 				<div class="sticky">
-				<form class="offset-top-10 offset-sm-top-30 " id="home_page_form">
+			<?php $form = ActiveForm::begin(['options' => ['class' => 'offset-top-10 offset-sm-top-30','id'=>'home_page_form']]); ?>
                         <div class="group-sm group-top">
                          
 						 <div  class="group-item col-md-5 col-xs-12">
@@ -36,7 +36,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 						  <div   class="group-item col-md-2 col-xs-6">
                             <div class="form-group">
                               <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                <option value="1">Experience</option>
+                                <option value="">Experience</option>
                                 <option value="2"> > 1 Year   </option>
                                 <option value="3">   2 Year  </option>
                                 <option value="4">   3 Year  </option>
@@ -52,23 +52,23 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                           <div  class="group-item col-md-2 col-xs-6">
                             <div class="form-group">
                               <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                <option value="1">Salary</option>
-                                <option value="2"> > 1 Lakh  </option>
-                                <option value="3"> 1</option>
-                                <option value="4"> 2  </option>
-								<option value="4"> 3  </option>
-								<option value="4"> 4  </option>
-								<option value="4"> 5  </option>
+                                <option value="">Salary</option>
+                                <option value="0-12500"> 0 - 1.5 Lakh  </option>
+                                <option value="12500-25000"> 1.5 - 3 Lakh </option>
+                                <option value="25000-50000"> 3 - 6 Lakh  </option>
+								<option value="50000-84000"> 6 - 10 Lakh   </option>
+								<option value="84000-125000"> 10 - 15 Lakh   </option>
+								<option value="125000-208000"> 15 - 25 Lakh  </option>
                               </select> 
                             </div>
                           </div>
 						   
                           <div class=" group-item reveal-block reveal-lg-inline-block col-md-1 col-xs-12">
-                            <button type="button" style="" class="btn btn-primary element-fullwidth">Search  </button>
+							<?= Html::submitButton('Search', ['class' => 'btn btn-primary element-fullwidth']) ?>
                           </div>
 						  
                         </div>
-                      </form>
+                      <?php ActiveForm::end(); ?>
 					 </div>
 						</div>
 						<div class="col-md-12 align-left">

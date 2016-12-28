@@ -23,7 +23,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					 <div class="col-lg-9  col-md-9 col-sm-9 col-xs-12"  id="mobile_design">
 	  
 					 
-					   <h4><i class="glyphicon glyphicon-briefcase"></i>   You Have Bookmarked <?=Yii::$app->session['NoofjobApplied']; ?> Jobs</h4>
+					   <h4><i class="glyphicon glyphicon-briefcase"></i>   List of  Bookmarked  Jobs</h4>
 				
 				<?php
 				if($model)

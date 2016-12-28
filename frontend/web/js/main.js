@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
 				for(var t=0;t<terms.length;t++)
 				{
 					if (terms[t]) {
-						allskill+='<div id="loc'+termsid[t]+'" style="width:auto;float:left;margin-left:10px;background:red;"><div style="width:auto;float:left;padding:5px;">'+terms[t]+'</div><span onclick="removeskill('+terms[t]+','+termsid[t]+');" style="width:auto; float:left;margin-top:-5px;cursor:pointer;color:#fff; margin-left:5px;font-size:16px;">x</span></div>';
+						allskill+='<div id="loc'+termsid[t]+'" style="width:auto;float:left;margin-left:10px;background:red;"><div style="width:auto;float:left;padding:5px;">'+terms[t]+'</div><span onclick="removeskill(&#39;'+terms[t]+'&#39;,'+termsid[t]+');" style="width:auto; float:left;margin-top:-5px;cursor:pointer;color:#fff; margin-left:5px;font-size:16px;">x</span></div>';
                     }
 				}
 				$('#allskill').html(allskill);

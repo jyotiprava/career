@@ -151,7 +151,8 @@ use dosamigos\tinymce\TinyMce;
 								  <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Website:	</label>
-                                        <input type="text" placeholder="" class="form-control" name="PostJob[Website]">
+                                        <input type="url" placeholder="" class="form-control" name="PostJob[Website]">
+					<span class="help-block">e.g - http://www.google.com</span>
                                     </div>
                                 </div>
 								 

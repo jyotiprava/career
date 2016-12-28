@@ -1192,7 +1192,16 @@ Thank you for connecting with us.
             $postajob->LogoId=$logo_id;
             $postajob->EmployerId=Yii::$app->session['Employerid'];
             $postajob->OnDate=date('Y-m-d h:i:s');
-            $postajob->save();
+            if($postajob->save())
+            {
+                $val=1;
+                Yii::$app->session->setFlash('success', 'Job Post Successfully');
+            }
+            else
+            {
+                $val=0;
+                Yii::$app->session->setFlash('error', 'There is some error ,Please try again');
+            }
             
             $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
             foreach($skill as $key=>$value)
@@ -1206,7 +1215,8 @@ Thank you for connecting with us.
                 $jobrelatedskill->save();
                 }
             }
-            Yii::$app->session->setFlash('success', 'Job Post Successfully');
+            
+            
             return $this->redirect(['yourpost']);
         }
         else
@@ -1308,6 +1318,30 @@ Thank you for connecting with us.
         {
             $state=Yii::$app->request->get()['state'];
             $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0,'State'=>$state])->orderBy(['OnDate'=>SORT_DESC])->all();
+        }
+        elseif(isset(Yii::$app->request->get()['salaryrange']))
+        {
+            if(Yii::$app->request->get()['salaryrange']!='')
+            {
+            $salaryrange=explode(",",Yii::$app->request->get()['salaryrange']);
+            foreach($salaryrange as $key=>$value)
+            {
+                $sal=explode("-",$value);
+                $salary[]=trim($sal[0]);
+                $salary[]=trim($sal[1]);
+            }
+            $min=min($salary);$max=max($salary);
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0])->andWhere(['<=','Salary',$max])->orderBy(['OnDate'=>SORT_DESC])->all();
+            }
+            else
+            {
+              $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();  
+            }
+        }
+        elseif(isset(Yii::$app->request->get()['jobtype']))
+        {
+            $jobtype=explode(",",Yii::$app->request->get()['jobtype']);
+            $alljob=$postjob->find()->where(['IsDelete'=>0,'JobStatus'=>0])->andWhere(['JobType'=>$jobtype])->orderBy(['OnDate'=>SORT_DESC])->all();  
         }
         else
         {
@@ -2456,7 +2490,7 @@ Thank you for connecting with us.
         {
             $model = new AppliedJob();
             $alreadyapplied = $model->find()->where(['IsDelete'=>0,'JobId'=>$JobId,'UserId'=>Yii::$app->session['Employeeid']])->one();
-            if($alreadyapplied>0){
+            if($alreadyapplied){
             if($alreadyapplied->Status=='Bookmark'){
                 $alreadyapplied->Status="Applied";
                 $alreadyapplied->save();
@@ -2470,13 +2504,14 @@ Thank you for connecting with us.
             $model->OnDate = date("Y-m-d");
             $model->Status ="Applied";
             $model->save();
-            
-           $noofjobapplied=$model->find()->where(['Status'=>'Applied','UserId'=> Yii::$app->session['Employeeid']])->count();
-            Yii::$app->session['NoofjobApplied']=$noofjobapplied;
-            
+          
             //var_dump($model->getErrors());
             Yii::$app->session->setFlash('success', "Applied Job Sucescsfully");
             }
+              
+           $noofjobapplied=$model->find()->where(['Status'=>'Applied','UserId'=> Yii::$app->session['Employeeid']])->count();
+           Yii::$app->session['NoofjobApplied']=$noofjobapplied;
+            
             return $this->redirect(['index']);
         
         }else{
@@ -2545,7 +2580,7 @@ Thank you for connecting with us.
         {
             $model = new AppliedJob();
             $alreadyapplied = $model->find()->where(['IsDelete'=>0,'JobId'=>$JobId,'UserId'=>Yii::$app->session['Employeeid']])->one();
-            if($alreadyapplied>0){
+            if($alreadyapplied){
             if($alreadyapplied->Status=='Bookmark'){               
                 Yii::$app->session->setFlash('error', "You have already bookmarked for this Job.");
                 }else{                

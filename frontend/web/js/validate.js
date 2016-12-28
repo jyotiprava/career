@@ -157,10 +157,14 @@ success:function(res) {
     }
 }
 
-$(function(){
-   $('.salary').click(function(){
-var checkedValues = $('.salary').map(function () {
-        return this.value;
-    }).get();
-   });
-});
+function removeskill(terms,termsid) {
+    $('#loc'+termsid).remove();
+    var skillid=$('#skillid').val();
+    skillid=skillid.split(termsid+',').join('');
+    $('#skillid').val(skillid);
+    var skills=$('#skills').val();
+    skills=skills.replace(terms+', ','');
+    $('#skills').val(skills);
+}
+
+

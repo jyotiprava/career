@@ -79,46 +79,56 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 				
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> Salary</a>
-                        </h4>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><h4 class="panel-title">
+                             Salary
+                        </h4></a>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
-                        <div class="panel-body"> 
+                        <div class="panel-body">
+								<?php
+								if(isset($_GET['salaryrange']))
+								{
+								$salaryrange=explode(",",$_GET['salaryrange']);
+								}
+								else
+								{
+										$salaryrange=array();
+								}
+								?>
 						            <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="0-12500">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="0-12500" <?php if(in_array('0-12500',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span> 0 - 1.5 Lakh   </label>
 								      </div>	 
 							       </span>
 								 
 								     <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="12500-25000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="12500-25000" <?php if(in_array('12500-25000',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>1.5 - 3Lakh  </label>
 								      </div>	 
 							       </span>
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="25000-50000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="25000-50000" <?php if(in_array('25000-50000',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>3 - 6 Lakh   </label>
 								      </div>	 
 							       </span>
 								   
 								   
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="50000-84000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="50000-84000" <?php if(in_array('50000-84000',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>6 - 10 Lakh  </label>
 								      </div>	 
 							       </span>
 								  
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="84000-125000">
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="84000-125000" <?php if(in_array('84000-125000',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>10 - 15 Lakh  </label>
 								      </div>	 
 							       </span>
 								   
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="125000-208000">
+									   <div class="checkbox"> <label> <input type="checkbox" value="125000-208000" <?php if(in_array('125000-208000',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>15 - 25 Lakh   </label>
 								      </div>	 
 							       </span> 
@@ -128,16 +138,25 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> Job Type</a>
-                        </h4>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><h4 class="panel-title">
+                             Job Type
+                        </h4></a>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
-                           
+                           <?php
+								if(isset($_GET['jobtype']))
+								{
+								$jobtype=explode(",",$_GET['jobtype']);
+								}
+								else
+								{
+										$jobtype=array();
+								}
+								?>
 						         <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="Work From Home">
+									<label> <input type="checkbox" class="jobtype" value="Work From Home" <?php if(in_array('Work From Home',$jobtype)) echo "checked";?>>
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span> Work From Home 
 									</label>
 								  </div>	 
@@ -145,7 +164,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								 
 								  <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="Part Time">
+									<label> <input type="checkbox" class="jobtype" value="Part Time" <?php if(in_array('Part Time',$jobtype)) echo "checked";?>>
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Part Time Jobs 
 									</label>
 								  </div>	 
@@ -153,7 +172,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								 
 								  <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="Full Time">
+									<label> <input type="checkbox" class="jobtype" value="Full Time" <?php if(in_array('Full Time',$jobtype)) echo "checked";?>>
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Full Time Jobs
 									</label>
 								  </div>	 
@@ -162,7 +181,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 								 
 								  <span> 
 									<div class="checkbox">
-									<label> <input type="checkbox" value="Internships">
+									<label> <input type="checkbox" class="jobtype" value="Internships" <?php if(in_array('Internships',$jobtype)) echo "checked";?>>
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Internships
 									</label>
 								  </div>	 
@@ -312,7 +331,6 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
             window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&role="+val;
         }
 		function getstatejob(val) {
-            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&state="+val
+            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&state="+val;
         }
 </script>
-	 
