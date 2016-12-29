@@ -5,9 +5,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+use yii\widgets\LinkPager;
 ?>
-
-
 <div id="wrapper"><!-- start main wrapper -->
 
 		<div class="job_search"><!-- Start Recent Job -->
@@ -25,13 +24,18 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     </div>
                     <div id="collapseOne12" class="panel-collapse collapse in">
                         <div class="panel-body">
-								<select class="form-control" onchange="getlatestjob(this.value);">
+								<?php
+								if(isset($_GET['latest']))
+								{
+										$latest=$_GET['latest'];}else{$latest='';}
+								?>
+								<select class="form-control" id="latest" onchange="getsearch();">
 										<option value="">Select</option>
-										<option value="1">1 Days</option>
-										<option value="3">3 Days</option>
-										<option value="7">7 Days</option>
-										<option value="15">15 Days</option>
-										<option value="30">30 Days</option>
+										<option value="1" <?php if($latest==1) echo "selected='selected'";?>>1 Days</option>
+										<option value="3" <?php if($latest==3) echo "selected='selected'";?>>3 Days</option>
+										<option value="7" <?php if($latest==7) echo "selected='selected'";?>>7 Days</option>
+										<option value="15" <?php if($latest==15) echo "selected='selected'";?>>15 Days</option>
+										<option value="30" <?php if($latest==30) echo "selected='selected'";?>>30 Days</option>
 						        </select>
                         </div>
                     </div>
@@ -47,12 +51,15 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     </div>
                     <div id="collapseOne13" class="panel-collapse collapse">
                         <div class="panel-body">
-                           <select class="form-control" onchange="getjobrole(this.value);"><option value="">Select</option>
+						<?php
+								if(isset($_GET['role']))
+								{$role1=$_GET['role'];}else{$role1='';}?>
+                           <select class="form-control" id="position" onchange="getsearch();"><option value="">Select</option>
 						   <?php
 						   foreach($role as $rk=>$rvalue)
 						   {
 						   ?>
-						   <option value="<?=$rvalue->PositionId;?>"><?=$rvalue->Position;?></option>
+						   <option value="<?=$rvalue->PositionId;?>" <?php if($role1==$rvalue->PositionId) echo "selected='selected'";?>><?=$rvalue->Position;?></option>
 						   <?php
 						   }
 						   ?>
@@ -72,7 +79,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <select class="form-control bfh-states states" onchange="getstatejob(this.value);"><option value="">Select</option></select>
+                            <select class="form-control bfh-states states" id="state" onchange="getsearch();"><option value="">Select</option></select>
                         </div>
                     </div>
                 </div>
@@ -245,7 +252,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                     <h5 class="add-title"><?=$jvalue->JobTitle;?></h5>
                     <div class="info"> 
                       <span class="category"><?=$jvalue->position->Position;?></span> -
-                      <span class="item-location"><i class="fa fa-map-marker"></i><?=$jvalue->Location;?></span> <br>
+                      <span class="item-location"><i class="fa fa-map-marker"></i> <?=$jvalue->Location;?></span> <br>
                     <span> <strong><?=$jvalue->CompanyName;?></strong> </span>
 					</div>
                     <div class="info bottom">
@@ -304,13 +311,11 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 		}
 		?>
 					 
-					 <ul class="pagination" style="display: none;">
-								<li class="active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-							  </ul>
+					 <?php
+							echo LinkPager::widget([
+								'pagination' => $pages,
+							]);
+							?>
 						<div class="spacer-2"></div>
 					</div>
 					
@@ -322,15 +327,16 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 		
 		<div class="border"></div>
 </div>
-
 <script type="text/javascript">
-		function getlatestjob(val) {
-            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&latest="+val;
-        }
-		function getjobrole(val) {
-            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&role="+val;
-        }
-		function getstatejob(val) {
-            window.location.href="<?= Url::toRoute(['site/jobsearch'])?>&state="+val;
-        }
+		setTimeout(function(){
+				<?php
+				if(isset($_GET['state']))
+								{
+										?>
+				var state='<?=$_GET['state'];?>';
+				$('#state').val(state);
+				<?php
+								}
+								?>
+		},2000);
 </script>

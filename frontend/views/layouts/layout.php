@@ -181,7 +181,7 @@ AppAsset::register($this);
 						
 						<!-- It will display when customer paid  for that -->		
 							<li class="no-need"> 
-							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
+							   <a href="<?= Url::toRoute(['site/jobsearch'])?>" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
 							</li>  
 						<!-- It will display when customer paid  for that -->	
 
@@ -435,7 +435,7 @@ AppAsset::register($this);
 					     <?=htmlspecialchars_decode($contactus->Content);?>
 						  
 					  </div>
-					  <h6 class="widget-title sig1">Singn For news Letter</h6>
+					  <h6 class="widget-title sig1">Singin For news Letter</h6>
 							
 							<div class="single-widget"> 
 										<input autocomplete="off" type="email" id="news_email" type="text" class="col-xs-15 subscribeInputBox" placeholder="Your email address">

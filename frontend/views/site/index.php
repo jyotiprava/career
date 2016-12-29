@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+use yii\widgets\LinkPager;
 ?>
 <!-- start main wrapper --> 
 	<div id="wrapper">
@@ -15,19 +16,20 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 						
 						<h2 class="banner_heading">Find a <span>Job </span> You Will <span>  Love </span> </h2>
 				<div class="sticky">
-			<?php $form = ActiveForm::begin(['options' => ['class' => 'offset-top-10 offset-sm-top-30','id'=>'home_page_form']]); ?>
+
+				<?php $form = ActiveForm::begin(['options' => ['class' => 'offset-top-10 offset-sm-top-30','id'=>'home_page_form']]); ?>
                         <div class="group-sm group-top">
                          
 						 <div  class="group-item col-md-5 col-xs-12">
                             <div class="form-group"> 
-							<input type="text" class="form-control" name="name" id="name" placeholder="Job title, skills, or company">
+							<input type="text" class="form-control" name="keyname" id="keyname" placeholder="Job title, skills, or company">
                              
                             </div>
                           </div>
 						  
 						  <div  class="group-item col-md-2 col-xs-12">
                             <div class="form-group"> 
-							<input type="text" class="form-control" name="name" id="name" placeholder="Location"> 
+							<input type="text" class="form-control" name="indexlocation" id="indexlocation" placeholder="Location"> 
                             </div>
                           </div>
 						  
@@ -35,7 +37,8 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 						  
 						  <div   class="group-item col-md-2 col-xs-6">
                             <div class="form-group">
-                              <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+
+                              <select id="form-filter-location" name="experience" id="experience" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                 <option value="">Experience</option>
                                 <option value="2"> > 1 Year   </option>
                                 <option value="3">   2 Year  </option>
@@ -51,7 +54,9 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 						  
                           <div  class="group-item col-md-2 col-xs-6">
                             <div class="form-group">
-                              <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+
+                              <select id="form-filter-location" name="salary" id="salary" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+>>>>>>> jobpost
                                 <option value="">Salary</option>
                                 <option value="0-12500"> 0 - 1.5 Lakh  </option>
                                 <option value="12500-25000"> 1.5 - 3 Lakh </option>
@@ -64,7 +69,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                           </div>
 						   
                           <div class=" group-item reveal-block reveal-lg-inline-block col-md-1 col-xs-12">
-							<?= Html::submitButton('Search', ['class' => 'btn btn-primary element-fullwidth']) ?>
+							<?= Html::submitButton('Search', ['name'=>'indexsearch','class' => 'btn btn-primary element-fullwidth']) ?>
                           </div>
 						  
                         </div>
@@ -97,12 +102,18 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 						      <label>Result Per page </label>
 							 </div>
 						<div class="col-sm-4">
-                              <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control23 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-								<option value="1">10</option>
-                                <option value="2">  20  </option>
-                                <option value="3">  30 </option>
-                                <option value="4">  40  </option>
-								<option value="4">  50  </option> 
+							<?php
+							if(isset($_GET['perpage']))
+							{
+							$perpage=$_GET['perpage'];
+							}else{$perpage=10;}
+							?>
+                              <select name="resultperpage" data-minimum-results-for-search="Infinity" class="form-control23 select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="getresultperpage(this.value,'index');">
+								<option value="10" <?php if($perpage==10) echo "selected='selected'";?>>10</option>
+                                <option value="20" <?php if($perpage==20) echo "selected='selected'";?>>  20  </option>
+                                <option value="30" <?php if($perpage==30) echo "selected='selected'";?>>  30 </option>
+                                <option value="40" <?php if($perpage==40) echo "selected='selected'";?>>  40  </option>
+								<option value="50" <?php if($perpage==50) echo "selected='selected'";?>>  50  </option> 
                               </select> 
                             </div>
 							 </div>
@@ -181,15 +192,11 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 		}
 		}
 		?>
-			
-							<ul class="pagination" style="display: none;">
-								<li class="active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-							  </ul>
-			  
+							<?php
+							echo LinkPager::widget([
+								'pagination' => $pages,
+							]);
+							?>
 					 
 						<div class="spacer-2"></div>
 					</div>
@@ -502,7 +509,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					}
 				?>
 				<div class="testimony-image">
-					<img src="<?=$doc;?>" class="img-responsive" alt="testimony"/>
+					<img src="<?=$doc;?>" class="img-responsive" alt="testimony" style="height: 150px;width: 150px;"/>
 				</div>
 				<?php
 				}
