@@ -8,11 +8,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 ?>
 
 <div id="wrapper"><!-- start main wrapper -->
-		 
-			  
-					 
-	
-		 
+
 		<div class="inner_page second">
 			<div class="container">
 			  <div  id="profile-desc">
@@ -124,7 +120,15 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4><?=$profile->educations[0]->skill->Skill;?></h4>
+												<?php
+												$skill='';
+												foreach($profile->empRelatedSkills as $ask=>$asv)
+												{
+														$skill.=$asv->skill->Skill.', ';
+												}
+												$skill=trim(trim($skill),",");
+												?>
+                                            <h4><?=$skill;?></h4>
                                              </div>
                                     </div>
                                 </div>
@@ -187,7 +191,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
                                         <div class="degree-info">
-                                            <h4><?=$profile->experiences[0]->Experience;?></h4>
+                                            <h4>> <?=$profile->experiences[0]->Experience;?> Year</h4>
                                              </div>
                                     </div>
                                 </div>

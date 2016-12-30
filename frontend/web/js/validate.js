@@ -180,9 +180,22 @@ function getsearch() {
             window.location.href="index.php?r=site/jobsearch&latest="+latest+"&role="+position+"&state="+state+"&salaryrange="+salary+"&jobtype="+jobtype;
 }
 
+function candidatesearch()
+{
+var state=$('#state').val();
+				var salary = $('.csalary:checked').map(function () {
+						return this.value;
+					}).get();
+				var jobtype = $('.cjobtype:checked').map(function () {
+						return this.value;
+					}).get();
+window.location.href="index.php?r=site/hirecandidate&state="+state+"&salaryrange="+salary+"&jobtype="+jobtype;
+}
+
 function getresultperpage(perpage,page) {
     window.location.href="index.php?r=site/"+page+"&perpage="+perpage;
 }
+
 
 function indexsearch() {
     var keyname=$('#indexsearch').val();
@@ -200,5 +213,14 @@ $(function(){
    
    $('.jobtype').click(function(){
             getsearch(); 
+   });
+
+$('.csalary').click(function(){
+            candidatesearch();    
+   });
+   
+   
+   $('.cjobtype').click(function(){
+            candidatesearch(); 
    });
 });

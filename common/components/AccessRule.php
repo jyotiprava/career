@@ -18,12 +18,15 @@ class AccessRule extends \yii\filters\AccessRule {
                 if ($user->getIsGuest()) {
                     return true;
                 }
-            } elseif ($role === '@') {
+            } elseif ($role ===  '@') {
                 if (!$user->getIsGuest()) {
                     return true;
                 }
             // Check if the user is logged in, and the roles match
-            } elseif (!$user->getIsGuest() && $role === $user->identity->role) {
+            } elseif (!$user->getIsGuest() && $role === $user->identity->type->TypeName) {
+                return true;
+            }
+            elseif ($user->can($role)) {
                 return true;
             }
         }
@@ -31,3 +34,4 @@ class AccessRule extends \yii\filters\AccessRule {
         return false;
     }
 }
+?>

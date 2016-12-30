@@ -37,6 +37,7 @@ use common\models\SocialIcon;
 use common\models\FooterThirdBlock;
 use common\models\Feedback;
 use common\models\PeoplesayBlock;
+use common\models\EmployeeSkill;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -111,23 +112,15 @@ class SiteController extends Controller
             
             if($salary!='')
                 {
-                    if(Yii::$app->request->post()['salary']!='')
-                    {
                     $salaryrange=$salary;
                     
-                        $sal=explode("-",$salary);
-
-                    $min=$sal[0];$max=$sal[1];
-                    }
-                    else{$min='';$max='';}
-                }else{$min='';$max='';}
+                }else{$salaryrange='';}
             
             $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])
             ->andFilterWhere(['or',
                 ['like', 'JobTitle', $keyname],
                 ['like', 'CompanyName', $keyname],])
-            ->andFilterWhere(['Location'=>$indexlocation,'Experience'=>$experience])
-            ->andFilterWhere(['<=','Salary',$max])
+            ->andFilterWhere(['Location'=>$indexlocation,'Experience'=>$experience,'Salary'=>$salaryrange])
                 ->orderBy(['OnDate'=>SORT_DESC]);
         }
         else
@@ -170,7 +163,7 @@ class SiteController extends Controller
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -224,7 +217,7 @@ class SiteController extends Controller
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -493,7 +486,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -595,7 +588,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -621,7 +614,7 @@ Thank you for connecting with us.
         $this->layout='layout';
        
         $model=new AllUser();
-        $allindustry= ArrayHelper::map(Industry::find()->where(['IsDelete'=>0])->all(),'IndustryId','IndustryName');
+        $allindustry= ArrayHelper::map(Industry::find()->where(['IsDelete'=>0])->orderBy(['IndustryName'=>'SORT_ASC'])->all(),'IndustryId','IndustryName');
         $docmodel=new Documents();
         if ($model->load(Yii::$app->request->post()))
         {
@@ -728,7 +721,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -828,7 +821,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -933,7 +926,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -983,7 +976,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1063,7 +1056,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1115,7 +1108,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1186,7 +1179,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1317,7 +1310,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1367,19 +1360,8 @@ Thank you for connecting with us.
         }
         if(isset(Yii::$app->request->get()['salaryrange']) && Yii::$app->request->get()['salaryrange']!='')
         {
-            if(Yii::$app->request->get()['salaryrange']!='')
-            {
-            $salaryrange=explode(",",Yii::$app->request->get()['salaryrange']);
-            foreach($salaryrange as $key=>$value)
-            {
-                $sal=explode("-",$value);
-                $salary[]=trim($sal[0]);
-                $salary[]=trim($sal[1]);
-            }
-            $min=min($salary);$max=max($salary);
-            }
-            else{$min='';$max='';}
-        }else{$min='';$max='';}
+            $salary=explode(",",Yii::$app->request->get()['salaryrange']);
+        }else{$salary='';}
         if(isset(Yii::$app->request->get()['jobtype']) && Yii::$app->request->get()['jobtype']!='')
         {
             $jobtype=explode(",",Yii::$app->request->get()['jobtype']);
@@ -1390,8 +1372,9 @@ Thank you for connecting with us.
                         'JobCategoryId'=>$jobcategoryid,
                         'PositionId'=>$role,
                         'State'=>$state,
-                        'JobType'=>$jobtype
-            ])->andFilterWhere(['<=','Salary',$max])
+                        'JobType'=>$jobtype,
+                        'Salary'=>$salary,
+            ])
             ->andFilterWhere(['>', 'DATE( `OnDate` )', "(DATE(NOW( ) - INTERVAL $latest DAY))"])->orderBy(['OnDate'=>SORT_DESC]);
         
         $pages = new Pagination(['totalCount' => $alljob->count()]);
@@ -1434,7 +1417,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1458,7 +1441,61 @@ Thank you for connecting with us.
         Yii::$app->view->params['footerthirdblock']=$thirdblock;
         
         $this->layout='layout';
-        return $this->render('hirecandidate');
+        $state='';
+        if(isset(Yii::$app->request->get()['state']))
+        {
+            $state=Yii::$app->request->get()['state'];
+        }
+        if(isset(Yii::$app->request->get()['salaryrange']) && Yii::$app->request->get()['salaryrange']!='')
+        {
+            $salary=explode(",",Yii::$app->request->get()['salaryrange']);
+        }else{$salary='';}
+        if(isset(Yii::$app->request->get()['jobtype']) && Yii::$app->request->get()['jobtype']!='')
+        {
+            $jobtype=explode(",",Yii::$app->request->get()['jobtype']);
+        }
+            
+            
+        $alluser=new AllUser();
+        if(isset(Yii::$app->request->post()['candidatesearch']))
+        {
+            $keyname=Yii::$app->request->post()['keysearch'];
+            $indexlocation=Yii::$app->request->post()['location'];
+            $experience=Yii::$app->request->post()['experience'];
+            $category=Yii::$app->request->post()['category'];
+            
+            $allcandidate=$alluser->find()->where(['AllUser.IsDelete'=>0,'VerifyStatus'=>1])->joinWith(['experiences','industry','educations'])
+            ->andFilterWhere(['or',
+                ['like', 'Industry.IndustryName', $keyname],
+                ['like', 'Education.HighestQualification', $keyname],])
+            ->andFilterWhere(['State'=>$indexlocation,'Experience.Experience'=>$experience,'Experience.PositionId'=>$category])
+                ->orderBy(['AllUser.OnDate'=>SORT_DESC]);
+        }
+        else
+        {
+        $allcandidate=$alluser->find()->where(['AllUser.IsDelete'=>0,'VerifyStatus'=>1])->joinWith(['experiences'])->
+        andFilterWhere([
+                        'State'=>$state,
+                        'Experience.Salary'=>$salary,
+            ])
+        ->orderBy(['AllUser.OnDate'=>SORT_DESC]);
+        }
+        
+        $pages = new Pagination(['totalCount' => $allcandidate->count()]);
+        if(isset(Yii::$app->request->get()['perpage']))
+        {
+            $pages->defaultPageSize=Yii::$app->request->get()['perpage'];
+        }
+        else
+        {
+            $pages->defaultPageSize=10;
+        }
+	$allcandidate = $allcandidate->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+        
+        $allposition=Position::find()->select(['Position','PositionId'])->where(['IsDelete'=>0])->orderBy(['Position'=>SORT_ASC])->all();
+        return $this->render('hirecandidate',['candidate'=>$allcandidate,'pages'=>$pages,'allcategory'=>$allposition]);
     }
     
     public function actionJobseekersregister()
@@ -1479,7 +1516,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1510,8 +1547,8 @@ Thank you for connecting with us.
         $docmodel=new Documents();
         
         $allskill=$skill->find()->where("IsDelete=0")->all();
-        $allposition=$position->find()->where("IsDelete=0")->all();
-        $allcourse=$course->find()->where("IsDelete=0")->all();
+        $allposition=$position->find()->where("IsDelete=0")->orderBy(['Position'=>'SORT_ASC'])->all();
+        $allcourse=$course->find()->where("IsDelete=0")->orderBy(['CourseName'=>'SORT_ASC'])->all();
         
         if ($alluser->load(Yii::$app->request->post())) {
             $count=$alluser->find()->where(['Email'=>$alluser->Email,'IsDelete'=>0,'UserTypeId'=>2])->count();
@@ -1541,23 +1578,31 @@ Thank you for connecting with us.
             }
             
             //other course
-            if(Yii::$app->request->post()['AllUser']['OtherCourse']!='')
+            if(isset(Yii::$app->request->post()['AllUser']['OtherCourse']) && Yii::$app->request->post()['AllUser']['OtherCourse']!='')
             {
                 $ncourse=new Course();
-                $ncourse->Course=Yii::$app->request->post()['AllUser']['OtherCourse'];
+                $ncourse->CourseName=Yii::$app->request->post()['AllUser']['OtherCourse'];
                 $ncourse->OnDate=date('Y-m-d');
                 $ncourse->save();
-                $alluser->CourseId=$ncourse->CourseId;
+                $courseId=$ncourse->CourseId;
+            }
+            else
+            {
+                $courseId=Yii::$app->request->post()['AllUser']['CourseId'];
             }
             
             //other position
-            if(Yii::$app->request->post()['AllUser']['OtherPosition']!='')
+            if(isset(Yii::$app->request->post()['AllUser']['OtherPosition']) && Yii::$app->request->post()['AllUser']['OtherPosition']!='')
             {
                 $nposition=new Position();
                 $nposition->Position=Yii::$app->request->post()['AllUser']['OtherPosition'];
                 $nposition->OnDate=date('Y-m-d');
                 $nposition->save();
-                $alluser->PositionId=$nposition->PositionId;
+                $positionId=$nposition->PositionId;
+            }
+            else
+            {
+                $positionId=Yii::$app->request->post()['AllUser']['PositionId'];
             }
             
             $alluser->UserTypeId=2;
@@ -1578,10 +1623,36 @@ Thank you for connecting with us.
             $alluser->VerifyStatus=1;
             $alluser->save();
             
+             //new skill
+            $rawskill=explode(",",Yii::$app->request->post()['AllUser']['RawSkill']);
+            foreach($rawskill as $rk=>$rval)
+            {
+                $indskill=trim($rval);
+                $nskill=new Skill();
+                $cskill=$nskill->find()->where(['Skill'=>$indskill,'IsDelete'=>0])->one();
+                if(!$cskill)
+                {
+                    $nskill->Skill=$indskill;
+                    $nskill->OnDate=date('Y-m-d');
+                    $nskill->save();
+                    $skid=$nskill->SkillId;
+                }
+                else
+                {
+                    $skid=$cskill->SkillId;
+                }
+                    $empskill=new EmployeeSkill();
+                    $empskill->SkillId=$skid;
+                    $empskill->UserId=$alluser->UserId;
+                    $empskill->OnDate=date('Y-m-d');
+                    $empskill->save();
+                
+            }
+            
             $education=new Education;
             $education->UserId=$alluser->UserId;
             $education->HighestQualification=Yii::$app->request->post()['AllUser']['HighestQualification'];
-            $education->CourseId=Yii::$app->request->post()['AllUser']['CourseId'];
+            $education->CourseId=$courseId;
             $education->University=Yii::$app->request->post()['AllUser']['University'];
             $education->PassingYear=Yii::$app->request->post()['AllUser']['DurationTo'];
             $education->SkillId=Yii::$app->request->post()['AllUser']['SkillId'];
@@ -1595,7 +1666,7 @@ Thank you for connecting with us.
             $experience=new Experience();
             $experience->UserId=$alluser->UserId;
             $experience->CompanyName=Yii::$app->request->post()['AllUser']['CompanyName'];
-            $experience->PositionId=Yii::$app->request->post()['AllUser']['PositionId'];
+            $experience->PositionId=$positionId;
             $experience->YearFrom=Yii::$app->request->post()['AllUser']['YearFrom'];
             $experience->YearTo=Yii::$app->request->post()['AllUser']['YearTo'];
             $experience->Experience=Yii::$app->request->post()['AllUser']['Experience'];
@@ -1692,7 +1763,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1800,7 +1871,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1900,7 +1971,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -1969,7 +2040,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2033,7 +2104,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2133,7 +2204,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2203,7 +2274,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2273,7 +2344,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2321,7 +2392,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2371,7 +2442,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2419,7 +2490,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2544,6 +2615,33 @@ Thank you for connecting with us.
             }
             }
             
+            EmployeeSkill::deleteAll(['UserId' => $profile->UserId]);
+            
+            //new skill
+            $rawskill=explode(",",Yii::$app->request->post()['AllUser']['RawSkill']);
+            foreach($rawskill as $rk=>$rval)
+            {
+                $indskill=trim($rval);
+                $nskill=new Skill();
+                $cskill=$nskill->find()->where(['Skill'=>$indskill,'IsDelete'=>0])->one();
+                if(!$cskill)
+                {
+                    $nskill->Skill=$indskill;
+                    $nskill->OnDate=date('Y-m-d');
+                    $nskill->save();
+                    $skid=$nskill->SkillId;
+                }
+                else
+                {
+                    $skid=$cskill->SkillId;
+                }
+                    $empskill=new EmployeeSkill();
+                    $empskill->SkillId=$skid;
+                    $empskill->UserId=$profile->UserId;
+                    $empskill->OnDate=date('Y-m-d');
+                    $empskill->save();
+            }
+            
             //return $this->render('editprofile',['profile'=>$profile,'skill'=>$allskill,'position'=>$allposition,'course'=>$allcourse]);
             Yii::$app->session->setFlash('success', "Profile Updated Successfully");
             return $this->redirect(['profilepage']);
@@ -2615,7 +2713,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2702,7 +2800,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2752,7 +2850,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2844,7 +2942,7 @@ Thank you for connecting with us.
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block
@@ -2951,7 +3049,7 @@ Thank you for your feedback
         
         //second block
         $jobcategory=new JobCategory();
-        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->all();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
         Yii::$app->view->params['hotcategory']=$allhotcategory;
         
         //copyright block

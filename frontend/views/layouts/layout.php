@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\bootstrap\ActiveForm;
 
 AppAsset::register($this);
 ?>
@@ -106,48 +107,50 @@ AppAsset::register($this);
 		  <div class="group-sm group-top" id="top_side_fixed">
 					 <h2 class="banner_heading">Find a <span>Job </span> You Will <span>  Love </span> </h2>
 					 <div class="spacer1"></div>
+			<?php $form = ActiveForm::begin(['action' => Url::toRoute(['site/index']), 'options' => ['class' => 'offset-top-10 offset-sm-top-30','id'=>'home_page_form']]); ?>
 					 <div  class="group-item col-md-12 col-xs-12">
 						<div class="form-group"> 
-						<input type="text" class="form-control" name="name" id="name" placeholder="Job title, skills, or company"> 
+						<input type="text" class="form-control" name="keyname"  placeholder="Job title, skills, or company"> 
 						</div>
 					  </div> 
 					  <div  class="group-item col-md-12 col-xs-12">
 						<div class="form-group"> 
-						<input type="text" class="form-control" name="name" id="name" placeholder="Location"> 
+						<input type="text" class="form-control" name="indexlocation" placeholder="Location"> 
 						</div>
 					  </div> 
 					  <div   class="group-item col-md-12 col-xs-6">
 						<div class="form-group">
-						  <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-							<option value="1">Experience</option>
-							<option value="2"> > 1 Year   </option>
-							<option value="3">   2 Year  </option>
-							<option value="4">   3 Year  </option>
-							<option value="4">   4 Year  </option>
-							<option value="4">   5 Year  </option>
-							<option value="4">   6 Year  </option>
-							<option value="4">   7 Year  </option>
+						  <select id="form-filter-location" name="experience" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+							<option value="">Experience</option>
+                                <option value="2"> > 1 Year   </option>
+                                <option value="3">   2 Year  </option>
+                                <option value="4">   3 Year  </option>
+								<option value="4">   4 Year  </option>
+								<option value="4">   5 Year  </option>
+								<option value="4">   6 Year  </option>
+								<option value="4">   7 Year  </option>
 						  </select> 
 						</div>
 					  </div>
 					  
 					  <div  class="group-item col-md-12 col-xs-6">
 						<div class="form-group">
-						  <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-							<option value="1">Salary</option>
-							<option value="2"> > 1 Lakh  </option>
-							<option value="3"> 1</option>
-							<option value="4"> 2  </option>
-							<option value="4"> 3  </option>
-							<option value="4"> 4  </option>
-							<option value="4"> 5  </option>
-						  </select> 
+						  <select id="form-filter-location" name="salary" id="salary" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                <option value="">Salary</option>
+                                <option value="0 - 1.5"> 0 - 1.5 Lakh  </option>
+                                <option value="1.5 - 3"> 1.5 - 3 Lakh </option>
+                                <option value="3 - 6"> 3 - 6 Lakh  </option>
+								<option value="6 - 10"> 6 - 10 Lakh   </option>
+								<option value="10 - 15"> 10 - 15 Lakh   </option>
+								<option value="15 - 25"> 15 - 25 Lakh  </option>
+                              </select> 
 						</div>
 					  </div>
 					   
 					  <div class=" group-item reveal-block reveal-lg-inline-block col-md-12 col-xs-12">
-						<button type="button" style="" class="btn btn-primary element-fullwidth">Search  </button>
+						<?= Html::submitButton('Search', ['name'=>'indexsearch','class' => 'btn btn-primary element-fullwidth']) ?>
 					  </div>
+					  <?php ActiveForm::end(); ?>
             </div>   
 	   </div> 
   <!--sidebar search--> 
@@ -215,7 +218,7 @@ AppAsset::register($this);
 						
 						<!-- It will display when customer paid  for that -->		
 							<li class="no-need"> 
-							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Candidate List </a>
+							   <a href="<?= Url::toRoute(['sitel/hirecandidate'])?>" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Candidate List </a>
 							</li>  
 						<!-- It will display when customer paid  for that -->	
 
@@ -248,7 +251,7 @@ AppAsset::register($this);
 						       <ul>  
 								   <li class=""> <strong> Are you recruiting?</strong> <a  href="how_we_can_help.html"> 
 									  <span>How we can help</span>  </a></li>  
-								   <li><a class="btn-123"  href="<?= Url::toRoute(['site/searchcandidate'])?>"   >Search Candidates</a></li>
+								   <li><a class="btn-123"  href="<?= Url::toRoute(['sitel/hirecandidate'])?>"   >Search Candidates</a></li>
 						       </ul>
                       </div><!--/.nav-collapse -->
 					<?php

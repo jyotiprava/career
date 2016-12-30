@@ -16,6 +16,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\filters\AccessControl;
+use common\components\AccessRule;
 /**
  * AboutController implements the CRUD actions for About model.
  */
@@ -27,6 +29,24 @@ class FooterController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'actions' => ['login'],
+                        'allow' => true,
+                    ],
+                    [
+
+                        'actions' => ['aboutindex','contactindex','copyrightindex','developedblock','socialiconindex','thirdindex','peoplesayblock','allfeedback','approvefeedback','disapprovefeedback'],
+                        'allow' => true,
+                        'roles' => ['Admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

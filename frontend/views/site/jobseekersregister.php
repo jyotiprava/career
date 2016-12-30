@@ -237,20 +237,14 @@ text/plain, application/pdf">
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<select class="questions-category form-control select2-hidden-accessible" name="AllUser[SkillId]"  required>
-										<option value="">Select Skill  </option>
-										<?php
-										foreach($skill as $key=>$value)
-										{
-										?>
-										<option value="<?=$value->SkillId;?>"><?=$value->Skill;?></option>
-										<?php
-										}
-										?>
-										</select>
+									<input type="text" placeholder=" " name="AllUser[RawSkill]"  id="skills" required class="form-control">
+										
+										<input type="hidden" id="skillid" name="AllUser[SkillId]" />
 								</div>
+								<div id="allskill" style="width: 100%; margin-top: 5px;margin-left: 110px; height: 25px; padding: 3px;font-size:12px; color: #fff;"></div>
 							</div>
 						</div>
+						
 						
 						
 						  <h5  class="page-head">Work Experience</h5>
@@ -327,7 +321,15 @@ text/plain, application/pdf">
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[Salary]" id="Salary"  placeholder="Salary Per Month"/>
+									<select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Salary]">
+                                            <option value="0 - 1.5"> 0 - 1.5 Lakh</option>
+                                            <option value="1.5 - 3">1.5 - 3 Lakh</option>
+                                            <option value="3 - 6">3 - 6 Lakh</option>
+											<option value="6 - 10">6 - 10 Lakh</option>
+											<option value="10 - 15">10 - 15 Lakh</option>
+											<option value="15 - 25">15 - 25 Lakh</option>
+											<option value="Negotiable">Negotiable</option>
+                                        </select> 
 								</div>
 							</div>
 						</div>

@@ -77,14 +77,12 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                                     <div class="form-group">
                                         <label>Salary  </label>
                                         <select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="PostJob[Salary]">
-                                            <option value="Less than 10,000" <?php if($allpost->Salary=='Less than 10,000') echo 'selected="selected"';?>>  Less than 10,000</option>
-                                            <option value="10000 +" <?php if($allpost->Salary=='10000 +') echo 'selected="selected"';?>>10000 + </option>
-                                            <option value="20000 +" <?php if($allpost->Salary=='20000 +') echo 'selected="selected"';?>> 20000 +</option>
-                                            <option value="30000 +" <?php if($allpost->Salary=='30000 +') echo 'selected="selected"';?>>30000 +</option>
-											<option value="40000 +" <?php if($allpost->Salary=='40000 +') echo 'selected="selected"';?>>40000 +</option>
-											<option value="50000 +" <?php if($allpost->Salary=='50000 +') echo 'selected="selected"';?>>50000 +</option>
-											<option value="60000 +" <?php if($allpost->Salary=='60000 +') echo 'selected="selected"';?>>60000 +</option>
-											<option value="70000 +" <?php if($allpost->Salary=='70000 +') echo 'selected="selected"';?>>70000 +</option>
+											<option value="0 - 1.5" <?php if($allpost->Salary=='0 - 1.5') echo 'selected="selected"';?>> 0 - 1.5 Lakh</option>
+                                            <option value="1.5 - 3" <?php if($allpost->Salary=='1.5 - 3') echo 'selected="selected"';?>>1.5 - 3 Lakh</option>
+                                            <option value="3 - 6" <?php if($allpost->Salary=='3 - 6') echo 'selected="selected"';?>>3 - 6 Lakh</option>
+											<option value="6 - 10" <?php if($allpost->Salary=='6 - 10') echo 'selected="selected"';?>>6 - 10 Lakh</option>
+											<option value="10 - 15" <?php if($allpost->Salary=='10 - 15') echo 'selected="selected"';?>>10 - 15 Lakh</option>
+											<option value="15 - 25" <?php if($allpost->Salary=='15 - 25') echo 'selected="selected"';?>>15 - 25 Lakh</option>
 											<option value="Negotiable" <?php if($allpost->Salary=='Negotiable') echo 'selected="selected"';?>>Negotiable</option>
                                         </select> 
                                     </div>

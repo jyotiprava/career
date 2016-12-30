@@ -58,12 +58,12 @@ use yii\widgets\LinkPager;
                               <select id="form-filter-location" name="salary" id="salary" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
 >>>>>>> jobpost
                                 <option value="">Salary</option>
-                                <option value="0-12500"> 0 - 1.5 Lakh  </option>
-                                <option value="12500-25000"> 1.5 - 3 Lakh </option>
-                                <option value="25000-50000"> 3 - 6 Lakh  </option>
-								<option value="50000-84000"> 6 - 10 Lakh   </option>
-								<option value="84000-125000"> 10 - 15 Lakh   </option>
-								<option value="125000-208000"> 15 - 25 Lakh  </option>
+                                <option value="0 - 1.5"> 0 - 1.5 Lakh  </option>
+                                <option value="1.5 - 3"> 1.5 - 3 Lakh </option>
+                                <option value="3 - 6"> 3 - 6 Lakh  </option>
+								<option value="6 - 10"> 6 - 10 Lakh   </option>
+								<option value="10 - 15"> 10 - 15 Lakh   </option>
+								<option value="15 - 25"> 15 - 25 Lakh  </option>
                               </select> 
                             </div>
                           </div>
