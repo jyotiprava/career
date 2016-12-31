@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "bryglen/yii2-sendgrid": "*",
-        "2amigos/yii2-tinymce-widget": "~1.1"
+        "2amigos/yii2-tinymce-widget": "~1.1",
+        "yiisoft/yii2-authclient": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

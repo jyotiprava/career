@@ -33,7 +33,7 @@ class EmployeeSkill extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserId', 'SkillId', 'IsDelete', 'OnDate'], 'required'],
+            [['UserId', 'SkillId', 'OnDate'], 'required'],
             [['UserId', 'SkillId', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['SkillId'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['SkillId' => 'SkillId']],

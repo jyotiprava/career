@@ -60,7 +60,7 @@ class PositionSearch extends Position
         // grid filtering conditions
         $query->andFilterWhere([
             'PositionId' => $this->PositionId,
-            'IsDelete' => $this->IsDelete,
+            'IsDelete' => 0,
             'OnDate' => $this->OnDate,
             'UpdatedDate' => $this->UpdatedDate,
         ]);

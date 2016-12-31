@@ -4,9 +4,10 @@ jQuery(document).ready(function($) {
 	$(function(){
 		$('#tab-container').easytabs();
 	
-	
 	$('.date').datepicker();		
 	$( ".date" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
+	
+	$(".educationdatepicker").datepicker({ dateFormat: 'yy' });
 		
 		setTimeout(function() {
             $('.alert').fadeOut('fast');

@@ -4,7 +4,6 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
 use yii\data\ActiveDataProvider;
 
@@ -13,6 +12,8 @@ use common\models\Education;
 use common\models\Experience;
 use common\models\ContactUs;
 
+use yii\filters\AccessControl;
+use common\components\AccessRule;
 
 /**
  * AboutController implements the CRUD actions for About model.
@@ -25,6 +26,24 @@ class ReportController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'actions' => ['login'],
+                        'allow' => true,
+                    ],
+                    [
+
+                        'actions' => ['candidatelist','companylist','candidatedetailview','contactuslist'],
+                        'allow' => true,
+                        'roles' => ['Admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

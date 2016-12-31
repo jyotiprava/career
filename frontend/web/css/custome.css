@@ -10,3 +10,14 @@ height:30px;
 }
 
 .edit_job a{color:#fff;}
+
+.heading-inner button {
+    background: none repeat scroll 0 0 #333 !important;
+    color: #fff;
+    display: block;
+    padding: 14px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+}

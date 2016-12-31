@@ -27,7 +27,9 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					 <div class="row">
                    <div class="col-lg-3  col-md-4 col-sm-4 col-xs-12">
 				    <aside>
-                                
+                                 <div class="apply-job">
+                                 <a href="<?= Url::toRoute(['site/bookmark','JobId'=>$allpost->JobId])?>"><i class="fa fa-star"></i>Bookmark</a>
+				 </div>
                                 <div class="company-detail">
                                     <div class="company-img">
 										<?php

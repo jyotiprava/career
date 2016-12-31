@@ -103,43 +103,43 @@ use yii\widgets\LinkPager;
 								}
 								?>
 						            <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="0-12500" <?php if(in_array('0-12500',$salaryrange)) echo "checked";?>>
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="0 - 1.5" <?php if(in_array('0 - 1.5',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span> 0 - 1.5 Lakh   </label>
 								      </div>	 
 							       </span>
 								 
 								     <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="12500-25000" <?php if(in_array('12500-25000',$salaryrange)) echo "checked";?>>
-									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>1.5 - 3Lakh  </label>
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="1.5 - 3" <?php if(in_array('1.5 - 3',$salaryrange)) echo "checked";?>>
+									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>1.5 - 3 Lakh  </label>
 								      </div>	 
 							       </span>
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="25000-50000" <?php if(in_array('25000-50000',$salaryrange)) echo "checked";?>>
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="3 - 6" <?php if(in_array('3 - 6',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>3 - 6 Lakh   </label>
 								      </div>	 
 							       </span>
 								   
 								   
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="50000-84000" <?php if(in_array('50000-84000',$salaryrange)) echo "checked";?>>
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="6 - 10" <?php if(in_array('6 - 10',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>6 - 10 Lakh  </label>
 								      </div>	 
 							       </span>
 								  
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="84000-125000" <?php if(in_array('84000-125000',$salaryrange)) echo "checked";?>>
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="10 - 15" <?php if(in_array('10 - 15',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>10 - 15 Lakh  </label>
 								      </div>	 
 							       </span>
 								   
 								    
 								       <span> 
-									   <div class="checkbox"> <label> <input type="checkbox" value="125000-208000" <?php if(in_array('125000-208000',$salaryrange)) echo "checked";?>>
+									   <div class="checkbox"> <label> <input type="checkbox" class="salary" value="15 - 25" <?php if(in_array('15 - 25',$salaryrange)) echo "checked";?>>
 									   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>15 - 25 Lakh   </label>
 								      </div>	 
 							       </span> 
-							 </select>
+							
                         </div>
                     </div>
                 </div>
@@ -295,7 +295,7 @@ use yii\widgets\LinkPager;
 					    	<span class="styl">Salary Range </span>  
 					    </div>
 						<div class="col-sm-9 col-xs-9 left-text">
-							<span class="category"><?=$jvalue->Salary;?></span>  
+							<span class="category"><?=$jvalue->Salary;?> Lakh</span>  
                       </div>
 					 </div> 
 					 

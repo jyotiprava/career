@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\bootstrap\ActiveForm;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
@@ -65,7 +66,7 @@ AppAsset::register($this);
 		   <div class="collapse navbar-collapse" style="display:block"> 
 			<ul class="nav navbar-nav"> 
 					<li> <a href="<?= Url::toRoute(['site/jobsearch'])?>">Job Search</a></li>
-					<li><a   href="<?= Url::toRoute(['sitel/hirecandidate'])?>" >   Hire Candidate</a></li>  
+					<li><a   href="<?= Url::toRoute(['site/hirecandidate'])?>" >   Hire Candidate</a></li>  
 					<li><a   href="<?= Url::toRoute(['site/login'])?>" >Post a Resume</a></li>   
 					 <li><a   href="<?= Url::toRoute(['site/login'])?>"   > <i class="fa fa-upload" aria-hidden="true"></i>  &nbsp Upload CV </a></li>
 					 <li><a   href="<?= Url::toRoute(['site/employerslogin'])?>" > <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp  Employer Login</a></li>  
@@ -76,7 +77,7 @@ AppAsset::register($this);
 					   <p class="title_profile"> Rohit Jaiwal</p>
 							 </li>
 			                 <li><a href="#">Dashboard</a></li>  
-							<li><a href="your_post.html">Your Post</a></li> 
+							<li><a href="<?= Url::toRoute(['site/yourpost'])?>">Your Post</a></li> 
 						    <li><a  href="<?= Url::toRoute(['site/postajob'])?>"  >New Post</a></li>   
                         </ul>
                               
@@ -94,48 +95,50 @@ AppAsset::register($this);
 		  <div class="group-sm group-top" id="top_side_fixed">
 					 <h2 class="banner_heading">Find a <span>Job </span> You Will <span>  Love </span> </h2>
 					 <div class="spacer1"></div>
+					 <?php $form = ActiveForm::begin(['action' => Url::toRoute(['site/index']), 'options' => ['class' => 'offset-top-10 offset-sm-top-30','id'=>'home_page_form']]); ?>
 					 <div  class="group-item col-md-12 col-xs-12">
 						<div class="form-group"> 
-						<input type="text" class="form-control" name="name" id="name" placeholder="Job title, skills, or company"> 
+						<input type="text" class="form-control" name="keyname"  placeholder="Job title, skills, or company"> 
 						</div>
 					  </div> 
 					  <div  class="group-item col-md-12 col-xs-12">
 						<div class="form-group"> 
-						<input type="text" class="form-control" name="name" id="name" placeholder="Location"> 
+						<input type="text" class="form-control" name="indexlocation" placeholder="Location"> 
 						</div>
 					  </div> 
 					  <div   class="group-item col-md-12 col-xs-6">
 						<div class="form-group">
-						  <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-							<option value="1">Experience</option>
-							<option value="2"> > 1 Year   </option>
-							<option value="3">   2 Year  </option>
-							<option value="4">   3 Year  </option>
-							<option value="4">   4 Year  </option>
-							<option value="4">   5 Year  </option>
-							<option value="4">   6 Year  </option>
-							<option value="4">   7 Year  </option>
+						  <select id="form-filter-location" name="experience" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+							<option value="">Experience</option>
+                                <option value="2"> > 1 Year   </option>
+                                <option value="3">   2 Year  </option>
+                                <option value="4">   3 Year  </option>
+								<option value="4">   4 Year  </option>
+								<option value="4">   5 Year  </option>
+								<option value="4">   6 Year  </option>
+								<option value="4">   7 Year  </option>
 						  </select> 
 						</div>
 					  </div>
 					  
 					  <div  class="group-item col-md-12 col-xs-6">
 						<div class="form-group">
-						  <select id="form-filter-location" name="location" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-							<option value="1">Salary</option>
-							<option value="2"> > 1 Lakh  </option>
-							<option value="3"> 1</option>
-							<option value="4"> 2  </option>
-							<option value="4"> 3  </option>
-							<option value="4"> 4  </option>
-							<option value="4"> 5  </option>
-						  </select> 
+						  <select id="form-filter-location" name="salary" id="salary" data-minimum-results-for-search="Infinity" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                <option value="">Salary</option>
+                                <option value="0 - 1.5"> 0 - 1.5 Lakh  </option>
+                                <option value="1.5 - 3"> 1.5 - 3 Lakh </option>
+                                <option value="3 - 6"> 3 - 6 Lakh  </option>
+								<option value="6 - 10"> 6 - 10 Lakh   </option>
+								<option value="10 - 15"> 10 - 15 Lakh   </option>
+								<option value="15 - 25"> 15 - 25 Lakh  </option>
+                              </select> 
 						</div>
 					  </div>
 					   
 					  <div class=" group-item reveal-block reveal-lg-inline-block col-md-12 col-xs-12">
-						<button type="button" style="" class="btn btn-primary element-fullwidth">Search  </button>
+						<?= Html::submitButton('Search', ['name'=>'indexsearch','class' => 'btn btn-primary element-fullwidth']) ?>
 					  </div>
+					  <?php ActiveForm::end(); ?>
             </div>   
 	   </div> 
   <!--sidebar search--> 
@@ -169,16 +172,30 @@ AppAsset::register($this);
 						
 						<!-- It will display when customer paid  for that -->		
 							<li class="no-need"> 
-							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
+							   <a href="<?= Url::toRoute(['site/jobsearch'])?>" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Company List </a>
 							</li>  
 						<!-- It will display when customer paid  for that -->	
 
 						<li class="no-need">
-								<a href="#" class="dropdown-toggle brdr  orange_bg new_style" data-toggle="dropdown"><b class="fa fa-bell orange"></b> <br>  Notification </a> 
-								<!--<ul class="dropdown-menu">
-								    <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
-									 <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
-								</ul>-->
+								<a href="#" class="dropdown-toggle brdr  orange_bg new_style" data-toggle="dropdown"><b class="fa fa-bell orange"></b> <br>  Notification </a>
+								<?php
+								$alnotification=[];
+								if(isset(Yii::$app->view->params['employeenotification']))
+								$alnotification=Yii::$app->view->params['employeenotification'];
+								?>
+								<ul class="dropdown-menu">
+								   <?php
+								   if($alnotification)
+								   {
+								   foreach($alnotification as $nk=>$nval)
+								   {
+								   ?>
+								    <li class=""><a target="_blank" href="<?= Url::toRoute(['site/jobdetail','JobId'=>$nval->JobId,'Nid'=>$nval->NotificationId])?>"><span class="notiLabel">Job Recommendations</span> <span class="notiCount"><?=$nk+1;?></span> <p><span class="noti_Description fullWidth"><?=$nval->job->JobTitle;?> at <?=$nval->job->Location;?> , <?=$nval->job->City;?></span><span class="status"></span></p></a></li>
+									<?php
+								   }
+								   }
+								   ?>
+								</ul>
 							</li>
 							
 							<li class="no-need prfl_img">
@@ -203,16 +220,39 @@ AppAsset::register($this);
 						
 						<!-- It will display when customer paid  for that -->		
 							<li class="no-need"> 
-							   <a href="search_candidate.html" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Candidate List </a>
+							   <a href="<?= Url::toRoute(['site/hirecandidate'])?>" class="dropdown-toggle  orange_bg new_style">  <b class="fa fa-file-text orange"></b> <br>   Candidate List </a>
 							</li>  
 						<!-- It will display when customer paid  for that -->	
 
 						<li class="no-need">
 								<a href="#" class="dropdown-toggle brdr  orange_bg new_style" data-toggle="dropdown"><b class="fa fa-bell orange"></b> <br>  Notification </a> 
-								<!--<ul class="dropdown-menu">
-								    <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
-									 <li class=""><a target="_blank" href="#"><span class="notiLabel">Job Recommendations</span> <span class="notiCount">08</span> <p><span class="noti_Description fullWidth">HR Manager Position at Innofied Solution, Kolkata</span><span class="status"></span></p></a></li> 
-								</ul>-->
+							<?php
+								$empnotification=[];
+								if(isset(Yii::$app->view->params['employernotification']))
+								$empnotification=Yii::$app->view->params['employernotification'];
+								?>
+								<ul class="dropdown-menu">
+								   <?php
+								   if($empnotification)
+								   {
+								   foreach($empnotification as $nk1=>$nval1)
+								   {
+										$exp='';
+										if($nval1->user->experiences)
+										{
+											$exp='Having'.$nval1->user->experiences[0]->Experience.' Year Experience'; 
+										}
+										else
+										{
+											 $exp=$nval1->user->educations[0]->HighestQualification;
+										}
+								   ?>
+								    <li class=""><a target="_blank" href="<?= Url::toRoute(['site/jobdetail','JobId'=>$nval1->JobId,'Nid'=>$nval1->EmpnId])?>"><span class="notiLabel">Job Applied</span> <span class="notiCount"><?=$nk1+1;?></span> <p><span class="noti_Description fullWidth"><?=$nval1->user->Name;?>  <?=$exp;?> , <?=$nval1->user->City;?></span><span class="status"></span></p></a></li>
+									<?php
+								   }
+								   }
+								   ?>
+								</ul>
 							</li>
 							
 							<li class="no-need prfl_img">
@@ -236,7 +276,7 @@ AppAsset::register($this);
 						       <ul>  
 								   <li class=""> <strong> Are you recruiting?</strong> <a  href="how_we_can_help.html"> 
 									  <span>How we can help</span>  </a></li>  
-								   <li><a class="btn-123"  href="<?= Url::toRoute(['site/searchcandidate'])?>"   >Search Candidates</a></li>
+								   <li><a class="btn-123"  href="<?= Url::toRoute(['site/hirecandidate'])?>"   >Search Candidates</a></li>
 						       </ul>
                       </div><!--/.nav-collapse -->
 					<?php
@@ -260,16 +300,19 @@ AppAsset::register($this);
 					if(isset(Yii::$app->session['Employeeid']))
 					{
 					?>
- 	   <div id="header"><!-- start main header --> 
+ 	   <div id="header"><!-- start main header -->
+	   <div class="find_a_job">
+		     <span style="cursor:pointer" onclick="openNav()"> <img src="images/find-icon.png"></span> 
+         </div>
 					<div class="container"><!-- container -->
 						<div class="row">  
 							    <div class="col-lg-8  col-md-8 col-sm-8 col-xs-12 main-nav"><!-- Main Navigation --> 
 					              <div class="navbar navbar-default " role="navigation"> 
 								   <div class="collapse navbar-collapse"> 
 									 <ul class="nav navbar-nav float-left">
-										<li><a href="#">Dashboard</a></li>   
-										<li><a href="post_a_job.html" > Bookmark Jobs  </a></li>   
-										  <li><a href="post_a_job.html" > Applied Job  <span class="total">0</span></a></li>  
+										<li><a href="<?= Url::toRoute(['site/userdashboard'])?>">Dashboard</a></li>   
+										<li><a href="<?= Url::toRoute(['site/bookmarkjob'])?>" > Bookmark Jobs  </a></li>   
+										  <li><a href="<?= Url::toRoute(['site/appliedjob'])?>" > Applied Job  <span class="total"><?=Yii::$app->session['NoofjobApplied']; ?></span></a></li>  
 											</ul>
 									</div><!--/.nav-collapse --> 
 								   </div>
@@ -284,14 +327,17 @@ AppAsset::register($this);
 			   <?php
 					}elseif(isset(Yii::$app->session['Employerid'])){
 				        ?>
-					 <div id="header"><!-- start main header --> 
+					 <div id="header"><!-- start main header -->
+					 <div class="find_a_job">
+		     <span style="cursor:pointer" onclick="openNav()"> <img src="images/find-icon.png"></span> 
+         </div>
 					<div class="container"><!-- container -->
 						<div class="row">  
 							    <div class="col-lg-8  col-md-8 col-sm-8 col-xs-12 main-nav"><!-- Main Navigation --> 
 					              <div class="navbar navbar-default " role="navigation"> 
 								   <div class="collapse navbar-collapse"> 
 									 <ul class="nav navbar-nav float-left">
-										 <li><a href="#">Dashboard</a></li>  
+										 <li><a href="<?= Url::toRoute(['site/empdashboard'])?>">Dashboard</a></li>  
 										 <li><a href="<?= Url::toRoute(['site/yourpost'])?>">Your Post</a></li> 
 										 <li><a href="<?= Url::toRoute(['site/postajob'])?>" >New Post</a></li>
 									 </ul>
@@ -424,7 +470,7 @@ AppAsset::register($this);
 					     <?=htmlspecialchars_decode($contactus->Content);?>
 						  
 					  </div>
-						<h6 class="widget-title sig1">Singn For news Letter</h6>
+						<h6 class="widget-title sig1">Singin For news Letter</h6>
 							
 							<div class="single-widget"> 
 										<input autocomplete="off" type="email" id="news_email" type="text" class="col-xs-15 subscribeInputBox" placeholder="Your email address">

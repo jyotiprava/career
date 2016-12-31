@@ -110,7 +110,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 						 
 								<div class="input-group full">
 									 <select class="questions-category cities form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" id="cityId" name="AllUser[City]" required>
-														<option value="">Select City  </option>
+										<option value="">Select City  </option>
 										</select>
 								 
 							</div>
@@ -187,7 +187,7 @@ text/plain, application/pdf">
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-files-o" aria-hidden="true"></i></span>
-									<select class="questions-category form-control select2-hidden-accessible" name="AllUser[CourseId]"  required>
+									<select class="questions-category form-control select2-hidden-accessible" id="empcourse" name="AllUser[CourseId]" onchange="if($('#empcourse option:selected').text()=='Others'){$('#otc').append('<input type=&#34;text&#34; class=&#34;form-control&#34; name=&#34;AllUser[OtherCourse]&#34;   placeholder=&#34;Course&#34; required/>');} else{$('#otc').html('');}"  required>
 										<option value="">Select Course  </option>
 										<?php
 										foreach($course as $key=>$value)
@@ -197,7 +197,10 @@ text/plain, application/pdf">
 										<?php
 										}
 										?>
-										</select>
+								       </select>
+								       <span id="otc">
+										
+								       </span>
 								</div>
 							</div>
 						</div>
@@ -217,12 +220,12 @@ text/plain, application/pdf">
 							<div class="cols-sm-8">
 								<div class="input-group" style="width: 33%;float: left;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control date" name="AllUser[DurationFrom]" id="dfrom"  placeholder="From" required maxlength="4" onkeypress="return numbersonly(event)" />
+									<input type="text" class="form-control educationdatepicker" name="AllUser[DurationFrom]" readonly style="cursor: pointer;background: #fff;" id="dfrom" autocomplete="off" placeholder="From" required maxlength="4" onkeypress="return numbersonly(event)" />
 								</div>
 								
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control date" name="AllUser[DurationTo]" id="dto"  placeholder="To" required maxlength="4" onkeypress="return numbersonly(event)" onchange="if(new Date($(this).val()).getTime()<=new Date($('#dfrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
+									<input type="text" class="form-control educationdatepicker" name="AllUser[DurationTo]" readonly style="cursor: pointer;background: #fff;" id="dto" autocomplete="off"  placeholder="To" required maxlength="4" onkeypress="return numbersonly(event)" onchange="if(new Date($(this).val()).getTime()<=new Date($('#dfrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 							</div>
 							
@@ -234,20 +237,14 @@ text/plain, application/pdf">
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<select class="questions-category form-control select2-hidden-accessible" name="AllUser[SkillId]"  required>
-										<option value="">Select Skill  </option>
-										<?php
-										foreach($skill as $key=>$value)
-										{
-										?>
-										<option value="<?=$value->SkillId;?>"><?=$value->Skill;?></option>
-										<?php
-										}
-										?>
-										</select>
+									<input type="text" placeholder=" " name="AllUser[RawSkill]"  id="skills" required class="form-control">
+										
+										<input type="hidden" id="skillid" name="AllUser[SkillId]" />
 								</div>
+								<div id="allskill" style="width: 100%; margin-top: 5px;margin-left: 110px; height: 25px; padding: 3px;font-size:12px; color: #fff;"></div>
 							</div>
 						</div>
+						
 						
 						
 						  <h5  class="page-head">Work Experience</h5>
@@ -268,7 +265,7 @@ text/plain, application/pdf">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
 									
-									<select class="questions-category form-control select2-hidden-accessible" name="AllUser[PositionId]">
+									<select class="questions-category form-control select2-hidden-accessible" name="AllUser[PositionId]" id="emppos" onchange="if($('#emppos option:selected').text()=='Others'){$('#pos').append('<input type=&#34;text&#34; class=&#34;form-control&#34; name=&#34;AllUser[OtherPosition]&#34;   placeholder=&#34;Position&#34; required/>');} else{$('#pos').html('');}">
 										<option value="">Select Position  </option>
 										<?php
 										foreach($position as $key=>$value)
@@ -279,6 +276,7 @@ text/plain, application/pdf">
 										}
 										?>
 										</select>
+									<span id="pos"></span>
 								</div>
 							</div>
 						</div> 
@@ -288,11 +286,11 @@ text/plain, application/pdf">
 							<div class="cols-sm-5">
 								<div class="input-group" style="width: 33%;float: left;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control date" name="AllUser[YearFrom]" id="YearFrom"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)"/>
+									<input type="text" class="form-control educationdatepicker" name="AllUser[YearFrom]" id="YearFrom" readonly style="cursor: pointer;background: #fff;" autocomplete="off"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)"/>
 								</div>
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control date" name="AllUser[YearTo]" id="YearTo"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onchange="if(new Date($(this).val()).getTime()<=new Date($('#YearFrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
+									<input type="text" class="form-control educationdatepicker" name="AllUser[YearTo]" id="YearTo" readonly style="cursor: pointer;background: #fff;" autocomplete="off"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onchange="if(new Date($(this).val()).getTime()<=new Date($('#YearFrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 							</div>
 							
@@ -323,7 +321,15 @@ text/plain, application/pdf">
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[Salary]" id="Salary"  placeholder="Salary Per Month"/>
+									<select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Salary]">
+                                            <option value="0 - 1.5"> 0 - 1.5 Lakh</option>
+                                            <option value="1.5 - 3">1.5 - 3 Lakh</option>
+                                            <option value="3 - 6">3 - 6 Lakh</option>
+											<option value="6 - 10">6 - 10 Lakh</option>
+											<option value="10 - 15">10 - 15 Lakh</option>
+											<option value="15 - 25">15 - 25 Lakh</option>
+											<option value="Negotiable">Negotiable</option>
+                                        </select> 
 								</div>
 							</div>
 						</div>

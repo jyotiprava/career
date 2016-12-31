@@ -30,7 +30,17 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
                                 
                                 <div class="company-detail">
                                     <div class="company-img">
-                                        <img src="<?=$url.$allpost->docDetail->Doc;?>" class="img-responsive" alt="">
+										<?php
+										if($allpost->docDetail)
+										{
+											$doc=$url.$allpost->docDetail->Doc;
+										}
+										else
+										{
+											$doc=$imageurl.'images/user.png';
+										}
+										?>
+                                        <img src="<?=$doc;?>" class="img-responsive" alt="">
                                     </div>
                                     <div class="company-contact-detail">
                                         <table>

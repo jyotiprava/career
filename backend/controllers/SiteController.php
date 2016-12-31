@@ -4,7 +4,6 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
 
 use common\models\AllUser;
@@ -25,7 +24,8 @@ use common\models\JobCategory;
 use common\models\JobRelatedSkill;
 use common\models\NewsLetter;
 
-
+use yii\filters\AccessControl;
+use common\components\AccessRule;
 /**
  * Site controller
  */
@@ -39,15 +39,19 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer','newslettersubscriber','deletenews','topjob'],
+                        'actions' => ['login'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+
+                        'actions' => ['login','index', 'error','alljob','deletejob','allemployee','deleteemployee','allemployer','deleteemployer','newslettersubscriber','deletenews','topjob'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['Admin'],
                     ],
                 ],
             ],

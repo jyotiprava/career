@@ -162,18 +162,21 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
 									<div class="degree-info">
-										  <select class="questions-category form-control select2-hidden-accessible" name="AllUser[SkillId]"  required>
-										<option value="">Select Skill  </option>
-										<?php
-										foreach($skill as $key=>$value)
-										{
-										?>
-										<option value="<?=$value->SkillId;?>" <?php if($profile->educations[0]->SkillId==$value->SkillId) echo "selected";?>><?=$value->Skill;?></option>
-										<?php
-										}
-										?>
-										</select>
-                                        </div>  
+									  <?php
+												$skill='';$skillid='';$askill='';
+												foreach($profile->empRelatedSkills as $ask=>$asv)
+												{
+														$skill.=$asv->skill->Skill.', ';
+														$skillid.=$asv->SkillId.', ';
+														$askill.='<div id="loc'.$asv->SkillId.'" style="width:auto;float:left;margin-left:10px;background:red;"><div style="width:auto;float:left;padding:5px;">'.$asv->skill->Skill.'</div><span onclick="removeskill(&#39;'.$asv->skill->Skill.'&#39;,'.$asv->SkillId.');" style="width:auto; float:left;margin-top:-5px;cursor:pointer;color:#fff; margin-left:5px;font-size:16px;">x</span></div>';
+												}
+												
+												?>
+										 <input type="text" placeholder=" " name="AllUser[RawSkill]" value="<?=$skill;?>"  id="skills" required class="form-control">
+										
+										<input type="hidden" id="skillid" name="AllUser[SkillId]" value="<?=$skillid;?>" />
+                                    </div>
+									<div id="allskill" style="width: 100%; margin-top: 5px; height: 25px; padding: 3px;font-size:12px; color: #fff;"><?=$askill;?></div>
                                     </div>
                                 </div>
                             </div>
@@ -352,11 +355,11 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 						<div class="cols-sm-5">
 								<div class="input-group" style="width: 33%;float: left;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control date" name="AllUser[YearFrom]" id="YearFrom"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)"/>
+									<input type="text" class="form-control educationdatepicker" name="AllUser[YearFrom]" readonly style="cursor: pointer;background: #fff;" autocomplete="off" id="YearFrom"  placeholder="From" maxlength="4" onkeypress="return numbersonly(event)"/>
 								</div>
 								<div class="input-group" style="width: 33%;float: left;margin-left: 10%;">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									<input type="text" class="form-control date" name="AllUser[YearTo]" id="YearTo"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onchange="if(new Date($(this).val()).getTime()<=new Date($('#YearFrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
+									<input type="text" class="form-control educationdatepicker" name="AllUser[YearTo]" readonly style="cursor: pointer;background: #fff;" autocomplete="off"  id="YearTo"  placeholder="To"  maxlength="4" onkeypress="return numbersonly(event);" onchange="if(new Date($(this).val()).getTime()<=new Date($('#YearFrom').val()).getTime()){alert('Wrong Year Duration');$(this).val('');}"/>
 								</div>
 						</div>
                                         </div>   
@@ -374,7 +377,15 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
                                     </div>
                                     <div class="col-xs-12 col-md-8 col-sm-8">
 										<div class="degree-info">
-													<input type="text" class="form-control" name="AllUser[Salary]" id="Salary"  placeholder="Salary Per Month"/>
+										<select class="questions-category form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="AllUser[Salary]">
+                                            <option value="0 - 1.5"> 0 - 1.5 Lakh</option>
+                                            <option value="1.5 - 3">1.5 - 3 Lakh</option>
+                                            <option value="3 - 6">3 - 6 Lakh</option>
+											<option value="6 - 10">6 - 10 Lakh</option>
+											<option value="10 - 15">10 - 15 Lakh</option>
+											<option value="15 - 25">15 - 25 Lakh</option>
+											<option value="Negotiable">Negotiable</option>
+                                        </select> 
                                         </div>   
                                     </div>
                                 </div>

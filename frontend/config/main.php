@@ -36,6 +36,25 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'authClientCollection' => [
+        'class' => 'yii\authclient\Collection',
+        'clients' => [
+         //'facebook' => [
+         //   'class' => 'yii\authclient\clients\Facebook',
+         //   'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
+         //   'clientId' => '1242867259079970',
+         //   'clientSecret' => '5312039cebd9e34394846a36438ce667',
+         // ],
+              
+               'google' => [
+                      'class' => 'yii\authclient\clients\Google',
+                      'clientId' => '843817468168-sfov950a5sd93k2ogv05b18vbihrue8p.apps.googleusercontent.com',
+                      'clientSecret' => 'XAYFs_Tuh8uM6q2VFd-r7n5D',
+                      'scope'=>' https://www.googleapis.com/auth/plus.profile.emails.read',
+                  ],
+       
+        ],
+      ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

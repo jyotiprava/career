@@ -100,7 +100,7 @@ use dosamigos\tinymce\TinyMce;
                                         <div class="cols-sm-10">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" name="Feedback[Facebooklink]"  placeholder="Facebook Link" />
+                                                <input type="url" class="form-control" name="Feedback[Facebooklink]"  placeholder="Facebook Link" />
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@ use dosamigos\tinymce\TinyMce;
                                         <div class="cols-sm-10">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" name="Feedback[TwitterLink]"  placeholder="Twitter Link" />
+                                                <input type="url" class="form-control" name="Feedback[TwitterLink]"  placeholder="Twitter Link" />
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@ use dosamigos\tinymce\TinyMce;
                                         <div class="cols-sm-10">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-linkedin" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" name="Feedback[LinkedinLink]" id="address"  placeholder="Linkedin Link" />
+                                                <input type="url" class="form-control" name="Feedback[LinkedinLink]" id="address"  placeholder="Linkedin Link" />
                                             </div>
                                         </div>
                                     </div>

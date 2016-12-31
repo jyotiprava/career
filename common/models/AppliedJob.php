@@ -34,7 +34,7 @@ class AppliedJob extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['JobId', 'UserId', 'OnDate', 'Status', 'IsDelete'], 'required'],
+            [['JobId', 'UserId', 'OnDate', 'Status'], 'required'],
             [['JobId', 'UserId', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdatedDate'], 'safe'],
             [['Status'], 'string', 'max' => 100],

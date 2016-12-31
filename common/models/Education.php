@@ -40,13 +40,13 @@ class Education extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserId', 'HighestQualification', 'CourseId', 'University', 'PassingYear', 'SkillId', 'DurationFrom', 'DurationTo', 'OnDate'], 'required'],
-            [['UserId', 'CourseId', 'SkillId', 'IsDelete'], 'integer'],
+            [['UserId', 'HighestQualification', 'CourseId', 'University', 'PassingYear', 'DurationFrom', 'DurationTo', 'OnDate'], 'required'],
+            [['UserId', 'CourseId', 'IsDelete'], 'integer'],
             [['OnDate', 'UpdateDate'], 'safe'],
             [['HighestQualification', 'University'], 'string', 'max' => 200],
             [['PassingYear'], 'string', 'max' => 50],
             [['DurationFrom', 'DurationTo'], 'string', 'max' => 20],
-            [['SkillId'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['SkillId' => 'SkillId']],
+            //[['SkillId'], 'exist', 'skipOnError' => true, 'targetClass' => Skill::className(), 'targetAttribute' => ['SkillId' => 'SkillId']],
             [['CourseId'], 'exist', 'skipOnError' => true, 'targetClass' => Course::className(), 'targetAttribute' => ['CourseId' => 'CourseId']],
             [['UserId'], 'exist', 'skipOnError' => true, 'targetClass' => AllUser::className(), 'targetAttribute' => ['UserId' => 'UserId']],
         ];
