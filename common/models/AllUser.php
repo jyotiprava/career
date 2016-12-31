@@ -157,6 +157,11 @@ class AllUser extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Education::className(), ['UserId' => 'UserId']);
     }
+    
+    public function getSkilldetail()
+    {
+        return $this->hasMany(EmployeeSkill::className(), ['UserId' => 'UserId']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
