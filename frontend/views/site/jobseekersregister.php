@@ -31,10 +31,28 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 					
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">Your Name</label>
+							<?php
+							if(isset(Yii::$app->session['SocialName']))
+							   {
+								$name='value="'.Yii::$app->session['SocialName'].'" readonly';
+							   }
+							   else
+							   {
+								$name='';
+							   }
+							   if(isset(Yii::$app->session['SocialEmail']))
+							   {
+								$email='value="'.Yii::$app->session['SocialEmail'].'" readonly';
+							   }
+							   else
+							   {
+								$email='';
+							   }
+							?>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="AllUser[Name]" id="name"  placeholder="Enter your Name" required/>
+									<input type="text" class="form-control" <?=$name;?> name="AllUser[Name]" id="name"  placeholder="Enter your Name" required/>
 								</div>
 							</div>
 						</div>
@@ -44,7 +62,7 @@ $imageurl=Yii::$app->getUrlManager()->getBaseUrl().'/';
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="email" class="form-control" name="AllUser[Email]" id="email"  placeholder="Enter your Email" required/>
+									<input type="email" class="form-control" <?=$email;?> name="AllUser[Email]" id="email"  placeholder="Enter your Email" required/>
 								</div>
 							</div>
 						</div>

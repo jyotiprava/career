@@ -39,12 +39,12 @@ return [
         'authClientCollection' => [
         'class' => 'yii\authclient\Collection',
         'clients' => [
-         //'facebook' => [
-         //   'class' => 'yii\authclient\clients\Facebook',
-         //   'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
-         //   'clientId' => '1242867259079970',
-         //   'clientSecret' => '5312039cebd9e34394846a36438ce667',
-         // ],
+         'facebook' => [
+            'class' => 'yii\authclient\clients\Facebook',
+            'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
+            'clientId' => '587014848163668',
+            'clientSecret' => '4ee2a7d1109b013e57fe6df398dca61a',
+          ],
               
                'google' => [
                       'class' => 'yii\authclient\clients\Google',

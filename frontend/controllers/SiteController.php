@@ -119,15 +119,29 @@ $email=$userAttributes['emails'][0]['value'];
 $client=$_GET['authclient'];
 $session = Yii::$app->session;
 $session->open();
-                
+            
 $userlist=new AllUser();
-$count=$userlist->find()->where(['Email'=>$email,'IsDelete'=>0,'VerifyStatus'=>1])->count();
+$count=$userlist->find()->where(['Email'=>$email,'IsDelete'=>0,'VerifyStatus'=>1,'UserTypeId'=>2])->count();
 if($count>0)
 {
     $rest=$userlist->find()->where(['Email'=>$email,'IsDelete'=>0,'VerifyStatus'=>1])->one();
-                Yii::$app->session['EmployeeEmail']=$email;
+                Yii::$app->session['EmployeeEmail']=$rest->Email;
                 Yii::$app->session['Employeeid']=$rest->UserId;
-                Yii::$app->session['EmployeeName']=$name;
+                Yii::$app->session['EmployeeName']=$rest->Name;
+                if($rest->PhotoId!=0)
+                {
+                    $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlManager()->getBaseUrl())));
+                    $pimage=$url.$rest->photo->Doc;
+                }
+                else
+                {
+                    $pimage='images/user.png';
+                }
+                $appliedjob=new AppliedJob();
+                $noofjobapplied=$appliedjob->find()->where(['Status'=>'Applied','UserId'=> Yii::$app->session['Employeeid']])->count();
+                Yii::$app->session['NoofjobApplied']=$noofjobapplied;
+                Yii::$app->session['EmployeeDP']=$pimage;
+                
 }
 else
 {
@@ -140,7 +154,14 @@ else
 
 public function actionUsersocial()
 {
- echo Yii::$app->session['SocialEmail'];   
+ if(isset(Yii::$app->session['Employeeid']))
+ {
+    return $this->redirect(['profilepage']);
+ }
+ elseif(isset(Yii::$app->session['SocialEmail']))
+ {
+    return $this->redirect(['jobseekersregister']);
+ }
 }
 
     /**
