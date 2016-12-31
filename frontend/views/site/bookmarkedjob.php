@@ -113,58 +113,6 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 					 
 					 
 					 <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12" id="right-side">
-					 
-								<div class="job-oppening-title-right mar_less"> <h4> Top Jobs </h4></div>
-				 
-						  <div class="rsw"> 
-                            <aside> 
-                                <div class="widget">
-                                    
-                                    <ul class="related-post">
-                                        <li>
-                                            <a href="#"> SSCS WORLD PVT LTD  </a>
-											<span><i class="fa fa-suitcase"></i>Position:  Wed Developer </span>
-											<span><i class="fa fa-calendar"></i>Place: Kolkata </span>
-											<span><i class="fa fa-clock-o"></i>Post Time: 10.30 AM </span>
-                                        </li>
-                                        <li>
-										   <a href="#"> RS WORLD PVT LTD  </a>
-											<span><i class="fa fa-suitcase"></i>Position: Marketing Professionals Required </span>
-											<span><i class="fa fa-calendar"></i>Place: Kolkata </span>
-											<span><i class="fa fa-clock-o"></i>Post Time: 10.30 AM </span> 
-                                        </li>
-                                        <li>
-										<a href="#"> BCC PVT LTD  </a>
-											<span><i class="fa fa-suitcase"></i>Position: Mobile App Programmers </span>
-											<span><i class="fa fa-calendar"></i>Place: Kolkata </span>
-											<span><i class="fa fa-clock-o"></i>Post Time: 10.30 AM </span>  
-                                        </li>
-                                        <li>
-										<a href="#"> PC Gems PVT LTD  </a>
-											<span><i class="fa fa-suitcase"></i>Position: General Compliance Officer </span>
-											<span><i class="fa fa-calendar"></i>Place: Kolkata </span>
-											<span><i class="fa fa-clock-o"></i>Post Time: 10.30 AM </span>  
-                                        </li>
-                                        <li>
-										<a href="#"> Tech Mahendra PVT LTD  </a>
-											<span><i class="fa fa-suitcase"></i>Position: Call Centre Manager</span>
-											<span><i class="fa fa-calendar"></i>Place: Kolkata </span>
-											<span><i class="fa fa-clock-o"></i>Post Time: 10.30 AM </span>  
-                                        </li>
-                                        
-                                    </ul>
-                                </div>
-
-                            </aside>
-                        </div>
-					  	 
-                
- 
-  
-  
-							<div class="clearfix"></div>
-						
-						
 							<!--adban_block main -->
 								<div class="adban_block">
 							      <img src="images/adban_block/ban.jpg"> 

@@ -14,9 +14,10 @@ use frontend\models\ContactForm;
 use common\models\AllUser;
 use common\models\Industry;
 use common\models\UserType;
-use yii\heleprs\Url;
+use yii\helpers\Url;
 
-
+use common\models\Notification;
+use common\models\EmpNotification;
 use common\models\Skill;
 use common\models\Course;
 use common\models\Position;
@@ -87,12 +88,60 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'oAuthSuccess'],
+                 'successUrl' => Url::to(['usersocial']),
+              ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }
+    
+    public function oAuthSuccess($client) {
+  // get user data from client
+  $userAttributes = $client->getUserAttributes();
+if($_GET['authclient']=='facebook')
+{
+$name=$userAttributes['name'];
+$id=$userAttributes['id'];
+$email=$userAttributes['email'];
+}
+else if($_GET['authclient']=='google')
+{
+$name=$userAttributes['name']['givenName'];
+$id=$userAttributes['id'];
+$email=$userAttributes['emails'][0]['value'];
+}
+
+$client=$_GET['authclient'];
+$session = Yii::$app->session;
+$session->open();
+                
+$userlist=new AllUser();
+$count=$userlist->find()->where(['Email'=>$email,'IsDelete'=>0,'VerifyStatus'=>1])->count();
+if($count>0)
+{
+    $rest=$userlist->find()->where(['Email'=>$email,'IsDelete'=>0,'VerifyStatus'=>1])->one();
+                Yii::$app->session['EmployeeEmail']=$email;
+                Yii::$app->session['Employeeid']=$rest->UserId;
+                Yii::$app->session['EmployeeName']=$name;
+}
+else
+{
+    Yii::$app->session['SocialEmail']=$email;
+    Yii::$app->session['SocialName']=$name;
+}
+  // do some thing with user data. for example with $userAttributes['email']
+}
+
+
+public function actionUsersocial()
+{
+ echo Yii::$app->session['SocialEmail'];   
+}
 
     /**
      * Displays homepage.
@@ -110,18 +159,25 @@ class SiteController extends Controller
             $experience=Yii::$app->request->post()['experience'];
             $salary=Yii::$app->request->post()['salary'];
             
+            $sklist=array();
+            $skilllist=Skill::find()->where(['like','Skill',$keyname])->all();
+            foreach($skilllist as $sk=>$sv)
+            {
+            $sklist[]=$sv->SkillId;
+            }
             if($salary!='')
                 {
                     $salaryrange=$salary;
                     
                 }else{$salaryrange='';}
             
-            $alljob=$postjob->find()->where(['IsDelete'=>0,'Jobstatus'=>0])
+            $alljob=$postjob->find()->where(['PostJob.IsDelete'=>0,'Jobstatus'=>0])->joinWith(['jobRelatedSkills'])
             ->andFilterWhere(['or',
                 ['like', 'JobTitle', $keyname],
-                ['like', 'CompanyName', $keyname],])
+                ['like', 'CompanyName', $keyname],
+                ['JobRelatedSkill.SkillId'=>$sklist]])
             ->andFilterWhere(['Location'=>$indexlocation,'Experience'=>$experience,'Salary'=>$salaryrange])
-                ->orderBy(['OnDate'=>SORT_DESC]);
+                ->orderBy(['PostJob.OnDate'=>SORT_DESC]);
         }
         else
         {
@@ -196,6 +252,24 @@ class SiteController extends Controller
         $fdbk=new Feedback();
         $allfeedback=$fdbk->find()->where(['IsApprove'=>1])->orderBy(['OnDate'=>'SORT_DESC'])->all();
         
+        //notification for employee
+//        $allnotification=array();
+//		if(isset(Yii::$app->session['Employeeid']))
+//		{
+//        $notification=new Notification();
+//        $allnotification=$notification->find()->where(['UserId'=>Yii::$app->session['Employeeid'],'IsView'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+//        }
+//        Yii::$app->view->params['employeenotification']=$allnotification;
+        
+        //notification for employer
+        //$allntemp=array();
+        //if(isset(Yii::$app->session['Employerid']))
+        //{
+        //    $empnot=new EmpNotification();
+        //    $allntemp=$empnot->find()->where(['EmpId'=>Yii::$app->session['Employerid'],'IsView'=>0])->orderBy(['OnDate'=>SORT_DESC])->all();
+        //}
+        //Yii::$app->view->params['employernotification']=$allntemp;
+        
         $this->layout='main';
         
         return $this->render('index',['alljob'=>$alljob,'pages' => $pages,'topjob'=>$topjob,'hotcategory'=>$hotcategory,'allcompany'=>$companylogo,'peoplesayblock'=>$pb,'allfeedback'=>$allfeedback,'topjobopening'=>$topjobopening]);
@@ -244,6 +318,14 @@ class SiteController extends Controller
         $JobId=Yii::$app->request->get()['JobId'];
         $postjob=new PostJob();
         $postdetail=$postjob->find()->where(['JobId'=>$JobId,'JobStatus'=>0])->one();
+        
+        if(isset(Yii::$app->request->get()['Nid']))
+        {
+            $nid=Yii::$app->request->get()['Nid'];
+            $notification=Notification::find()->where(['NotificationId'=>$nid])->one();
+            $notification->IsView=1;
+            $notification->save();
+        }
         return $this->render('jobdetail',['allpost'=>$postdetail]);
     }
 
@@ -1240,17 +1322,47 @@ Thank you for connecting with us.
                 Yii::$app->session->setFlash('error', 'There is some error ,Please try again');
             }
             
-            $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
-            foreach($skill as $key=>$value)
+            $jobskill=array();
+            //new skill
+            $rawskill=explode(",",Yii::$app->request->post()['PostJob']['RawSkill']);
+            foreach($rawskill as $rk=>$rval)
             {
-                if($value!='')
+                if($rval!='')
                 {
-                $jobrelatedskill=new JobRelatedSkill();
-                $jobrelatedskill->JobId=$postajob->JobId;
-                $jobrelatedskill->SkillId=$value;
-                $jobrelatedskill->OnDate=date('Y-m-d');
-                $jobrelatedskill->save();
+                $indskill=trim($rval);
+                $nskill=new Skill();
+                $cskill=$nskill->find()->where(['Skill'=>$indskill,'IsDelete'=>0])->one();
+                if(!$cskill)
+                {
+                    $nskill->Skill=$indskill;
+                    $nskill->OnDate=date('Y-m-d');
+                    $nskill->save();
+                    $skid=$nskill->SkillId;
                 }
+                else
+                {
+                    $skid=$cskill->SkillId;
+                }
+                $jobskill[]=$skid;
+                    $jobrelatedskill=new JobRelatedSkill();
+                    $jobrelatedskill->JobId=$postajob->JobId;
+                    $jobrelatedskill->SkillId=$skid;
+                    $jobrelatedskill->OnDate=date('Y-m-d');
+                    $jobrelatedskill->save();
+                }
+            }
+            
+            $userlist=AllUser::find()->where(['AllUser.IsDelete'=>0,'VerifyStatus'=>1,'EmployeeSkill.SkillId'=>$jobskill])->joinWith(['skilldetail'])->all();
+            if($userlist)
+            {
+            foreach($userlist as $uk=>$uval)
+            {
+                $nt=new Notification();
+                $nt->JobId=$postajob->JobId;
+                $nt->UserId=$uval->UserId;
+                $nt->IsView=0;
+                $nt->save();
+            }
             }
             
             
@@ -2681,10 +2793,19 @@ Thank you for connecting with us.
             $model->OnDate = date("Y-m-d");
             $model->Status ="Applied";
             $model->save();
-          
-            //var_dump($model->getErrors());
+            
+           
             Yii::$app->session->setFlash('success', "Applied Job Sucescsfully");
             }
+            
+            $jobdet=PostJob::find()->where(['JobId'=>$JobId])->one();
+            $empnt=new EmpNotification();
+            $empnt->EmpId=$jobdet->EmployerId;
+            $empnt->UserId=Yii::$app->session['Employeeid'];
+            $empnt->JobId=$JobId;
+            $empnt->Type='Applied';
+            $empnt->IsView=0;
+            $empnt->save();
               
            $noofjobapplied=$model->find()->where(['Status'=>'Applied','UserId'=> Yii::$app->session['Employeeid']])->count();
            Yii::$app->session['NoofjobApplied']=$noofjobapplied;
@@ -2772,6 +2893,15 @@ Thank you for connecting with us.
             
             $noofjobapplied=$model->find()->where(['Status'=>'Applied','UserId'=> Yii::$app->session['Employeeid']])->count();
             Yii::$app->session['NoofjobApplied']=$noofjobapplied;
+            
+            $jobdet=PostJob::find()->where(['JobId'=>$JobId])->one();
+            $empnt=new EmpNotification();
+            $empnt->EmpId=$jobdet->EmployerId;
+            $empnt->UserId=Yii::$app->session['Employeeid'];
+            $empnt->JobId=$JobId;
+            $empnt->Type='Bookmarked';
+            $empnt->IsView=0;
+            $empnt->save();
             
             //var_dump($model->getErrors());
             Yii::$app->session->setFlash('success', "You have Bookmarked a job.");
@@ -2900,16 +3030,31 @@ Thank you for connecting with us.
             
             $jobrelatedskill=new JobRelatedSkill();
             JobRelatedSkill::deleteAll(['JobId' => $JobId]);
-            $skill=explode(",",Yii::$app->request->post()['PostJob']['KeySkill']);
-            foreach($skill as $key=>$value)
+             //new skill
+            $rawskill=explode(",",Yii::$app->request->post()['PostJob']['RawSkill']);
+            foreach($rawskill as $rk=>$rval)
             {
-                if($value!='')
+                if($rval!='')
                 {
-                $jobrelatedskill=new JobRelatedSkill();
-                $jobrelatedskill->JobId=$postdetail->JobId;
-                $jobrelatedskill->SkillId=$value;
-                $jobrelatedskill->OnDate=date('Y-m-d');
-                $jobrelatedskill->save();
+                $indskill=trim($rval);
+                $nskill=new Skill();
+                $cskill=$nskill->find()->where(['Skill'=>$indskill,'IsDelete'=>0])->one();
+                if(!$cskill)
+                {
+                    $nskill->Skill=$indskill;
+                    $nskill->OnDate=date('Y-m-d');
+                    $nskill->save();
+                    $skid=$nskill->SkillId;
+                }
+                else
+                {
+                    $skid=$cskill->SkillId;
+                }
+                    $jobrelatedskill=new JobRelatedSkill();
+                    $jobrelatedskill->JobId=$JobId;
+                    $jobrelatedskill->SkillId=$skid;
+                    $jobrelatedskill->OnDate=date('Y-m-d');
+                    $jobrelatedskill->save();
                 }
             }
             Yii::$app->session->setFlash('success', 'Job Post Edited Successfully');
@@ -3074,6 +3219,246 @@ Thank you for your feedback
         
         
         return $this->render('thankyou');
+    }
+    
+    
+    public function actionEmpdashboard()
+    {
+        if(isset(Yii::$app->session['Employerid']))
+        {
+           //footer section
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+            $this->layout='layout';
+            $postjob=new PostJob();
+            $totaljob=$postjob->find()->where(['EmployerId'=>Yii::$app->session['Employerid']])->count();
+            $totalactive=$postjob->find()->where(['EmployerId'=>Yii::$app->session['Employerid'],'JobStatus'=>0])->count();
+            
+            $candidateapplied=AppliedJob::find()->where(['PostJob.EmployerId'=>Yii::$app->session['Employerid'],'Status'=>'Applied'])->joinWith(['job'])->count();
+            
+            $candidatebookmarked=AppliedJob::find()->where(['PostJob.EmployerId'=>Yii::$app->session['Employerid'],'Status'=>'Bookmark'])->joinWith(['job'])->count();
+            return $this->render('employerdashboard',['totaljob'=>$totaljob,'totalactivejob'=>$totalactive,'appliedjob'=>$candidateapplied,'bookmarked'=>$candidatebookmarked]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
+    }
+    
+    
+    
+    public function actionUserdashboard()
+    {
+        if(isset(Yii::$app->session['Employeeid']))
+        {
+           //footer section
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+            $this->layout='layout';
+            
+            $candidateapplied=AppliedJob::find()->where(['UserId'=>Yii::$app->session['Employeeid'],'Status'=>'Applied'])->count();
+            
+            $candidatebookmarked=AppliedJob::find()->where(['UserId'=>Yii::$app->session['Employerid'],'Status'=>'Bookmark'])->count();
+            return $this->render('userdashboard',['appliedjob'=>$candidateapplied,'bookmarked'=>$candidatebookmarked]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
+    }
+    
+    public function actionCandidateapplied()
+    {
+        if(isset(Yii::$app->session['Employerid']))
+        {
+           //footer section
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+            $this->layout='layout';
+            $postjob=new PostJob();
+            
+            $candidateapplied=AppliedJob::find()->where(['PostJob.EmployerId'=>Yii::$app->session['Employerid'],'Status'=>'Applied'])->joinWith(['job','user']);
+            $pages = new Pagination(['totalCount' => $candidateapplied->count()]);
+        if(isset(Yii::$app->request->get()['perpage']))
+        {
+            $pages->defaultPageSize=Yii::$app->request->get()['perpage'];
+        }
+        else
+        {
+            $pages->defaultPageSize=10;
+        }
+	$candidateapplied = $candidateapplied->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+            return $this->render('candidateapplied',['appliedjob'=>$candidateapplied,'pages'=>$pages]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
+    }
+    
+    public function actionCandidatebookmarked()
+    {
+        if(isset(Yii::$app->session['Employerid']))
+        {
+           //footer section
+        //first block
+        $about=new FooterAboutus();
+        $footerabout=$about->find()->one();
+        Yii::$app->view->params['footerabout']=$footerabout;
+        
+        //contactus block
+        $cn=new FooterContactus();
+        $footercontact=$cn->find()->one();
+        Yii::$app->view->params['footercontact']=$footercontact;
+        
+        //second block
+        $jobcategory=new JobCategory();
+        $allhotcategory=$jobcategory->find()->select(['CategoryName','JobCategoryId'])->where(['IsDelete'=>0])->orderBy(['OnDate'=>SORT_DESC])->limit(7)->all();
+        Yii::$app->view->params['hotcategory']=$allhotcategory;
+        
+        //copyright block
+        $cp=new FooterCopyright();
+        $allcp=$cp->find()->one();
+        Yii::$app->view->params['footercopyright']=$allcp;
+        
+        //developer block
+        $dblock=new FooterDevelopedblock();
+        $developerblock=$dblock->find()->one();
+        Yii::$app->view->params['footerdeveloperblock']=$developerblock;
+        
+        //socialicon block
+        $socialicon=new SocialIcon();
+        $sicon=$socialicon->find()->one();
+        Yii::$app->view->params['footersocialicon']=$sicon;
+        
+        //third block
+        $th=new FooterThirdBlock();
+        $thirdblock=$th->find()->one();
+        Yii::$app->view->params['footerthirdblock']=$thirdblock;
+        
+            $this->layout='layout';
+            $postjob=new PostJob();
+            
+            $candidateapplied=AppliedJob::find()->where(['PostJob.EmployerId'=>Yii::$app->session['Employerid'],'Status'=>'Bookmark'])->joinWith(['job','user']);
+            $pages = new Pagination(['totalCount' => $candidateapplied->count()]);
+        if(isset(Yii::$app->request->get()['perpage']))
+        {
+            $pages->defaultPageSize=Yii::$app->request->get()['perpage'];
+        }
+        else
+        {
+            $pages->defaultPageSize=10;
+        }
+	$candidateapplied = $candidateapplied->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+            return $this->render('candidateapplied',['appliedjob'=>$candidateapplied,'pages'=>$pages]);
+        }
+        else
+        {
+            return $this->redirect(['index']);
+        }
     }
     
     

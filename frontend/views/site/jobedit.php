@@ -49,7 +49,7 @@ $url=str_replace('frontend','backend',(str_replace('web','',Yii::$app->getUrlMan
 											$askill.='<div id="loc'.$value->SkillId.'" style="width:auto;float:left;margin-left:10px;background:red;"><div style="width:auto;float:left;padding:5px;">'.$value->skill->Skill.'</div><span onclick="removeskill(&#39;'.$value->skill->Skill.'&#39;,'.$value->SkillId.');" style="width:auto; float:left;margin-top:-5px;cursor:pointer;color:#fff; margin-left:5px;font-size:16px;">x</span></div>';
 										}
 										?>
-                                        <input type="text" value="<?=$skillname;?>" id="skills" required class="form-control">
+                                        <input type="text" value="<?=$skillname;?>" name="PostJob[RawSkill]" id="skills" required class="form-control">
 										<div id="allskill" style="width: 100%; margin-top: 5px; height: 25px; padding: 3px;font-size:12px; color: #fff;">
 											<?=$askill;?>
 										</div>

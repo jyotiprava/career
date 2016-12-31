@@ -36,7 +36,7 @@ use dosamigos\tinymce\TinyMce;
 								<div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Key Skill</label>
-                                        <input type="text" placeholder=" " id="skills" required class="form-control">
+                                        <input type="text" placeholder=" " name="PostJob[RawSkill]" id="skills" required class="form-control">
 										<div id="allskill" style="width: 100%; margin-top: 5px; height: 25px; padding: 3px;font-size:12px; color: #fff;">
 										</div>
 										<input type="hidden" id="skillid" name="PostJob[KeySkill]" />

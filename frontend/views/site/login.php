@@ -67,7 +67,7 @@ use yii\bootstrap\ActiveForm;
 
 						
 	    	<div class="row omb_row-sm-offset-3 omb_socialButtons">
-							<div class="col-xs-4 col-sm-2">
+							<!--<div class="col-xs-4 col-sm-2">
 								<a href="#" class="btn btn-lg btn-block omb_btn-facebook">
 									<i class="fa fa-facebook visible-xs"></i>
 									<span class="hidden-xs">Facebook</span>
@@ -84,7 +84,8 @@ use yii\bootstrap\ActiveForm;
 									<i class="fa fa-google-plus visible-xs"></i>
 									<span class="hidden-xs">Google+</span>
 								</a>
-							</div>	
+							</div>	-->
+							<?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['site/auth']]) ?>
 						</div>
 					</div>
                              </div>
